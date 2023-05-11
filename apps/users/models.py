@@ -12,7 +12,6 @@ from simple_history.models import HistoricalRecords
 
 from apps.users.manager import UserManager
 
-
 # from rest_framework.generics import CreateAPIView, UpdateAPIView, GenericAPIView
 # from rest_framework.serializers import ModelSerializer
 # from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -38,11 +37,12 @@ NEW, CODE_VERIFIED, HALF, DONE = (
 )
 
 AUTH_STATUS = (
-    (NEW, _("NEW")),
+    (NEW, _("New")),
     (CODE_VERIFIED, _("Code verified")),
     (HALF, _("Done without MyID")),
     (DONE, _("Done"))
 )
+
 
 class UserConfirmation(models.Model):
     code = models.CharField(max_length=4)

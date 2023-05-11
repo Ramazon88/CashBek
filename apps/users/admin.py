@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 class UserAdmin(DjangoUserAdmin, admin.ModelAdmin):
     fieldsets = (
         (_('Main'), {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'phone',)}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'auth_status', 'phone',)}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
     )

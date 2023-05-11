@@ -1,9 +1,9 @@
 import re
 
 import requests
-from rest_framework.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from apps.api.exeptions import CustomError
 from config.settings import SMS_TOKEN, SMS_URL
 
 phone_regex = re.compile(r"^(!?){0}([998]){3}([3-9]){1}([0-9]){1}([0-9]){7}$")
@@ -18,7 +18,7 @@ def check_phone(phone):
             "success": False,
             'message': _("The phone number is incorrect")
         }
-        raise ValidationError(data)
+        raise CustomError(data)
 
 
 def send_sms(phone, code):
