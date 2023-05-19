@@ -3,7 +3,7 @@ import re
 import requests
 from django.utils.translation import gettext_lazy as _
 
-from apps.api.exeptions import CustomError
+from apps.api.exceptions import CustomError
 from config.settings import SMS_TOKEN, SMS_URL
 
 phone_regex = re.compile(r"^(!?){0}([998]){3}([3-9]){1}([0-9]){1}([0-9]){7}$")
