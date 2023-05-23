@@ -1,8 +1,25 @@
 from django.contrib import admin
 
-from apps.users.models import User
+from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
+
+
+class BookInline(admin.StackedInline):
+    model = User
+    fieldsets = (
+        (_('Main'), {'fields': ('phone', 'password')}),
+        (_('Important dates'), {'fields': ('last_login',)}),
+    )
+
+
+@admin.register(Seller)
+class SellerAdmin(admin.ModelAdmin):
+    inlines = [BookInline]
+
+    def save_model(self, request, obj, form, change):
+        obj.simple_user.user_type = MANAGER
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(User)
