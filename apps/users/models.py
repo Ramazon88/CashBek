@@ -97,9 +97,9 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     history = HistoricalRecords()
     simple_user = models.OneToOneField("SimpleUsers", on_delete=models.CASCADE, null=True, related_name="simple_user")
-    vendor = models.OneToOneField("Vendor", on_delete=models.CASCADE, null=True, related_name="simple_user")
-    seller = models.OneToOneField("Seller", on_delete=models.CASCADE, null=True, related_name="simple_user")
-    manager = models.OneToOneField("Manager", on_delete=models.CASCADE, null=True, related_name="simple_user")
+    vendor = models.OneToOneField("Vendor", on_delete=models.CASCADE, null=True, related_name="vendor")
+    seller = models.OneToOneField("Seller", on_delete=models.CASCADE, null=True, related_name="seller")
+    manager = models.OneToOneField("Manager", on_delete=models.CASCADE, null=True, related_name="manager")
     objects = UserManager()
 
     USERNAME_FIELD = 'phone'
@@ -166,7 +166,7 @@ class SimpleUsers(models.Model):
     first_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя")
     last_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Фамилия")
     middle_name = models.CharField(max_length=100, null=True, blank=True)
-    passport_number = models.CharField(max_length=9, verbose_name="Номер паспорта")
+    passport_number = models.CharField(max_length=9, null=True, blank=True, verbose_name="Номер паспорта")
     pinfl = models.CharField(max_length=14, unique=True, null=True, blank=True, error_messages={
         'unique': _("A user with that pinfl already exists."),
     }, verbose_name="ПИНФЛ")
@@ -177,13 +177,16 @@ class SimpleUsers(models.Model):
     birth_place = models.CharField(max_length=100, null=True, blank=True, verbose_name="Место рождения")
     address = models.CharField(max_length=100, null=True, blank=True, verbose_name="Адрес")
 
+    def __str__(self):
+        return "User"
+
     class Meta:
         verbose_name = "Обычные пользователи"
         verbose_name_plural = "Обычные пользователи"
 
 
 class Vendor(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Название компании")
+    name = models.CharField(max_length=100, verbose_name="Название компании")
     telegram_id = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="Telegram ID")
 
     class Meta:
@@ -192,7 +195,7 @@ class Vendor(models.Model):
 
 
 class Seller(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя продавца")
+    name = models.CharField(max_length=100, verbose_name="Имя продавца")
     telegram_id = models.CharField(max_length=100, unique=True, verbose_name="Telegram ID")
 
     class Meta:
@@ -201,7 +204,7 @@ class Seller(models.Model):
 
 
 class Manager(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя Менеджер")
+    name = models.CharField(max_length=100, verbose_name="Имя Менеджер")
     telegram_id = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="Telegram ID")
 
     class Meta:

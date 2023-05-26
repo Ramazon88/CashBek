@@ -1,25 +1,120 @@
 from django.contrib import admin
-
+from apps.users.form import CustomUniversalForm, CustomUserCreationForm, CustomUniversalFormForUser
 from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 
-class BookInline(admin.StackedInline):
+class UserInline(admin.StackedInline):
     model = User
-    fieldsets = (
-        (_('Main'), {'fields': ('phone', 'password')}),
-        (_('Important dates'), {'fields': ('last_login',)}),
-    )
+    form = CustomUserCreationForm
+    can_delete = False
+    min_num = 1
+    max_num = 1
+
+    def get_formset(self, request, obj=None, **kwargs):
+        if obj:
+            self.form = CustomUniversalForm
+        return super().get_formset(request, obj=None, **kwargs)
 
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    inlines = [BookInline]
+    exclude = ('password1', 'password2')
+    inlines = [UserInline]
+    list_display = ["name", "get_phone", "get_active"]
 
     def save_model(self, request, obj, form, change):
-        obj.simple_user.user_type = MANAGER
+        obj.seller.user_type = SELLER
+        obj.seller.auth_status = DONE
+        obj.seller.is_staff = True
         super().save_model(request, obj, form, change)
+
+    @admin.display(ordering='seller__phone', description='Телефон')
+    def get_phone(self, obj):
+        return obj.seller.phone
+
+    @admin.display(ordering='seller__is_active', description='Актив', boolean=True)
+    def get_active(self, obj):
+        return obj.seller.is_active
+
+
+@admin.register(Manager)
+class SellerAdmin(admin.ModelAdmin):
+    exclude = ('password1', 'password2')
+    inlines = [UserInline]
+    list_display = ["name", "get_phone", "get_active"]
+
+    def save_model(self, request, obj, form, change):
+        obj.manager.user_type = MANAGER
+        obj.manager.auth_status = DONE
+        obj.manager.is_staff = True
+        super().save_model(request, obj, form, change)
+
+    @admin.display(ordering='manager__phone', description='Телефон')
+    def get_phone(self, obj):
+        return obj.manager.phone
+
+    @admin.display(ordering='manager__is_active', description='Актив', boolean=True)
+    def get_active(self, obj):
+        return obj.manager.is_active
+
+
+@admin.register(Vendor)
+class SellerAdmin(admin.ModelAdmin):
+    exclude = ('password1', 'password2')
+    inlines = [UserInline]
+    list_display = ["name", "get_phone", "get_active"]
+
+    def save_model(self, request, obj, form, change):
+        obj.vendor.user_type = VENDOR
+        obj.vendor.auth_status = DONE
+        obj.vendor.is_staff = True
+        super().save_model(request, obj, form, change)
+
+    @admin.display(ordering='vendor__phone', description='Телефон')
+    def get_phone(self, obj):
+        return obj.vendor.phone
+
+    @admin.display(ordering='vendor__is_active', description='Актив', boolean=True)
+    def get_active(self, obj):
+        return obj.vendor.is_active
+
+
+class SimpleUserInline(admin.StackedInline):
+    model = User
+    form = CustomUserCreationForm
+    can_delete = False
+    min_num = 1
+    max_num = 1
+
+    def get_formset(self, request, obj=None, **kwargs):
+        if obj:
+            self.form = CustomUniversalFormForUser
+        return super().get_formset(request, obj=None, **kwargs)
+
+
+@admin.register(SimpleUsers)
+class SellerAdmin(admin.ModelAdmin):
+    exclude = ('password1', 'password2')
+    inlines = [SimpleUserInline]
+    list_display = ["full_name", "get_phone", "pinfl", "auth_status", "get_active"]
+
+    @admin.display(ordering='simple_user__phone', description='Телефон')
+    def get_phone(self, obj):
+        return obj.simple_user.phone
+
+    @admin.display(ordering='simple_user__is_active', description='Актив', boolean=True)
+    def get_active(self, obj):
+        return obj.simple_user.is_active
+
+    @admin.display(ordering='simple_user__first_name', description='Имя')
+    def full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+
+    @admin.display(ordering='simple_user__auth_status', description='Статус авторизации')
+    def auth_status(self, obj):
+        return obj.simple_user.auth_status
 
 
 @admin.register(User)
