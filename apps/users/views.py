@@ -5,4 +5,4 @@ from django.contrib.admin import site
 def start(request):
     apps = site.get_app_list(request)
     print(apps)
-    return render(request, "index.html")
+    return render(request, "base.html")

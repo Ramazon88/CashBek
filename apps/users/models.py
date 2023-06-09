@@ -97,7 +97,7 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     history = HistoricalRecords()
     simple_user = models.OneToOneField("SimpleUsers", on_delete=models.CASCADE, null=True, related_name="simple_user")
-    vendor = models.OneToOneField("Vendor", on_delete=models.CASCADE, null=True, related_name="vendor")
+    vendor = models.OneToOneField("Vendor_account", on_delete=models.CASCADE, null=True, related_name="vendors")
     seller = models.OneToOneField("Seller", on_delete=models.CASCADE, null=True, related_name="seller")
     manager = models.OneToOneField("Manager", on_delete=models.CASCADE, null=True, related_name="manager")
     objects = UserManager()
@@ -186,8 +186,11 @@ class SimpleUsers(models.Model):
 
 
 class Vendor(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название компании")
-    telegram_id = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="Telegram ID")
+    name = models.CharField(max_length=100, verbose_name="Название компании", unique=True)
+    type_of_activity = models.CharField(max_length=100, verbose_name="Тип активности")
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = "Vendor"
@@ -210,3 +213,16 @@ class Manager(models.Model):
     class Meta:
         verbose_name = "Менеджер"
         verbose_name_plural = "Менеджеры"
+
+
+class Vendor_account(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Имя сотрудника")
+    telegram_id = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="Telegram ID")
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, verbose_name="Vendor", related_name="vendor")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Vendor account"
+        verbose_name_plural = "Vendor accounts"

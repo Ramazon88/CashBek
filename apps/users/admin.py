@@ -4,6 +4,8 @@ from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
 
+admin.site.register(Vendor)
+
 
 class UserInline(admin.StackedInline):
     model = User
@@ -60,25 +62,25 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.manager.is_active
 
 
-@admin.register(Vendor)
+@admin.register(Vendor_account)
 class SellerAdmin(admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [UserInline]
     list_display = ["name", "get_phone", "get_active"]
 
     def save_model(self, request, obj, form, change):
-        obj.vendor.user_type = VENDOR
-        obj.vendor.auth_status = DONE
-        obj.vendor.is_staff = True
+        obj.vendors.user_type = VENDOR
+        obj.vendors.auth_status = DONE
+        obj.vendors.is_staff = True
         super().save_model(request, obj, form, change)
 
-    @admin.display(ordering='vendor__phone', description='Телефон')
+    @admin.display(ordering='vendors__phone', description='Телефон')
     def get_phone(self, obj):
-        return obj.vendor.phone
+        return obj.vendors.phone
 
-    @admin.display(ordering='vendor__is_active', description='Актив', boolean=True)
+    @admin.display(ordering='vendors__is_active', description='Актив', boolean=True)
     def get_active(self, obj):
-        return obj.vendor.is_active
+        return obj.vendors.is_active
 
 
 class SimpleUserInline(admin.StackedInline):
