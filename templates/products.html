@@ -30,7 +30,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="btn-group">
-                        <button type="button" class="btn btn-info"><i class="fa-solid fa-file-import"></i>Импорт</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#import"><i class="fa-solid fa-file-import"></i>Импорт</button>
                         <button type="button" class="btn btn-success"><i class="fa-solid fa-file-export"></i>Экспорт</button>
                         <form action="simple-results.html">
                               <div class="input-group">
@@ -96,4 +96,55 @@
     </section>
     <!-- /.content -->
   </div>
+<!-- /.modal -->
+  <div class="modal fade" id="import">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Добавить файл Excel</h4>
+          <a href="{% url 'export_example' %}" class="btn btn-outline-primary">
+            <i class="fa-solid fa-file-import"></i>
+            Example
+          </a>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'import_products' %}" enctype="multipart/form-data" method="post">{% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="exampleInputFile">Заполнить только файл .xlsx</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="exampleInputFile" required>
+                <label class="custom-file-label" for="exampleInputFile">Выберите файл</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="submit" class="btn btn-primary">Сохранять</button>
+        </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- /.modal -->
+{% for message in messages %}
+{% if message.tags == "success" %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("SUCCESS", m, "success")
+</script>
+{% else %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("ERROR", m, "error")
+</script>
+{% endif %}
+{% endfor %}
 {% endblock %}
