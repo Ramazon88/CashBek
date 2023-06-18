@@ -1,10 +1,13 @@
 from django.contrib import admin
+
+from apps.main.models import BlackListProducts
 from apps.users.form import CustomUniversalForm, CustomUserCreationForm, CustomUniversalFormForUser
 from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 admin.site.register(Vendor)
+admin.site.register(BlackListProducts)
 
 
 class UserInline(admin.StackedInline):

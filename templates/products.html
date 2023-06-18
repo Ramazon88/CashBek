@@ -30,60 +30,82 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="btn-group">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#import"><i class="fa-solid fa-file-import"></i>Импорт</button>
-                        <button type="button" class="btn btn-success"><i class="fa-solid fa-file-export"></i>Экспорт</button>
-                        <form action="simple-results.html">
-                              <div class="input-group">
-                                  <input type="search" class="form-control form-control-lg" placeholder="Поиск">
-                                  <div class="input-group-append">
-                                      <button type="submit" class="btn btn-lg btn-default">
-                                          <i class="fa fa-search"></i>
-                                      </button>
-                                  </div>
+                    <a class="btn btn-info" data-toggle="modal" data-target="#import"><i class="fa-solid fa-file-import"></i>Импорт</a>
+                    <a href="{% url 'export_products' %}" class="btn btn-success"><i class="fa-solid fa-file-export"></i>Экспорт</a>
+                    <form action="">
+                          <div class="input-group">
+                              <input type="search" class="form-control" name="q" style="margin-left: 5px;" placeholder="Поиск">
+                              <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default">
+                                      <i class="fa fa-search"></i>
+                                  </button>
                               </div>
-                          </form>
+                          </div>
+                    </form>
                 </div>
+                <br><br>
+                <button type="button" class="btn btn-info">Общий: <strong>{{ all.count }}</strong></button>
+                <button type="button" class="btn btn-success">Актив: <strong>{{ active.count }}</strong></button>
+                <button type="button" class="btn btn-danger">Не Актив: <strong>{{ no_active.count }}</strong></button>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
+                    <tr>
+                      <th>Модел</th>
+                      <th>Дата Добавлена</th>
+                      <th>IMEI</th>
+                      <th>SKU</th>
+                      <th>Статус</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
+                    {% for obj in objs %}
+                    <tr>
+                      <td>{{ obj.model }}</td>
+                      <td>{{ obj.datetime | date:'Y-m-d' }}</td>
+                      <td>{{ obj.imei1 }}</td>
+                      <td>{{ obj.sku }}</td>
+                      {% if obj.is_active %}
+                      <td><i class="fa-solid fa-check" style="color: #1fbd00;"></i>Актуаль</td>
+                      {% else %}
+                      <td><td><i class="fa-solid fa-xmark" style="color: #ff0000;"></i>Не актуаль</td></td>
+                      {% endif %}
+                    </tr>
+                  {% endfor %}
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Модел</th>
+                    <th>Дата Добавлена</th>
+                    <th>IMEI</th>
+                    <th>SKU</th>
+                    <th>Статус</th>
                   </tr>
                   </tfoot>
                 </table>
               </div>
+
+              <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {% if obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ objs.previous_page_number }}">Предыдущий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Предыдущий</a></li>
+                    {% endif %}
+                    {% for i in objs.paginator.page_range %}
+                    {% if i == objs.number %}
+                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                    {% elif i >= objs.number|add:-3 and i <= objs.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if objs.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ objs.next_page_number }}">Следующий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Следующий</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
