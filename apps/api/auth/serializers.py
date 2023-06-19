@@ -1,4 +1,3 @@
-import datetime
 from collections import OrderedDict
 
 from django.contrib.auth.models import update_last_login
@@ -7,14 +6,14 @@ from django.db.models import Q
 from django.utils import timezone
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.exceptions import ValidationError
 
 from apps.api.exceptions import CustomError
 from apps.api.utilty import check_phone, send_sms
-from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF, USER
+from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF, USER, SimpleUsers
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -162,3 +161,27 @@ class ForgotPasswordVerifySerializers(serializers.Serializer):
     def validate_phone_number(self, value):
         check_phone(value)
         return value
+
+
+class CreateSimpleUserSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = SimpleUsers
+        exclude = ("pk",)
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+            'middle_name': {'required': True},
+            'passport_number': {'required': True},
+            'pinfl': {'required': True},
+            'inn': {'required': True},
+            'gender': {'required': True},
+            'birth_place': {'required': True},
+            'address': {'required': True},
+        }
+
+    def validate_pinfl(self, value):
+        obj = SimpleUsers.objects.filter(pinfl=value)
+        if obj:
+            raise ValidationError({"code": "113", "message": "This PINFL user is already registered"})
+        elif not str(value).isnumeric() and len(value) != 14:
+            raise ValidationError({"code": "114", "message": "pinfl line must be filled with 14 numbers"})

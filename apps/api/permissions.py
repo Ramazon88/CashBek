@@ -1,9 +1,8 @@
 from rest_framework.permissions import BasePermission, IsAuthenticated
-
+from rest_framework.exceptions import PermissionDenied
 
 class Verify(BasePermission):
-    message = {'success': False,
-               'code': '106',
+    message = {'code': '106',
                'message': "No such user exists"}
 
     def has_permission(self, request, view):
@@ -11,8 +10,7 @@ class Verify(BasePermission):
 
 
 class Password(BasePermission):
-    message = {'success': False,
-               'code': '106',
+    message = {'code': '106',
                'message': "No such user exists"}
 
     def has_permission(self, request, view):
@@ -22,14 +20,12 @@ class Password(BasePermission):
 
 
 class CustomIsAuthenticated(IsAuthenticated):
-    message = {'success': False,
-               'code': '106',
+    message = {'code': '106',
                'message': "No such user exists"}
 
 
 class UserPermission(BasePermission):
-    message = {'success': False,
-               'code': '106',
+    message = {'code': '106',
                'message': "No such user exists"}
 
     def has_permission(self, request, view):

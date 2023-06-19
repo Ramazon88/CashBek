@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.exceptions import ValidationError, APIException
+from rest_framework.exceptions import APIException
 
 
 class CustomError(APIException):

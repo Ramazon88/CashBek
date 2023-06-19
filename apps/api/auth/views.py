@@ -12,10 +12,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.api.exceptions import CustomError
-from apps.api.permissions import Verify, Password, CustomIsAuthenticated, UserPermission
-from apps.api.serializers import SignUpSerializer, ChangePasswordSerializer, LogoutSerializer, LoginSerializer, \
+from apps.api.permissions import Verify, Password, UserPermission
+from apps.api.auth.serializers import SignUpSerializer, ChangePasswordSerializer, LogoutSerializer, LoginSerializer, \
     CustomTokenRefreshSerializer, ForgotPasswordSerializers, ForgotPasswordVerifySerializers
-from apps.api.utilty import check_phone, send_sms
+from apps.api.utilty import send_sms
 from apps.users.models import User, CODE_VERIFIED, DONE, HALF, UserConfirmation, USER
 
 
@@ -26,7 +26,9 @@ class CreateUserView(CreateAPIView):
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
-            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0]}
+            data = {"success": False, "code": "101"}
+            data.update(response.data)
+            response.data = data
             response.status_code = status.HTTP_400_BAD_REQUEST
 
             return response
@@ -42,9 +44,18 @@ class VerifyApiView(APIView):
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": False, "code": "104"}
+        data = {"success": False}
         if exc.default_code == "token_not_valid":
-            data.update({"message": "Given token not valid for any token type"})
+            data.update({"code": "104", "message": "Given token not valid for any token type"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "not_authenticated":
+            data.update({"code": "110", "message": "Authentication credentials were not provided"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "permission_denied":
+            data.update({"code": "111", "message": "Permission denied"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "authentication_failed":
+            data.update({"code": "112", "message": "User not found"})
             return Response(data=data, status=401)
         return response
 
@@ -84,17 +95,25 @@ class ChangePasswordView(UpdateAPIView):
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": False, "code": "104"}
+        data = {"success": False}
         if exc.default_code == "token_not_valid":
-            data.update({"message": "Given token not valid for any token type"})
+            data.update({"code": "104", "message": "Given token not valid for any token type"})
             return Response(data=data, status=401)
-        elif isinstance(exc, ValidationError) and response.data.get("password"):
-            data = {"success": False, "code": "107"}
-            data.update({"message": response.data.get("password")})
+        elif exc.default_code == "not_authenticated":
+            data.update({"code": "110", "message": "Authentication credentials were not provided"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "permission_denied":
+            data.update({"code": "111", "message": "Permission denied"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "authentication_failed":
+            data.update({"code": "112", "message": "User not found"})
+            return Response(data=data, status=401)
+        elif isinstance(exc, ValidationError):
+            data.update({"code": "107"})
+            data.update(response.data)
             return Response(data=data, status=400)
-        elif response.data.get("confirm_password"):
-            data = {"success": False, "code": "108"}
-            data.update({"message": response.data.get("confirm_password")[0]})
+        elif isinstance(exc, CustomError):
+            data.update({"code": "108", "message": response.data.get("confirm_password")[0]})
             return Response(data=data, status=400)
         return response
 
@@ -108,9 +127,18 @@ class LogoutView(GenericAPIView):
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": "False"}
+        data = {"success": False}
         if exc.default_code == "token_not_valid":
-            data.update({"message": "Given token not valid for any token type"})
+            data.update({"code": "104", "message": "Given token not valid for any token type"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "not_authenticated":
+            data.update({"code": "110", "message": "Authentication credentials were not provided"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "permission_denied":
+            data.update({"code": "111", "message": "Permission denied"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "authentication_failed":
+            data.update({"code": "112", "message": "User not found"})
             return Response(data=data, status=401)
         return response
 
@@ -136,9 +164,9 @@ class LoginView(TokenObtainPairView):
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": False, "code": "109"}
+        data = {"success": False}
         if exc.default_code == "authentication_failed":
-            data.update(response.data)
+            data.update({"code": "112", "message": "User not found"})
             return Response(data=data, status=401)
         return response
 
@@ -162,7 +190,16 @@ class CustomTokenRefreshView(TokenObtainPairView):
         response = super().handle_exception(exc)
         data = {"success": False}
         if exc.default_code == "token_not_valid":
-            data.update({"message": "Given token not valid for any token type"})
+            data.update({"code": "104", "message": "Given token not valid for any token type"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "not_authenticated":
+            data.update({"code": "110", "message": "Authentication credentials were not provided"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "permission_denied":
+            data.update({"code": "111", "message": "Permission denied"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "authentication_failed":
+            data.update({"code": "112", "message": "User not found"})
             return Response(data=data, status=401)
         return response
 
@@ -186,7 +223,16 @@ class GetNewVerification(APIView):
         response = super().handle_exception(exc)
         data = {"success": False}
         if exc.default_code == "token_not_valid":
-            data.update({"message": "Given token not valid for any token type"})
+            data.update({"code": "104", "message": "Given token not valid for any token type"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "not_authenticated":
+            data.update({"code": "110", "message": "Authentication credentials were not provided"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "permission_denied":
+            data.update({"code": "111", "message": "Permission denied"})
+            return Response(data=data, status=401)
+        elif exc.default_code == "authentication_failed":
+            data.update({"code": "112", "message": "User not found"})
             return Response(data=data, status=401)
         return response
 
@@ -219,7 +265,9 @@ class ForgotPasswordView(GenericAPIView):
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
-            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0]}
+            data = {"success": False, "code": "101"}
+            data.update(response.data)
+            response.data = data
             response.status_code = status.HTTP_400_BAD_REQUEST
 
             return response
@@ -252,7 +300,9 @@ class ForgotPasswordVerifyView(GenericAPIView):
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
-            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0] if response.data.get("phone_number") else response.data["code"][0]}
+            data = {"success": False, "code": "101"}
+            data.update(response.data)
+            response.data = data
             response.status_code = status.HTTP_400_BAD_REQUEST
 
             return response

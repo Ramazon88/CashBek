@@ -12,11 +12,6 @@ from simple_history.models import HistoricalRecords
 
 from apps.users.manager import UserManager
 
-# from rest_framework.generics import CreateAPIView, UpdateAPIView, GenericAPIView
-# from rest_framework.serializers import ModelSerializer
-# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-# from rest_framework_simplejwt.views import TokenObtainPairView
-
 
 USER = 'user'
 SELLER = 'seller'
