@@ -14,7 +14,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 from apps.api.exceptions import CustomError
 from apps.api.utilty import check_phone, send_sms
-from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF
+from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF, USER
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -43,13 +43,14 @@ class SignUpSerializer(serializers.ModelSerializer):
     def validate_phone_number(self, value):
         check_phone(value)
         query = Q(phone=value) & (
-                Q(auth_status=NEW) | Q(auth_status=CODE_VERIFIED)
+                Q(auth_status=NEW) | Q(auth_status=CODE_VERIFIED) & Q(user_type=USER)
         )
         user = User.objects.filter(query)
         if user.exists():
             if UserConfirmation.objects.filter(user=user.first(), expiration_time__gte=timezone.now(),
                                                is_confirmed=False).exists():
                 data = {
+                    "code": "102",
                     "message": _("The previous verification code has not expired")
                 }
                 raise CustomError(data)
@@ -58,7 +59,8 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         if value and User.objects.filter(phone=value).exists():
             data = {
-                "message": _("This phone is already being used!")
+                "code": "103",
+                "message": _("This phone number is already being used!")
             }
             raise CustomError(data)
 
@@ -66,7 +68,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         text = super(SignUpSerializer, self).to_representation(instance)
-        data = {'succes': "True"}
+        data = {'success': True}
         data.update(text)
         data.update(instance.tokens())
         return data
@@ -76,7 +78,9 @@ class ChangePasswordSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True, error_messages={
         'required': 'password is required'
     })
-    confirm_password = serializers.CharField(write_only=True, required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True, error_messages={
+        'required': 'confirm_password is required'
+    })
 
     def validate_password(self, password):
         validate_password(password)
@@ -87,10 +91,8 @@ class ChangePasswordSerializer(serializers.Serializer):
         confirm_password = data.get('confirm_password')
         if password:
             validate_password(password)
-            validate_password(confirm_password)
         if password != confirm_password:
-            raise CustomError({"success": "False",
-                               "message": "Your passwords don't match"})
+            raise CustomError({"confirm_password": ["Your passwords don't match"]})
 
         return data
 
@@ -107,7 +109,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         return instance
 
     def to_representation(self, instance):
-        return {"success": "True",
+        return {"success": True,
                 "auth_status": instance.auth_status,
                 }
 
@@ -118,8 +120,7 @@ class LogoutSerializer(serializers.Serializer):
 
 class LoginSerializer(TokenObtainPairSerializer):
     default_error_messages = {
-        "no_active_account": OrderedDict([("success", False),
-                                          ("message", _("No active account found with the given credentials"))])
+        "no_active_account": OrderedDict([("message", _("No active account found with the given credentials"))])
     }
 
 
@@ -138,37 +139,26 @@ class ForgotPasswordSerializers(serializers.Serializer):
 
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordSerializers, self).__init__(*args, **kwargs)
-        self.fields['phone_number'] = serializers.CharField(required=True, source="phone", error_messages={
+        self.fields['phone_number'] = serializers.CharField(required=True, error_messages={
             'required': 'phone_number is required'
         })
 
     def validate_phone_number(self, value):
         check_phone(value)
-        query = Q(phone=value) & (
-                Q(auth_status=NEW) | Q(auth_status=CODE_VERIFIED)
-        )
-        user = User.objects.filter(query)
-        if user.exists():
-            if UserConfirmation.objects.filter(user=user.first(), expiration_time__gte=timezone.now(),
-                                               is_confirmed=False).exists():
-                data = {
-                    "message": _("The previous verification code has not expired")
-                }
-                raise CustomError(data)
-            else:
-                user.first().delete()
-
-        if value and User.objects.filter(phone=value).exists():
-            data = {
-                "message": _("This phone is already being used!")
-            }
-            raise CustomError(data)
-
         return value
 
-    def to_representation(self, instance):
-        text = super(ForgotPasswordSerializers, self).to_representation(instance)
-        data = {'succes': "True"}
-        data.update(text)
-        data.update(instance.tokens())
-        return data
+
+class ForgotPasswordVerifySerializers(serializers.Serializer):
+
+    def __init__(self, *args, **kwargs):
+        super(ForgotPasswordVerifySerializers, self).__init__(*args, **kwargs)
+        self.fields['phone_number'] = serializers.CharField(required=True, error_messages={
+            'required': 'phone_number is required'
+        })
+        self.fields['code'] = serializers.CharField(required=True, error_messages={
+            'required': 'code is required'
+        })
+
+    def validate_phone_number(self, value):
+        check_phone(value)
+        return value

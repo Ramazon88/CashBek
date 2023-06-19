@@ -14,9 +14,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from apps.api.exceptions import CustomError
 from apps.api.permissions import Verify, Password, CustomIsAuthenticated, UserPermission
 from apps.api.serializers import SignUpSerializer, ChangePasswordSerializer, LogoutSerializer, LoginSerializer, \
-    CustomTokenRefreshSerializer
+    CustomTokenRefreshSerializer, ForgotPasswordSerializers, ForgotPasswordVerifySerializers
 from apps.api.utilty import check_phone, send_sms
-from apps.users.models import User, CODE_VERIFIED, DONE, HALF, UserConfirmation
+from apps.users.models import User, CODE_VERIFIED, DONE, HALF, UserConfirmation, USER
 
 
 class CreateUserView(CreateAPIView):
@@ -24,25 +24,25 @@ class CreateUserView(CreateAPIView):
     serializer_class = SignUpSerializer
 
     def handle_exception(self, exc):
-        # call the parent's handle_exception to get the default behavior
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
-            # customize the response message for specific exceptions
-            response.data = {"succes": "False", "message": response.data["phone_number"][0]}
+            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0]}
             response.status_code = status.HTTP_400_BAD_REQUEST
 
             return response
         else:
-            response.data = {"succes": "False", "message": response.data['message']}
+            data = {"success": False}
+            data.update(response.data)
+            response.data = data
             return response
 
 
 class VerifyApiView(APIView):
-    permission_classes = (CustomIsAuthenticated, Verify, UserPermission)
+    permission_classes = (Verify,)
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": "False"}
+        data = {"success": False, "code": "104"}
         if exc.default_code == "token_not_valid":
             data.update({"message": "Given token not valid for any token type"})
             return Response(data=data, status=401)
@@ -54,7 +54,7 @@ class VerifyApiView(APIView):
         token = user.tokens()
         return Response(
             data={
-                "success": "True",
+                "success": True,
                 "auth_status": user.auth_status,
                 "access": token["access"],
                 "refresh": token["refresh"]
@@ -65,7 +65,8 @@ class VerifyApiView(APIView):
         verifies = user.verify_codes.filter(expiration_time__gte=timezone.now(), code=code, is_confirmed=False)
         if not verifies.exists():
             data = {
-                'success': 'False',
+                'success': False,
+                'code': '105',
                 'message': "Code is incorrect or expired"
             }
             raise ValidationError(data)
@@ -77,18 +78,25 @@ class VerifyApiView(APIView):
 
 
 class ChangePasswordView(UpdateAPIView):
-    permission_classes = (CustomIsAuthenticated, Password, UserPermission)
+    permission_classes = (Password,)
     serializer_class = ChangePasswordSerializer
     http_method_names = ['put']
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": "False"}
+        data = {"success": False, "code": "104"}
         if exc.default_code == "token_not_valid":
             data.update({"message": "Given token not valid for any token type"})
             return Response(data=data, status=401)
-        data.update(dict(response.data))
-        return Response(data=data, status=400)
+        elif isinstance(exc, ValidationError) and response.data.get("password"):
+            data = {"success": False, "code": "107"}
+            data.update({"message": response.data.get("password")})
+            return Response(data=data, status=400)
+        elif response.data.get("confirm_password"):
+            data = {"success": False, "code": "108"}
+            data.update({"message": response.data.get("confirm_password")[0]})
+            return Response(data=data, status=400)
+        return response
 
     def get_object(self):
         return self.request.user
@@ -96,7 +104,7 @@ class ChangePasswordView(UpdateAPIView):
 
 class LogoutView(GenericAPIView):
     serializer_class = LogoutSerializer
-    permission_classes = (CustomIsAuthenticated, UserPermission)
+    permission_classes = (UserPermission,)
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
@@ -126,6 +134,14 @@ class LogoutView(GenericAPIView):
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
 
+    def handle_exception(self, exc):
+        response = super().handle_exception(exc)
+        data = {"success": False, "code": "109"}
+        if exc.default_code == "authentication_failed":
+            data.update(response.data)
+            return Response(data=data, status=401)
+        return response
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
 
@@ -133,7 +149,7 @@ class LoginView(TokenObtainPairView):
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
             raise InvalidToken(e.args[0])
-        data = {"success": "True"}
+        data = {"success": True}
         data.update(serializer.validated_data)
 
         return Response(data, status=status.HTTP_200_OK)
@@ -144,7 +160,7 @@ class CustomTokenRefreshView(TokenObtainPairView):
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": "False"}
+        data = {"success": False}
         if exc.default_code == "token_not_valid":
             data.update({"message": "Given token not valid for any token type"})
             return Response(data=data, status=401)
@@ -157,18 +173,18 @@ class CustomTokenRefreshView(TokenObtainPairView):
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
             raise InvalidToken(e.args[0])
-        data = {"success": "True"}
+        data = {"success": True}
         data.update(serializer.validated_data)
 
         return Response(data, status=status.HTTP_200_OK)
 
 
 class GetNewVerification(APIView):
-    permission_classes = (CustomIsAuthenticated, UserPermission)
+    permission_classes = (UserPermission,)
 
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
-        data = {"success": "False"}
+        data = {"success": False}
         if exc.default_code == "token_not_valid":
             data.update({"message": "Given token not valid for any token type"})
             return Response(data=data, status=401)
@@ -177,6 +193,8 @@ class GetNewVerification(APIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         self.check_verification(user)
+        code = user.create_verify_code()
+        send_sms(user.phone, code)
         return Response(
             {
                 "success": True
@@ -188,59 +206,89 @@ class GetNewVerification(APIView):
         verifies = user.verify_codes.filter(expiration_time__gte=timezone.now(), is_confirmed=False)
         if verifies.exists():
             data = {
-                "message": "You need to wait over expiration time",
+                "success": False,
+                "code": "102",
+                "message": "The previous verification code has not expired",
             }
             raise ValidationError(data)
 
 
-class ForgotPasswordView(APIView):
+class ForgotPasswordView(GenericAPIView):
+    serializer_class = ForgotPasswordSerializers
 
-    def post(self, request, *args, **kwargs):
-        try:
-            phone = request.data["phone"]
-        except:
-            return Response({"success": "False", "message": "phone is required"}, status=400)
-        query = Q(phone=phone) & Q(user_type="user") & (
-                Q(auth_status=HALF) | Q(auth_status=DONE)
-        )
-        user = User.objects.filter(query)
-        if user.exists():
-            UserConfirmation.objects.filter(user=user.first(), expiration_time__gte=timezone.now()).delete()
-            code = user.first().create_verify_code()
-            send_sms(phone, code)
-            return Response({"success": "True"}, status=200)
+    def handle_exception(self, exc):
+        response = super().handle_exception(exc)
+        if isinstance(exc, ValidationError):
+            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0]}
+            response.status_code = status.HTTP_400_BAD_REQUEST
+
+            return response
         else:
-            return Response({"success": "False", "message": "No such user exists"}, status=400)
-
-
-class ForgotPasswordVerifyView(APIView):
+            data = {"success": False}
+            data.update(response.data)
+            response.data = data
+            return response
 
     def post(self, request, *args, **kwargs):
-        try:
-            phone = request.data["phone"]
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            phone = request.data["phone_number"]
+            query = Q(phone=phone) & Q(user_type=USER) & (
+                    Q(auth_status=HALF) | Q(auth_status=DONE)
+            )
+            user = User.objects.filter(query)
+            if user.exists():
+                UserConfirmation.objects.filter(user=user.first(), expiration_time__gte=timezone.now()).delete()
+                code = user.first().create_verify_code()
+                send_sms(phone, code)
+                return Response({"success": True}, status=200)
+            else:
+                return Response({"success": False, "code": "106", "message": "No such user exists"}, status=400)
+
+
+class ForgotPasswordVerifyView(GenericAPIView):
+    serializer_class = ForgotPasswordVerifySerializers
+
+    def handle_exception(self, exc):
+        response = super().handle_exception(exc)
+        if isinstance(exc, ValidationError):
+            response.data = {"success": False, "code": "101", "message": response.data["phone_number"][0] if response.data.get("phone_number") else response.data["code"][0]}
+            response.status_code = status.HTTP_400_BAD_REQUEST
+
+            return response
+        else:
+            data = {"success": False}
+            data.update(response.data)
+            response.data = data
+            return response
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            phone = request.data["phone_number"]
             code = request.data["code"]
-        except:
-            return Response({"success": "False", "message": "phone or code is required"}, status=400)
 
-        query = Q(phone=phone) & Q(user_type="user") & (
-                Q(auth_status=HALF) | Q(auth_status=DONE)
-        )
-        user = User.objects.filter(query)
-        if user.exists():
-            self.check_verify(user.first(), code)
-            token = user.first().tokens()
-            return Response({"success": "True",
-                             "refresh": token["refresh"],
-                             "access": token["access"]}, status=200)
-        else:
-            return Response({"success": "False", "message": "No such user exists"}, status=400)
+            query = Q(phone=phone) & Q(user_type=USER) & (
+                    Q(auth_status=HALF) | Q(auth_status=DONE)
+            )
+            user = User.objects.filter(query)
+            if user.exists():
+                self.check_verify(user.first(), code)
+                token = user.first().tokens()
+                return Response({"success": True,
+                                 "auth_status": user.first().auth_status,
+                                 "refresh": token["refresh"],
+                                 "access": token["access"]}, status=200)
+            else:
+                return Response({"success": False, "code": "106", "message": "No such user exists"}, status=400)
 
     @staticmethod
     def check_verify(user, code):
         verifies = user.verify_codes.filter(expiration_time__gte=timezone.now(), code=code, is_confirmed=False)
         if not verifies.exists():
             data = {
-                'success': 'False',
+                'success': False,
+                "code": "105",
                 'message': "Code is incorrect or expired"
             }
             raise ValidationError(data)

@@ -15,7 +15,7 @@ def check_phone(phone):
 
     else:
         data = {
-            "success": False,
+            'code': 100,
             'message': _("The phone number is incorrect")
         }
         raise CustomError(data)
@@ -24,19 +24,19 @@ def check_phone(phone):
 def send_sms(phone, code):
     headers = {"Authorization": SMS_TOKEN}
     data = {
-                          "messages": [
-                              {
-                                  "recipient": phone,
-                                  "message-id": "omo000000001",
-                                  "sms": {
-                                      "originator": "3700",
-                                      "content": {
-                                          "text": f"CashBek code: {code}"
-                                      }
-                                  }
-                              }
-                          ]
+              "messages": [
+                  {
+                      "recipient": phone,
+                      "message-id": "omo000000001",
+                      "sms": {
+                          "originator": "3700",
+                          "content": {
+                              "text": f"CashBek code: {code}"
+                          }
                       }
+                  }
+              ]
+          }
     url = SMS_URL
     data = requests.post(url=url, headers=headers, json=data)
     return True
