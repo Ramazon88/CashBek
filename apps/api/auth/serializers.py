@@ -13,7 +13,7 @@ from rest_framework.exceptions import ValidationError
 
 from apps.api.exceptions import CustomError
 from apps.api.utilty import check_phone, send_sms
-from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF, USER, SimpleUsers
+from apps.users.models import User, NEW, CODE_VERIFIED, UserConfirmation, HALF, USER, SimpleUsers, DONE
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -166,22 +166,81 @@ class ForgotPasswordVerifySerializers(serializers.Serializer):
 class CreateSimpleUserSerializers(serializers.ModelSerializer):
     class Meta:
         model = SimpleUsers
-        exclude = ("pk",)
+        fields = "__all__"
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
             'middle_name': {'required': True},
             'passport_number': {'required': True},
             'pinfl': {'required': True},
+            'birth_date': {'required': True},
             'inn': {'required': True},
             'gender': {'required': True},
             'birth_place': {'required': True},
             'address': {'required': True},
         }
 
+    def create(self, validated_data):
+        user = self.context['request'].user
+        if user.simple_user:
+            raise ValidationError({"code": "116", "message": "Already registered with MyID"})
+        obj = super().create(validated_data)
+        user.simple_user = obj
+        user.auth_status = DONE
+        user.save()
+        return obj
+
     def validate_pinfl(self, value):
         obj = SimpleUsers.objects.filter(pinfl=value)
         if obj:
             raise ValidationError({"code": "113", "message": "This PINFL user is already registered"})
-        elif not str(value).isnumeric() and len(value) != 14:
+        elif not str(value).isnumeric() or len(value) != 14:
             raise ValidationError({"code": "114", "message": "pinfl line must be filled with 14 numbers"})
+        return value
+
+    def validate_gender(self, value):
+        if value != "M" and value != "F":
+            raise ValidationError({"code": "115", "message": "Enter the gender string as 'M' - male or 'F' - female"})
+        return value
+
+    def to_representation(self, instance):
+        data = {
+            'first_name': instance.first_name,
+            'last_name': instance.last_name,
+            'middle_name': instance.middle_name,
+            'phone': instance.simple_user.phone,
+            'passport_number': instance.passport_number,
+            'pinfl': instance.pinfl,
+            'birth_date': instance.birth_date,
+            'inn': instance.inn,
+            'gender': instance.gender,
+            'birth_place': instance.birth_place,
+            'address': instance.address,
+        }
+        return {"success": True, "auth_status": DONE, "result": data}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

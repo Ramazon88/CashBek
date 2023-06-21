@@ -40,7 +40,7 @@ AUTH_STATUS = (
 
 
 class UserConfirmation(models.Model):
-    code = models.CharField(max_length=4)
+    code = models.CharField(max_length=10)
     user = models.ForeignKey('users.User', models.CASCADE, 'verify_codes')
     expiration_time = models.DateTimeField(null=True)
     is_confirmed = models.BooleanField(default=False)
@@ -72,7 +72,7 @@ class User(AbstractUser):
         },
         validators=[_validate_phone]
     )
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    first_name = models.CharField(_('first name'), max_length=100, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     user_type = models.CharField(max_length=60, choices=USER_TYPES, default=USER)
     auth_status = models.CharField(max_length=60, choices=AUTH_STATUS, default=NEW)
@@ -161,8 +161,8 @@ class SimpleUsers(models.Model):
     first_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя")
     last_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Фамилия")
     middle_name = models.CharField(max_length=100, null=True, blank=True)
-    passport_number = models.CharField(max_length=9, null=True, blank=True, verbose_name="Номер паспорта")
-    pinfl = models.CharField(max_length=14, unique=True, null=True, blank=True, error_messages={
+    passport_number = models.CharField(max_length=100, null=True, blank=True, verbose_name="Номер паспорта")
+    pinfl = models.CharField(max_length=100, unique=True, null=True, blank=True, error_messages={
         'unique': _("A user with that pinfl already exists."),
     }, verbose_name="ПИНФЛ")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
