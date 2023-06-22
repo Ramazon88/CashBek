@@ -129,7 +129,7 @@ class User(AbstractUser):
         refresh = RefreshToken.for_user(self)
         return {
             "access": str(refresh.access_token),
-            "refresh": str(refresh)
+            "refresh": str(refresh),
         }
 
     def save(self, *args, **kwargs):

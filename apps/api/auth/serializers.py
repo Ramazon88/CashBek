@@ -91,7 +91,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         if password:
             validate_password(password)
         if password != confirm_password:
-            raise CustomError({"confirm_password": ["Your passwords don't match"]})
+            raise CustomError({"code": "108", "message": "Your passwords don't match"})
 
         return data
 
@@ -183,7 +183,7 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
         if user.simple_user:
-            raise ValidationError({"code": "116", "message": "Already registered with MyID"})
+            raise CustomError({"code": "116", "message": "Already registered with MyID"})
         obj = super().create(validated_data)
         user.simple_user = obj
         user.auth_status = DONE
@@ -193,14 +193,14 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
     def validate_pinfl(self, value):
         obj = SimpleUsers.objects.filter(pinfl=value)
         if obj:
-            raise ValidationError({"code": "113", "message": "This PINFL user is already registered"})
+            raise CustomError({"code": "113", "message": "This PINFL user is already registered"})
         elif not str(value).isnumeric() or len(value) != 14:
-            raise ValidationError({"code": "114", "message": "pinfl line must be filled with 14 numbers"})
+            raise CustomError({"code": "114", "message": "pinfl line must be filled with 14 numbers"})
         return value
 
     def validate_gender(self, value):
         if value != "M" and value != "F":
-            raise ValidationError({"code": "115", "message": "Enter the gender string as 'M' - male or 'F' - female"})
+            raise CustomError({"code": "115", "message": "Enter the gender string as 'M' - male or 'F' - female"})
         return value
 
     def to_representation(self, instance):
