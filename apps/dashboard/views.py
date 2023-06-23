@@ -19,7 +19,7 @@ def index(request):
 
 
 def products(request):
-    products = Products.objects.filter(vendor=request.user.vendor).order_by("-id")
+    products = Products.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
     alls = products
     active = products.filter(is_active=True)
     no_active = products.filter(is_active=False)
