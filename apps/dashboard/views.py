@@ -1,23 +1,47 @@
 import os
-from tempfile import NamedTemporaryFile
-
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from openpyxl.reader.excel import load_workbook
 
-
 from apps.main.models import *
 from config.settings import BASE_DIR
 
 
+def dashboard_access(user):
+    if user.is_authenticated and user.is_dashboard():
+        return True
+    return False
+
+
+def signin(request):
+    if request.method == "POST":
+        phone = request.POST.get("phone")
+        password = request.POST.get("password")
+        remember = request.POST.get("remember")
+        user = authenticate(username=phone, password=password)
+        if user and user.is_dashboard():
+            login(request, user)
+            if not remember:
+                request.session.set_expiry(0)
+                request.session.modified = True
+            return redirect("index")
+        else:
+            messages.error(request, "Invalit login or password")
+    return render(request, "login.html")
+
+
+@user_passes_test(dashboard_access, login_url="signin")
 def index(request):
     context = {"home": True}
     return render(request, "index.html", context)
 
 
+@user_passes_test(dashboard_access, login_url="signin")
 def products(request):
     products = Products.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
     alls = products
@@ -34,6 +58,7 @@ def products(request):
     return render(request, "products.html", context)
 
 
+@user_passes_test(dashboard_access, login_url="signin")
 def export_example(request):
     file_location = BASE_DIR / 'file/example_products.xlsx'
     with open(file_location, 'rb') as f:
@@ -43,6 +68,7 @@ def export_example(request):
     return response
 
 
+@user_passes_test(dashboard_access, login_url="signin")
 def import_products(request):
     file = request.FILES['file']
     filename = file.name
@@ -85,12 +111,12 @@ def import_products(request):
         if creator:
             obj = BlackListProducts.objects.bulk_create(creator)
             context["interval"] = f"{obj[0].id}-{obj[-1].id}"
-            print(f"{obj[0].id}-{obj[-1].id}")
         return render(request, "confirm_products.html", context)
 
     return redirect("products")
 
 
+@user_passes_test(dashboard_access, login_url="signin")
 def export_products(request):
     products = Products.objects.filter(vendor=request.user.vendor).order_by("-id")
     file_location = BASE_DIR / 'file/products.xlsx'
@@ -112,6 +138,7 @@ def export_products(request):
     return response
 
 
+@user_passes_test(dashboard_access, login_url="signin")
 def confirm_products(request):
     if request.POST.get("new_prs"):
         prs = request.POST.get("new_prs")
@@ -121,5 +148,12 @@ def confirm_products(request):
         for obj in objs:
             creator.append(Products(model=obj.model, imei1=obj.imei1, sku=obj.sku, vendor=request.user.vendor))
         Products.objects.bulk_create(creator)
+        objs.delete()
         messages.success(request, "Товары успешно добавлены")
         return redirect("products")
+
+
+
+
+
+

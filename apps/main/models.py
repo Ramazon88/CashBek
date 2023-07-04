@@ -1,5 +1,3 @@
-from django.db import models
-
 from apps.users.models import *
 
 
@@ -18,3 +16,9 @@ class BlackListProducts(models.Model):
     imei1 = models.CharField(max_length=100, verbose_name="IMEI 1")
     sku = models.CharField(max_length=512, verbose_name="SKU")
 
+
+class Promo(models.Model):
+    name = models.CharField(max_length=512)
+    start = models.DateField()
+    end = models.DateField()
+    budget = models.IntegerField()

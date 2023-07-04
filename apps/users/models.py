@@ -3,13 +3,12 @@ import uuid
 from datetime import datetime, timedelta
 
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 from simple_history.models import HistoricalRecords
-
 from apps.users.manager import UserManager
 
 
@@ -153,6 +152,11 @@ class User(AbstractUser):
         """Return the short name for the user."""
         return self.first_name
 
+    def is_dashboard(self):
+        if self.user_type in [VENDOR, MANAGER] and self.is_active:
+            return True
+        return False
+
     def __str__(self):
         return self.get_full_name() or self.get_username()
 
@@ -183,6 +187,7 @@ class SimpleUsers(models.Model):
 class Vendor(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название компании", unique=True)
     type_of_activity = models.CharField(max_length=100, verbose_name="Тип активности")
+    price = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(10)])
 
     def __str__(self):
         return self.name
