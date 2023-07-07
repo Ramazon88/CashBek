@@ -1,3 +1,4 @@
+import datetime
 import os
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -56,17 +57,20 @@ def products(request):
     page_number = request.GET.get('page')
     page_obj = pagination.get_page(page_number)
     context = {"products": True, "objs": page_obj, "all_products": products, "all": alls, "active": active,
-               "no_active": no_active, 'filter': f}
+               "no_active": no_active}
     return render(request, "products.html", context)
 
 
 @user_passes_test(dashboard_access, login_url="signin")
-def export_example(request):
-    file_location = BASE_DIR / 'file/example_products.xlsx'
+def export_example(request, type):
+    if type == "products":
+        file_location = BASE_DIR / 'file/example_products.xlsx'
+    else:
+        file_location = BASE_DIR / 'file/example_promo.xlsx'
     with open(file_location, 'rb') as f:
         file_data = f.read()
     response = HttpResponse(file_data, content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="example_products.xlsx"'
+    response['Content-Disposition'] = 'attachment; filename="example.xlsx"'
     return response
 
 
@@ -167,12 +171,14 @@ def promo(request):
 def import_promo(request):
     file = request.FILES['file']
     filename = file.name
-    name = request.get("name")
-    start_promo = request.get("start_promo")
-    end_promo = request.get("end_promo")
-    budjet = request.get("budjet")
+    name = request.POST.get("name")
+    start_promo = datetime.datetime.strptime(request.POST.get("start_promo"), "%Y-%m-%d").date()
+    end_promo = datetime.datetime.strptime(request.POST.get("end_promo"), "%Y-%m-%d").date()
+    budjet = request.POST.get("budjet")
     if filename.split(".")[1] != "xlsx":
         messages.error(request, "Файл должен быть в формате .xlsx")
+    elif start_promo >= end_promo:
+        messages.error(request, "Дата начала должна быть меньше даты окончания")
     else:
         products = Products.objects.all()
         error_import = []
@@ -212,4 +218,4 @@ def import_promo(request):
             context["interval"] = f"{obj[0].id}-{obj[-1].id}"
         return render(request, "confirm_products.html", context)
 
-    return redirect("products")
+    return redirect("promo")
