@@ -9,4 +9,5 @@ urlpatterns = [
     path('products/import_products/', import_products, name="import_products"),
     path('products/export_products/', export_products, name="export_products"),
     path('products/confirm_products/', confirm_products, name="confirm_products"),
+    path('promo/', promo, name="promo"),
 ]

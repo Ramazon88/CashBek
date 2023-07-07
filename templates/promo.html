@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Список промо</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item active">Список промо</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Список промо</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="btn-group">
+                    <a class="btn btn-info" data-toggle="modal" data-target="#import"><i class="fa-solid fa-plus"></i>Создать промо</a>
+                    <form action="">
+                          <div class="input-group">
+                              <input type="search" class="form-control" name="q" style="margin-left: 5px;" placeholder="Поиск">
+                              <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default">
+                                      <i class="fa fa-search"></i>
+                                  </button>
+                              </div>
+                          </div>
+                    </form>
+                </div>
+                <br><br>
+<!--                <button type="button" class="btn btn-info">Общий: <strong>{{ all.count }}</strong></button>-->
+<!--                <button type="button" class="btn btn-success">Актив: <strong>{{ active.count }}</strong></button>-->
+<!--                <button type="button" class="btn btn-danger">Не Актив: <strong>{{ no_active.count }}</strong></button>-->
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Название акции</th>
+                      <th>Дата Добавлена</th>
+                      <th>Дата начала акции</th>
+                      <th>Дата окончания акции</th>
+                      <th>Бюджет</th>
+                      <th>Количество товаров</th>
+                      <th>Статус</th>
+                      <th>Скачать список товаров</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ob in obj %}
+                    <tr>
+                      <td>{{ obj.name }}</td>
+                      <td>{{ obj.create_at | date:'Y-m-d' }}</td>
+                      <td>{{ obj.start | date:'Y-m-d' }}</td>
+                      <td>{{ obj.end | date:'Y-m-d' }}</td>
+                      <td>{{ obj.budget }}</td>
+                      <td>{{ obj.products.all.count }}</td>
+                      {% if obj.status == "wait" %}
+                      <td style="color: yellow">Ожидает одобрения модератором CashBek</td>
+                      {% elif obj.status == "active" %}
+                      <td style="color: green">Активный</td>
+                      {% elif obj.status == "refused" %}
+                      <td style="color: red">Отклоненный</td>
+                      {% elif obj.status == "finish" %}
+                      <td style="color: red">Завершенный</td>
+                      {% endif %}
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Название акции</th>
+                    <th>Дата Добавлена</th>
+                    <th>Дата начала акции</th>
+                    <th>Дата окончания акции</th>
+                    <th>Бюджет</th>
+                    <th>Количество товаров</th>
+                    <th>Статус</th>
+                    <th>Скачать список товаров</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+<!--              <nav aria-label="Page navigation example">-->
+<!--                  <ul class="pagination justify-content-center">-->
+<!--                    {% if obj.has_previous %}-->
+<!--                    <li class="page-item"><a class="page-link" href="?page={{ objs.previous_page_number }}">Предыдущий</a></li>-->
+<!--                    {% else %}-->
+<!--                    <li class="page-item"><a class="page-link">Предыдущий</a></li>-->
+<!--                    {% endif %}-->
+<!--                    {% for i in objs.paginator.page_range %}-->
+<!--                    {% if i == objs.number %}-->
+<!--                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>-->
+<!--                    {% elif i >= objs.number|add:-3 and i <= objs.number|add:3 %}-->
+<!--                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>-->
+<!--                    {% endif %}-->
+<!--                    {% endfor %}-->
+
+<!--                    {% if objs.has_next %}-->
+<!--                    <li class="page-item"><a class="page-link" href="?page={{ objs.next_page_number }}">Следующий</a></li>-->
+<!--                    {% else %}-->
+<!--                    <li class="page-item"><a class="page-link">Следующий</a></li>-->
+<!--                    {% endif %}-->
+<!--                  </ul>-->
+<!--                </nav>-->
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.modal -->
+  <div class="modal fade" id="import">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Добавить Промо</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'import_products' %}" enctype="multipart/form-data" method="post">{% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Название акции</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Дата начала акции</label>
+            <input type="date" class="form-control" name="start_promo" required>
+          </div>
+          <div class="form-group">
+            <label>Дата окончания акции</label>
+            <input type="date" class="form-control" name="end_promo" required>
+          </div>
+          <div class="form-group">
+            <label>Промо бюджет</label>
+            <input type="number" class="form-control" name="budjet" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputFile">Список товаров участвующих в акции .xlsx<a href="{% url 'export_example' %}" class="btn btn-outline-primary">
+            <i class="fa-solid fa-file-import"></i>
+            Example
+          </a></label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="exampleInputFile" required>
+                <label class="custom-file-label" for="exampleInputFile">Выберите файл</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="submit" class="btn btn-primary">Сохранять</button>
+        </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- /.modal -->
+{% for message in messages %}
+{% if message.tags == "success" %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("SUCCESS", m, "success")
+</script>
+{% else %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("ERROR", m, "error")
+</script>
+{% endif %}
+{% endfor %}
+{% endblock %}

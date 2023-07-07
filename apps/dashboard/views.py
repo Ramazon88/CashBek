@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from openpyxl.reader.excel import load_workbook
 
+from apps.dashboard.filters import ProductFilter
 from apps.main.models import *
 from config.settings import BASE_DIR
 
@@ -44,6 +45,7 @@ def index(request):
 @user_passes_test(dashboard_access, login_url="signin")
 def products(request):
     products = Products.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
+    # f = ProductFilter(request.GET, queryset=Products.objects.all())
     alls = products
     active = products.filter(is_active=True)
     no_active = products.filter(is_active=False)
@@ -54,7 +56,7 @@ def products(request):
     page_number = request.GET.get('page')
     page_obj = pagination.get_page(page_number)
     context = {"products": True, "objs": page_obj, "all_products": products, "all": alls, "active": active,
-               "no_active": no_active}
+               "no_active": no_active, 'filter': f}
     return render(request, "products.html", context)
 
 
@@ -73,7 +75,7 @@ def import_products(request):
     file = request.FILES['file']
     filename = file.name
     if filename.split(".")[1] != "xlsx":
-        messages.error(request, "The file should be in .xlsx format")
+        messages.error(request, "Файл должен быть в формате .xlsx")
     else:
         products = Products.objects.all()
         error_import = []
@@ -153,7 +155,61 @@ def confirm_products(request):
         return redirect("products")
 
 
+@user_passes_test(dashboard_access, login_url="signin")
+def promo(request):
+    promos = Promo.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
+
+    context = {"promo": True, "obj": promos}
+    return render(request, "promo.html", context)
 
 
+@user_passes_test(dashboard_access, login_url="signin")
+def import_promo(request):
+    file = request.FILES['file']
+    filename = file.name
+    name = request.get("name")
+    start_promo = request.get("start_promo")
+    end_promo = request.get("end_promo")
+    budjet = request.get("budjet")
+    if filename.split(".")[1] != "xlsx":
+        messages.error(request, "Файл должен быть в формате .xlsx")
+    else:
+        products = Products.objects.all()
+        error_import = []
+        creator = []
+        imei = []
+        wb = load_workbook(file)
+        sheet = wb.active
+        for row in sheet.iter_rows(min_row=2, max_col=3):
+            data = {"model": "", "sku": "", "imei1": "", "reason": ""}
+            if row[0].value is None or row[1].value is None or row[2].value is None:
+                data["model"] = row[0].value
+                data["imei1"] = row[1].value
+                data["sku"] = row[2].value
+                data["reason"] = "Обязательные строки не заполняются"
+                error_import.append(data)
+                continue
+            elif products.filter(imei1=row[1].value):
+                data["model"] = row[0].value
+                data["imei1"] = row[1].value
+                data["sku"] = row[2].value
+                data["reason"] = "Этот продукт указан"
+                error_import.append(data)
+                continue
+            elif row[1].value in imei:
+                data["model"] = row[0].value
+                data["imei1"] = row[1].value
+                data["sku"] = row[2].value
+                data["reason"] = "Этот продукт указан"
+                error_import.append(data)
+                continue
+            creator.append(
+                BlackListProducts(model=row[0].value, imei1=row[1].value, sku=row[2].value, vendor=request.user.vendor))
+            imei.append(row[1].value)
+        context = {"products": True, "error": error_import, "correct": creator}
+        if creator:
+            obj = BlackListProducts.objects.bulk_create(creator)
+            context["interval"] = f"{obj[0].id}-{obj[-1].id}"
+        return render(request, "confirm_products.html", context)
 
-
+    return redirect("products")
