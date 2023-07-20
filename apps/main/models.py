@@ -1,16 +1,18 @@
 from apps.users.models import *
 
-WAIT, ACTIVE, REFUSED, FINISH = (
+WAIT, ACTIVE, REFUSED, PAUSE, FINISH = (
     "wait",
     "active",
     "refused",
+    "pause",
     "finish"
 )
 choice_promo = (
-    (WAIT, WAIT),
-    (ACTIVE, ACTIVE),
-    (REFUSED, REFUSED),
-    (FINISH, FINISH),
+    (WAIT, "Ожидает одобрения модератором CashBek"),
+    (ACTIVE, "Активный"),
+    (REFUSED, "Отклоненный"),
+    (PAUSE, "Пауза"),
+    (FINISH, "Завершенный"),
 )
 
 
@@ -38,11 +40,14 @@ class Promo(models.Model):
     end = models.DateField()
     budget = models.IntegerField()
     products = models.ManyToManyField(Products, related_name="promo")
-    status = models.CharField(choices=choice_promo, max_length=10)
+    status = models.CharField(choices=choice_promo, max_length=10, default=WAIT)
+    description = models.CharField(max_length=1024, default="")
+    who = models.CharField(max_length=1024, default="")
     price_procent = models.IntegerField()
 
 
 class TempPromo(models.Model):
+    vendor = models.ForeignKey(Vendor_account, on_delete=models.CASCADE)
     name = models.CharField(max_length=512)
     start = models.DateField()
     end = models.DateField()

@@ -157,6 +157,11 @@ class User(AbstractUser):
             return True
         return False
 
+    def is_manager(self):
+        if self.user_type in [MANAGER] and self.is_active:
+            return True
+        return False
+
     def __str__(self):
         return self.get_full_name() or self.get_username()
 

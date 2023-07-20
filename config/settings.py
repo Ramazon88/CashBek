@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_filters',
     'apps.users',
     'apps.api',
@@ -182,6 +183,7 @@ AUTH_USER_MODEL = 'users.User'
 
 SMS_URL = env.str('SMS_URL')
 SMS_TOKEN = env.str('SMS_TOKEN')
+BOT_TOKEN = env.str('BOT_TOKEN')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)

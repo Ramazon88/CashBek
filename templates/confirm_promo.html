@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block content %}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -6,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Подтверждение новых продуктов</h1>
+            <h1>Подтверждение новых промо</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,6 +25,16 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
+              <div class="card-body">
+                <h4>Промо-имена:</h4> <h5><i>{{ promos.name }}</i></h5>
+                <h4>Время начала:</h4> <h5><i>{{ promos.start | date:'Y-m-d' }}</i></h5>
+                <h4>Время окончания:</h4> <h5><i>{{ promos.start | date:'Y-m-d' }}</i></h5>
+                <h4>Буджет:</h4> <h5><i>{{ promos.budget | intcomma }} Сум{% if old_budget %} (Данный бюджет равнялся общей сумме кэшбэка товара) {% endif %}</i></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
               {% if error %}
               <div class="card-header">
                 <h3 class="card-title">Товары введены ошибочно</h3>
@@ -36,7 +47,7 @@
                     <th>#</th>
                     <th>Модел</th>
                     <th>IMEI</th>
-                    <th>SKU</th>
+                    <th>СУММА</th>
                     <th>ПРИЧИНА</th>
                   </tr>
                   </thead>
@@ -46,7 +57,7 @@
                     <th>{{ forloop.counter }}</th>
                     <td>{{ i.model }}</td>
                     <td>{{ i.imei1 }}</td>
-                    <td>{{ i.sku }}</td>
+                    <td>{{ i.amount | intcomma}}</td>
                     <td>{{ i.reason }}</td>
                   </tr>
                   {% endfor %}
@@ -56,14 +67,14 @@
                     <th>#</th>
                     <th>Модел</th>
                     <th>IMEI</th>
-                    <th>SKU</th>
+                    <th>СУММА</th>
                     <th>ПРИЧИНА</th>
                   </tr>
                   </tfoot>
                 </table>
                 {% if not correct %}
                 <div class="card-footer">
-                  <a href="{% url 'products' %}" class="btn btn-danger float-right">Отмена</a>
+                  <a href="{% url 'promo' %}" class="btn btn-danger float-right">Отмена</a>
                 </div>
                 {% endif %}
               </div>
@@ -82,16 +93,16 @@
                     <th>#</th>
                     <th>Модел</th>
                     <th>IMEI</th>
-                    <th>SKU</th>
+                    <th>СУММА</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {% for i in correct %}
+                  {% for i in product %}
                   <tr>
                     <th>{{ forloop.counter }}</th>
                     <td>{{ i.model }}</td>
                     <td>{{ i.imei1 }}</td>
-                    <td>{{ i.sku }}</td>
+                    <td>{{ i.price | intcomma}}</td>
                   </tr>
                   {% endfor %}
                   </tbody>
@@ -100,14 +111,14 @@
                     <th>#</th>
                     <th>Модел</th>
                     <th>IMEI</th>
-                    <th>SKU</th>
+                    <th>СУММА</th>
                   </tr>
                   </tfoot>
                 </table>
                 <br><br>
                 <div class="card-footer">
-                  <form action="{% url 'confirm_products' %}" method="post">{% csrf_token %}
-                    <input type="hidden" name="new_prs" value="{{ interval }}">
+                  <form action="{% url 'confirm_promo' %}" method="post">{% csrf_token %}
+                    <input type="hidden" name="promo" value="{{ promos.id }}">
                     <button type="submit" class="btn btn-info">Сохранять</button>
                     <a href="{% url 'products' %}" class="btn btn-danger float-right">Отмена</a>
                   </form>
@@ -127,6 +138,7 @@
     </section>
     <!-- /.content -->
   </div>
+
 {% for message in messages %}
 {% if message.tags == "success" %}
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

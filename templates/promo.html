@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block content %}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -30,7 +31,9 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="btn-group">
+                    {% if not user.is_manager %}
                     <a class="btn btn-info" data-toggle="modal" data-target="#import"><i class="fa-solid fa-plus"></i>Создать промо</a>
+                    {% endif %}
                     <form action="">
                           <div class="input-group">
                               <input type="search" class="form-control" name="q" style="margin-left: 5px;" placeholder="Поиск">
@@ -41,6 +44,17 @@
                               </div>
                           </div>
                     </form>
+                    {% if user.is_manager %}
+                    <form method="get">
+                      <div style="margin-left: 10px;" class="form-control select2">
+                        <label>Статус</label>
+                        {{ filter.form.status }}
+                        <label style="margin-left: 10px;">Vendor</label>
+                        {{ filter.form.vendor__vendor }}
+                        <input type="submit" />
+                      </div>
+                    </form>
+                    {% endif %}
                 </div>
                 <br><br>
 <!--                <button type="button" class="btn btn-info">Общий: <strong>{{ all.count }}</strong></button>-->
@@ -49,45 +63,66 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Название акции</th>
                       <th>Дата Добавлена</th>
                       <th>Дата начала акции</th>
                       <th>Дата окончания акции</th>
                       <th>Бюджет</th>
                       <th>Количество товаров</th>
+                      {% if user.is_manager %}
+                      <th>Vendor</th>
+                      {% endif %}
                       <th>Статус</th>
                       <th>Скачать список товаров</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for ob in obj %}
-                    <tr>
-                      <td>{{ obj.name }}</td>
-                      <td>{{ obj.create_at | date:'Y-m-d' }}</td>
-                      <td>{{ obj.start | date:'Y-m-d' }}</td>
-                      <td>{{ obj.end | date:'Y-m-d' }}</td>
-                      <td>{{ obj.budget }}</td>
-                      <td>{{ obj.products.all.count }}</td>
-                      {% if obj.status == "wait" %}
-                      <td style="color: yellow">Ожидает одобрения модератором CashBek</td>
-                      {% elif obj.status == "active" %}
-                      <td style="color: green">Активный</td>
-                      {% elif obj.status == "refused" %}
-                      <td style="color: red">Отклоненный</td>
-                      {% elif obj.status == "finish" %}
-                      <td style="color: red">Завершенный</td>
+                    {% if user.is_manager and ob.status == "wait" %}<tr style="background-color: #C8C8C8;">{% else %}<tr>{% endif %}
+                      <th>{{ forloop.counter }}</th>
+                      <td>{{ ob.name }}</td>
+                      <td>{{ ob.create_at | date:'Y-m-d' }}</td>
+                      <td>{{ ob.start | date:'Y-m-d' }}</td>
+                      <td>{{ ob.end | date:'Y-m-d' }}</td>
+                      <td>{{ ob.budget | intcomma }}</td>
+                      <td>{{ ob.products.all.count }}</td>
+                      {% if user.is_manager %}
+                      <td>{{ ob.vendor.vendor }}</td>
                       {% endif %}
+                      {% if ob.status == "active" %}
+                      <td style="color: green"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-{{ob.pk}}">
+                      {{ ob.get_status_display }}
+                      </button></td>
+                      {% elif ob.status == "refused" %}
+                      <td style="color: red"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ob.pk}}">
+                      {{ ob.get_status_display }}
+                      </button></td>
+                      {% elif ob.status == "finish" %}
+                      <td style="color: red"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ob.pk}}">
+                      {{ ob.get_status_display }}
+                      </button></td>
+                      {% else %}
+                      <td style="color: #DAA520;"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-{{ob.pk}}">
+                      {{ ob.get_status_display }}
+                      </button></td>
+                      {% endif %}
+                      <td><a href="{% url 'export_promo' ob.pk %}">Скачать</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>
                   <tfoot>
                   <tr>
+                    <th>#</th>
                     <th>Название акции</th>
                     <th>Дата Добавлена</th>
                     <th>Дата начала акции</th>
                     <th>Дата окончания акции</th>
                     <th>Бюджет</th>
                     <th>Количество товаров</th>
+                    {% if user.is_manager %}
+                    <th>Vendor</th>
+                    {% endif %}
                     <th>Статус</th>
                     <th>Скачать список товаров</th>
                   </tr>
@@ -95,28 +130,28 @@
                 </table>
               </div>
 
-<!--              <nav aria-label="Page navigation example">-->
-<!--                  <ul class="pagination justify-content-center">-->
-<!--                    {% if obj.has_previous %}-->
-<!--                    <li class="page-item"><a class="page-link" href="?page={{ objs.previous_page_number }}">Предыдущий</a></li>-->
-<!--                    {% else %}-->
-<!--                    <li class="page-item"><a class="page-link">Предыдущий</a></li>-->
-<!--                    {% endif %}-->
-<!--                    {% for i in objs.paginator.page_range %}-->
-<!--                    {% if i == objs.number %}-->
-<!--                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>-->
-<!--                    {% elif i >= objs.number|add:-3 and i <= objs.number|add:3 %}-->
-<!--                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>-->
-<!--                    {% endif %}-->
-<!--                    {% endfor %}-->
+              <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {% if obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.previous_page_number }}">Предыдущий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Предыдущий</a></li>
+                    {% endif %}
+                    {% for i in obj.paginator.page_range %}
+                    {% if i == obj.number %}
+                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                    {% elif i >= obj.number|add:-3 and i <= obj.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
 
-<!--                    {% if objs.has_next %}-->
-<!--                    <li class="page-item"><a class="page-link" href="?page={{ objs.next_page_number }}">Следующий</a></li>-->
-<!--                    {% else %}-->
-<!--                    <li class="page-item"><a class="page-link">Следующий</a></li>-->
-<!--                    {% endif %}-->
-<!--                  </ul>-->
-<!--                </nav>-->
+                    {% if obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.next_page_number }}">Следующий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Следующий</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -130,6 +165,7 @@
     <!-- /.content -->
   </div>
 <!-- /.modal -->
+  {% if not user.is_manager %}
   <div class="modal fade" id="import">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -179,6 +215,133 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+  {% for ob in obj %}
+      <div class="modal fade" id="modal-{{ob.pk}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{ob.name}} - {{ob.vendor.vendor.name}}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% if ob.status == "active" %}
+            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
+            <div class="modal-body">
+              <label for="exampleInput">Комментарий</label>
+              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
+              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
+              <input type="hidden" class="form-control" name="who" value="{{ user.vendor.name }}({{ user.vendor.vendor.name }})">
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="pause" value="Пауза">
+              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
+            </div>
+            </form>
+            {% elif ob.status == "pause" %}
+            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
+            <div class="modal-body">
+              <label for="exampleInput">Комментарий</label>
+              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
+              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
+              <input type="hidden" class="form-control" name="who" value="{{ user.vendor.name }}({{ user.vendor.vendor.name }})">
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="continue" value="Продолжать">
+              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
+            </div>
+            </form>
+            {% else %}
+            <div class="modal-body">
+              <h5>Статус:</h5>
+              <p>{{ ob.get_status_display }}</p><br>
+              <h5>Комментарий:</h5>
+              <p>{{ ob.description }}</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          {% endif %}
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  {% endfor %}
+  {% else %}
+  {% for ob in obj %}
+      <div class="modal fade" id="modal-{{ob.pk}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{ob.name}} - {{ob.vendor.vendor.name}}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% if ob.status == "wait" %}
+            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
+            <div class="modal-body">
+              <label for="exampleInput">Комментарий</label>
+              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
+              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
+              <input type="hidden" class="form-control" name="who" value="{{ user.manager.name }}({{ Cashbek }})">
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="confirm" value="Подтверждение">
+              <input type="submit" class="btn btn-danger" name="refuse" value="Отказ">
+            </div>
+            </form>
+            {% elif ob.status == "active" %}
+            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
+            <div class="modal-body">
+              <label for="exampleInput">Комментарий</label>
+              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
+              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
+              <input type="hidden" class="form-control" name="who" value="{{ user.manager.name }}({{ Cashbek }})">
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="pause" value="Пауза">
+              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
+            </div>
+            </form>
+            {% elif ob.status == "pause" %}
+            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
+            <div class="modal-body">
+              <label for="exampleInput">Комментарий</label>
+              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
+              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
+              <input type="hidden" class="form-control" name="who" value="{{ user.manager.name }}({{ Cashbek }})">
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="continue" value="Продолжать">
+              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
+            </div>
+            </form>
+            {% else %}
+            <div class="modal-body">
+              <h5>Статус:</h5>
+              <p>{{ ob.get_status_display }}</p><br>
+              <h5>Комментарий:</h5>
+              <p>{{ ob.description }}</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          {% endif %}
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  {% endfor %}
+  {% endif %}
+
 <!-- /.modal -->
 {% for message in messages %}
 {% if message.tags == "success" %}
