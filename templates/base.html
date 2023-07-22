@@ -115,7 +115,7 @@
           <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ user.vendor.name }}</a>
+          <a href="#" class="d-block">{% if user.is_manager %}{{ user.manager.name }}{% else %}{{ user.vendor.name }}{% endif %}</a>
         </div>
       </div>
 
