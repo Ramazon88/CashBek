@@ -285,7 +285,7 @@ def confirm_promo(request):
 @user_passes_test(dashboard_access, login_url="signin")
 def export_promo(request, pk):
     promo = Promo.objects.get(pk=pk)
-    if not request.user.is_manager and promo.vendor != request.user.vendor:
+    if not request.user.is_manager() and promo.vendor != request.user.vendor:
         return HttpResponseNotFound()
     file_location = BASE_DIR / 'file/example_romo_products.xlsx'
     file_send = BASE_DIR / f'file/{promo.vendor.vendor}_{promo.name}.xlsx'
@@ -311,7 +311,7 @@ def export_promo(request, pk):
     with open(file_send, 'rb') as f:
         file_data = f.read()
     response = HttpResponse(file_data, content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="{request.user.vendor.vendor}_{promo.name}.xlsx"'
+    response['Content-Disposition'] = f'attachment; filename="{promo.vendor.vendor.name}_{promo.name}.xlsx"'
     os.remove(file_send)
     return response
 

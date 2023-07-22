@@ -225,35 +225,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            {% if ob.status == "active" %}
-            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
-            <div class="modal-body">
-              <label for="exampleInput">Комментарий</label>
-              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
-              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
-              <input type="hidden" class="form-control" name="who" value="{{ user.vendor.name }}({{ user.vendor.vendor.name }})">
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <input type="submit" class="btn btn-primary" name="pause" value="Пауза">
-              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
-            </div>
-            </form>
-            {% elif ob.status == "pause" %}
-            <form action="{% url 'confirm_status' %}" method="post">{% csrf_token %}
-            <div class="modal-body">
-              <label for="exampleInput">Комментарий</label>
-              <input type="text" class="form-control" id="exampleInput" name="comment" maxlength="1024" required>
-              <input type="hidden" class="form-control" name="promo" value="{{ ob.pk }}">
-              <input type="hidden" class="form-control" name="who" value="{{ user.vendor.name }}({{ user.vendor.vendor.name }})">
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <input type="submit" class="btn btn-primary" name="continue" value="Продолжать">
-              <input type="submit" class="btn btn-danger" name="finish" value="Завершить">
-            </div>
-            </form>
-            {% else %}
             <div class="modal-body">
               <h5>Статус:</h5>
               <p>{{ ob.get_status_display }}</p><br>
@@ -263,7 +234,6 @@
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-          {% endif %}
           </div>
           <!-- /.modal-content -->
         </div>
