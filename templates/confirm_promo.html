@@ -28,7 +28,7 @@
               <div class="card-body">
                 <h4>Промо-имена:</h4> <h5><i>{{ promos.name }}</i></h5>
                 <h4>Время начала:</h4> <h5><i>{{ promos.start | date:'Y-m-d' }}</i></h5>
-                <h4>Время окончания:</h4> <h5><i>{{ promos.start | date:'Y-m-d' }}</i></h5>
+                <h4>Время окончания:</h4> <h5><i>{{ promos.end | date:'Y-m-d' }}</i></h5>
                 <h4>Буджет:</h4> <h5><i>{{ promos.budget | intcomma }} Сум{% if old_budget %} (Данный бюджет равнялся общей сумме кэшбэка товара) {% endif %}</i></h5>
               </div>
             </div>

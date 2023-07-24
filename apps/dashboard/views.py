@@ -192,7 +192,10 @@ def promo(request):
 
 @user_passes_test(dashboard_access, login_url="signin")
 def import_promo(request):
-    file = request.FILES['file']
+    try:
+        file = request.FILES['file']
+    except:
+        return redirect("promo")
     filename = file.name
     name = request.POST.get("name")
     now = datetime.now().date()
@@ -201,7 +204,7 @@ def import_promo(request):
     budget = request.POST.get("budjet")
     if filename.split(".")[1] != "xlsx":
         messages.error(request, "Файл должен быть в формате .xlsx")
-    elif end_promo <= start_promo < now:
+    elif end_promo <= start_promo or start_promo < now:
         messages.error(request, "Дата начала должна быть меньше даты окончания, а дата начала должна быть больше "
                                 "текущей даты.")
     else:
@@ -297,11 +300,11 @@ def export_promo(request, pk):
     sheet["C4"].value = promo.end.strftime("%d-%m-%Y")
     sheet["C5"].value = promo.budget
     for i_row, user_data in enumerate(promo.products.annotate(price=Subquery(
-                PriceProduct.objects.filter(
-                    promo=promo,
-                    product_id=OuterRef('pk')
-                ).values('price')[:1]
-            )), start=8):
+            PriceProduct.objects.filter(
+                promo=promo,
+                product_id=OuterRef('pk')
+            ).values('price')[:1]
+    )), start=8):
         sheet.cell(row=i_row, column=1, value=user_data.model)
         sheet.cell(row=i_row, column=2, value=user_data.imei1)
         sheet.cell(row=i_row, column=3, value=user_data.sku)
