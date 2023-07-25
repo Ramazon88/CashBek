@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.dashboard',
     'apps.main',
+    'apps.sellerbot',
     'simple_history',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist'
