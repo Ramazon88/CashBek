@@ -9,9 +9,9 @@ bot: Bot = Bot(token=BOT_TOKEN)
 
 def ready():
     pass
-    hostname = f'https://ramazon88.jprq.live/bot/'
-    print(f'setting MASTER webhook at {hostname}')
-    bot.set_webhook(hostname)
+    # hostname = f'https://ramazon88.jprq.live/bot/'
+    # print(f'setting MASTER webhook at {hostname}')
+    # bot.set_webhook(hostname)
 
 
 dispatcher: Dispatcher = Dispatcher(bot, None)

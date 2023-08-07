@@ -63,7 +63,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
@@ -218,7 +218,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "CashBek Ltd",
 
     # List of model admins to search from the search bar, search bar omitted if excluded
-    # If you want to use a single search field you dont need to use a list, you can use a simple string
+    # If you want to use a single search field you don`t need to use a list, you can use a simple string
     "search_model": [],
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user

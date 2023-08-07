@@ -8,3 +8,4 @@ class MainConfig(AppConfig):
     def ready(self):
         from apps.sellerbot.dispatcher import ready as bot
         bot()
+

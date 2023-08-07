@@ -17,7 +17,7 @@ class MyID(BasePermission):
     def has_permission(self, request, view):
         return bool(
             request.user and request.user.is_authenticated and request.user.user_type == "user" and request.user.auth_status in [
-                'half_done', 'done'])
+                'half_done', 'done'] and request.user.is_active)
 
 
 class Password(BasePermission):
@@ -26,8 +26,7 @@ class Password(BasePermission):
 
     def has_permission(self, request, view):
         return bool(
-            request.user and request.user.is_authenticated and request.user.user_type == "user" and request.user.auth_status in [
-                'code_verified', 'half_done', 'done'])
+            request.user and request.user.is_authenticated and request.user.user_type == "user" and request.user.auth_status in ['half_done', 'done'])
 
 
 class CustomIsAuthenticated(IsAuthenticated):

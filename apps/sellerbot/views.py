@@ -1,12 +1,12 @@
 import json
 
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from telegram import Update
 
 from apps.sellerbot.dispatcher import bot, dispatcher
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 
 @method_decorator(csrf_exempt, 'dispatch')
