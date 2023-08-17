@@ -16,7 +16,6 @@ class BotView(View):
     def post(self, request, *args, **kwargs):
         try:
             body = request.body
-            print(request.body)
             data = json.loads(body)
             update: Update = Update.de_json(data, bot)
             dispatcher.process_update(update)

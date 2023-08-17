@@ -1,7 +1,7 @@
 from telegram import Bot
 from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
 
-from apps.sellerbot.main import start_handler
+from apps.sellerbot.main import *
 from config.settings import BOT_TOKEN
 
 bot: Bot = Bot(token=BOT_TOKEN)
@@ -16,5 +16,5 @@ def ready():
 
 dispatcher: Dispatcher = Dispatcher(bot, None)
 
-dispatcher.add_handler(CommandHandler('start', start_handler))
-dispatcher.add_handler(MessageHandler(Filters.text("asd"), start_handler))
+dispatcher.add_handler(CommandHandler(command='start', filters=Filters.chat_type.private, callback=start_handler))
+dispatcher.add_handler(MessageHandler(filters=Filters.text & Filters.chat_type.private, callback=core))
