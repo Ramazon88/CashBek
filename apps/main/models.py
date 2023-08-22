@@ -65,3 +65,16 @@ class TempPriceProduct(models.Model):
     promo = models.ForeignKey(TempPromo, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     price = models.IntegerField()
+
+
+class QR_code(models.Model):
+    qr_id = models.UUIDField(default=uuid.uuid4())
+    expiry_date = models.DateTimeField(null=True)
+    is_used = models.BooleanField(default=False)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    message_id = models.CharField(max_length=100, null=True)
+    chat_id = models.CharField(max_length=100, null=True)
+
+    def save(self, *args, **kwargs):
+        self.expiry_date = timezone.now() + timedelta(minutes=2)
+        super(QR_code, self).save(*args, **kwargs)
