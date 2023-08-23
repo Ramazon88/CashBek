@@ -1,3 +1,6 @@
+import datetime
+
+import requests
 from django.contrib.auth.models import update_last_login
 from django.db.models import Q
 from django.utils import timezone
@@ -9,6 +12,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 from apps.api.exceptions import CustomError
 from apps.api.utilty import check_phone, send_sms
 from apps.users.models import User, NEW, UserConfirmation, HALF, USER, SimpleUsers, DONE
+from config.settings import CLIENT_ID, CLIENT_SECRET, MY_ID_URL, error_bot
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -79,44 +83,54 @@ class VerifySerializer(serializers.Serializer):
 
 
 class CreateSimpleUserSerializers(serializers.ModelSerializer):
+    code = serializers.CharField(required=True)
     class Meta:
         model = SimpleUsers
         fields = "__all__"
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'middle_name': {'required': True},
-            'passport_number': {'required': True},
-            'pinfl': {'required': True},
-            'birth_date': {'required': True},
-            'inn': {'required': True},
-            'gender': {'required': True},
-            'birth_place': {'required': True},
-            'address': {'required': True},
-        }
 
     def create(self, validated_data):
         user = self.context['request'].user
         if user.simple_user:
             raise CustomError({"code": "116", "message": "Already registered with MyID"})
-        obj = super().create(validated_data)
-        user.simple_user = obj
-        user.auth_status = DONE
-        user.save()
-        return obj
+        body = {
+            "grant_type": "authorization_code",
+            "code": validated_data["code"],
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET
+        }
+        response_access = requests.post(url=MY_ID_URL + "/api/v1/oauth2/access-token", data=body)
+        if response_access.status_code == 200:
+            header = {
+                "Authorization": f"Bearer {response_access.json()['access_token']}"
+            }
+            response_info = requests.get(url=MY_ID_URL + "/api/v1/users/me", headers=header)
+            if response_info.status_code == 200:
+                info = response_info.json()
+                adress = response_info.json()["profile"]["address"]
+                if SimpleUsers.objects.filter(pinfl=info["profile"]["common_data"]["pinfl"]).exists():
+                    raise CustomError({"code": "113", "message": "This PINFL user is already registered"})
+                data = {'first_name': info["profile"]["common_data"]["first_name"],
+                        'last_name': info["profile"]["common_data"]["last_name"],
+                        'middle_name': info["profile"]["common_data"]["middle_name"],
+                        'passport_number': info["profile"]["doc_data"]["pass_data"],
+                        'pinfl': info["profile"]["common_data"]["pinfl"],
+                        'birth_date': datetime.datetime.strptime(info["profile"]["common_data"]["birth_date"], "%d.%m.%Y").date(),
+                        'gender': "M" if info["profile"]["common_data"]["gender"] == "1" else "F",
+                        'birth_place': info["profile"]["common_data"]["birth_place"],
+                        'address': f'{adress["permanent_registration"]["region"]} {adress["permanent_registration"]["district"]} {adress["permanent_address"]}' if adress[
+                            "permanent_address"] else f'{adress["temporary_registration"]["region"]} {adress["temporary_registration"]["district"]} {adress["temporary_address"]}' if
+                        adress["temporary_address"] else "",
+                        }
+                obj = super().create(data)
+                user.simple_user = obj
+                user.auth_status = DONE
+                user.save()
+                return obj
+            else:
+                raise CustomError({"code": "118", "message": "My ID error"})
+        else:
+            raise CustomError({"code": "118", "message": "My ID error"})
 
-    def validate_pinfl(self, value):
-        obj = SimpleUsers.objects.filter(pinfl=value)
-        if obj:
-            raise CustomError({"code": "113", "message": "This PINFL user is already registered"})
-        elif not str(value).isnumeric() or len(value) != 14:
-            raise CustomError({"code": "114", "message": "pinfl line must be filled with 14 numbers"})
-        return value
-
-    def validate_gender(self, value):
-        if value != "M" and value != "F":
-            raise CustomError({"code": "115", "message": "Enter the gender string as 'M' - male or 'F' - female"})
-        return value
 
     def to_representation(self, instance):
         data = {
@@ -127,7 +141,6 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
             'passport_number': instance.passport_number,
             'pinfl': instance.pinfl,
             'birth_date': instance.birth_date,
-            'inn': instance.inn,
             'gender': instance.gender,
             'birth_place': instance.birth_place,
             'address': instance.address,
@@ -148,7 +161,6 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
 
 class LogoutSerializer(serializers.Serializer):
     refresh = serializers.CharField()
-
 
 # class ChangePasswordSerializer(serializers.Serializer):
 #     password = serializers.CharField(write_only=True, required=True, error_messages={

@@ -117,7 +117,6 @@ class GetUserInfoView(APIView):
                 'passport_number': user.simple_user.passport_number,
                 'pinfl': user.simple_user.pinfl,
                 'birth_date': user.simple_user.birth_date,
-                'inn': user.simple_user.inn,
                 'gender': user.simple_user.gender,
                 'birth_place': user.simple_user.birth_place,
                 'address': user.simple_user.address,

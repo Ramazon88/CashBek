@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 from environs import Env
+from telegram import Bot
+
 env = Env()
 env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,7 +59,7 @@ REST_FRAMEWORK = {
     ],
     'EXCEPTION_HANDLER': 'apps.api.exceptions.custom_exception_handler',
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
-    'DATE_INPUT_FORMATS': ['%d-%m-%Y'],
+    'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
     'DATE_FORMAT': '%d-%m-%Y',
 }
 
@@ -185,6 +187,11 @@ AUTH_USER_MODEL = 'users.User'
 SMS_URL = env.str('SMS_URL')
 SMS_TOKEN = env.str('SMS_TOKEN')
 BOT_TOKEN = env.str('BOT_TOKEN')
+CLIENT_ID = env.str('CLIENT_ID')
+CLIENT_SECRET = env.str('CLIENT_SECRET')
+MY_ID_URL = env.str('MY_ID_URL')
+ERROR_BOT = env.str('ERROR_BOT')
+error_bot = Bot(token=ERROR_BOT)
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)

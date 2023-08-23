@@ -78,3 +78,41 @@ class QR_code(models.Model):
     def save(self, *args, **kwargs):
         self.expiry_date = timezone.now() + timedelta(minutes=2)
         super(QR_code, self).save(*args, **kwargs)
+
+
+class IncomeCashbek(models.Model):
+    create_at = models.DateTimeField(auto_now_add=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    active = models.BooleanField(default=True)
+
+
+class ExpenseCashbek(models.Model):
+    create_at = models.DateTimeField(auto_now_add=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    active = models.BooleanField(default=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
