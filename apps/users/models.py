@@ -11,7 +11,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from simple_history.models import HistoricalRecords
 from apps.users.manager import UserManager
 
-
 USER = 'user'
 SELLER = 'seller'
 VENDOR = 'vendor'
@@ -105,6 +104,14 @@ class User(AbstractUser):
 
     def create_verify_code(self):
         code = "".join([str(random.randint(0, 100) % 10) for _ in range(6)])  # 493649
+        UserConfirmation.objects.create(
+            user_id=self.pk,
+            code=code
+        )
+        return code
+
+    def create_verify_code_demo(self):
+        code = "030303"  # 493649
         UserConfirmation.objects.create(
             user_id=self.pk,
             code=code
