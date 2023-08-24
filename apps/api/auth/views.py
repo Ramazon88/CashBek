@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, UpdateAPIView, GenericAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken

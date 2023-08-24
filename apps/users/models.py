@@ -200,6 +200,7 @@ class Vendor(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название компании", unique=True)
     type_of_activity = models.CharField(max_length=100, verbose_name="Тип активности")
     price = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(10)])
+    logo = models.ImageField(upload_to='vendor/')
 
     def __str__(self):
         return self.name
