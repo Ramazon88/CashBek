@@ -163,7 +163,7 @@ def confirm_products(request):
         creator = []
         objs = BlackListProducts.objects.filter(pk__gte=prs[0], pk__lte=prs[1], vendor=request.user.vendor)
         for obj in objs:
-            creator.append(Products(model=obj.model, imei1=obj.imei1, sku=obj.sku, vendor=request.user.vendor))
+            creator.append(Products(model=obj.model, imei1=obj.imei1, sku=obj.sku, vendor=request.user.vendor, ven=request.user.vendor.vendor))
         Products.objects.bulk_create(creator)
         objs.delete()
         messages.success(request, "Товары успешно добавлены")

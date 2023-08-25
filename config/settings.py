@@ -195,6 +195,7 @@ CLIENT_ID = env.str('CLIENT_ID')
 CLIENT_SECRET = env.str('CLIENT_SECRET')
 MY_ID_URL = env.str('MY_ID_URL')
 ERROR_BOT = env.str('ERROR_BOT')
+DOMAIN = env.str('DOMAIN')
 error_bot = Bot(token=ERROR_BOT)
 
 JAZZMIN_SETTINGS = {

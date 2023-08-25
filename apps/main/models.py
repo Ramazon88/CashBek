@@ -15,8 +15,14 @@ choice_promo = (
     (FINISH, "Завершенный"),
 )
 
+choice_cashbek = (
+    (1, "Начисление Кэшбэка"),
+    (2, "Cписание Кэшбэка"),
+)
+
 
 class Products(models.Model):
+    ven = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor_account, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True, verbose_name="Дата Добавлена")
     model = models.CharField(max_length=512, verbose_name="Модел")
@@ -33,6 +39,7 @@ class BlackListProducts(models.Model):
 
 
 class Promo(models.Model):
+    ven = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
     vendor = models.ForeignKey(Vendor_account, on_delete=models.CASCADE)
     name = models.CharField(max_length=512)
@@ -80,39 +87,31 @@ class QR_code(models.Model):
         super(QR_code, self).save(*args, **kwargs)
 
 
-class IncomeCashbek(models.Model):
-    create_at = models.DateTimeField(auto_now_add=True)
+class Cashbek(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
     amount = models.IntegerField()
     active = models.BooleanField(default=True)
+    types = models.IntegerField(choices=choice_cashbek)
 
-
-class ExpenseCashbek(models.Model):
-    create_at = models.DateTimeField(auto_now_add=True)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
-    amount = models.IntegerField()
-    active = models.BooleanField(default=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# class IncomeCashbek(models.Model):
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+#     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+#     user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+#     amount = models.IntegerField()
+#     active = models.BooleanField(default=True)
+#     types = models.IntegerField(default=1)
+#
+#
+# class ExpenseCashbek(models.Model):
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+#     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+#     user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+#     amount = models.IntegerField()
+#     active = models.BooleanField(default=True)
+#     types = models.IntegerField(default=2)
