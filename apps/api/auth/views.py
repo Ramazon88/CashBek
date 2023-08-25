@@ -11,8 +11,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.api.exceptions import CustomError
 from apps.api.permissions import UserPermission, MyID
-from apps.api.auth.serializers import SignUpSerializer, LogoutSerializer,\
-    CustomTokenRefreshSerializer,\
+from apps.api.auth.serializers import SignUpSerializer, LogoutSerializer, \
+    CustomTokenRefreshSerializer, \
     CreateSimpleUserSerializers, VerifySerializer
 from apps.users.models import User, DONE, HALF, USER, SimpleUsers
 
@@ -123,7 +123,6 @@ class GetUserInfoView(APIView):
             }
         return Response(data={"success": True, "auth_status": user.auth_status, "result": data})
 
-
 # class VerifyApiView(APIView):
 #     permission_classes = (Verify,)
 #
@@ -164,9 +163,6 @@ class GetUserInfoView(APIView):
 #         return self.request.user
 
 
-
-
-
 # class LoginView(TokenObtainPairView):
 #     serializer_class = LoginSerializer
 #
@@ -181,9 +177,6 @@ class GetUserInfoView(APIView):
 #         data.update(serializer.validated_data)
 #
 #         return Response(data, status=status.HTTP_200_OK)
-
-
-
 
 
 # class GetNewVerification(APIView):
@@ -266,9 +259,3 @@ class GetUserInfoView(APIView):
 #             raise CustomError(data)
 #         verifies.delete()
 #         return True
-
-
-
-
-
-
