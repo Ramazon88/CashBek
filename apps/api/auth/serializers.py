@@ -34,7 +34,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.filter(Q(phone=validated_data['phone']) & Q(user_type=USER))
         if user.exists():
-            if validated_data['phone'] == "998905555555":
+            if validated_data['phone'] in ["998905555555", "998922222222"]:
                 user.first().create_verify_code_demo()
                 user.first().save()
                 return user.first()
@@ -43,7 +43,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             user.first().save()
             return user.first()
         user = super(SignUpSerializer, self).create(validated_data)
-        if validated_data['phone'] == "998905555555":
+        if validated_data['phone'] in ["998905555555", "998922222222"]:
             user.create_verify_code_demo()
             user.save()
             return user

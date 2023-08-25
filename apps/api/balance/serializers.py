@@ -28,7 +28,7 @@ class GetCheckSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cashbek
-        fields = ["id", "created_at", "product", "seller", "vendor", "amount", "type"]
+        fields = ["id", "created_at", "product", "seller", "vendor", "amount", "types"]
 
 
 class GetProductSerializer(serializers.ModelSerializer):

@@ -189,7 +189,7 @@ class SimpleUsers(models.Model):
     address = models.CharField(max_length=100, null=True, blank=True, verbose_name="Адрес")
 
     def __str__(self):
-        return "User"
+        return f"{self.first_name} {self.last_name}"
 
     class Meta:
         verbose_name = "Обычные пользователи"
