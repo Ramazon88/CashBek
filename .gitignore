@@ -11,3 +11,4 @@ db.sqlite3
 
 /apps/main/migrations/
 /apps/sellerbot/migrations/
+data.json

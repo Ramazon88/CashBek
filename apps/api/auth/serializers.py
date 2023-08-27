@@ -15,6 +15,36 @@ from apps.users.models import User, NEW, UserConfirmation, HALF, USER, SimpleUse
 from config.settings import CLIENT_ID, CLIENT_SECRET, MY_ID_URL, error_bot
 
 
+class SetPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SimpleUsers
+        fields = ("photo",)
+        extra_kwargs = {
+            'photo': {'required': True},
+        }
+
+    def to_representation(self, instance):
+        data = {
+            'first_name': instance.first_name,
+            'last_name': instance.last_name,
+            'middle_name': instance.middle_name,
+            'phone': instance.simple_user.phone,
+            'photo': self.context['request'].build_absolute_uri(instance.photo.url),
+            'passport_number': instance.passport_number,
+            'pinfl': instance.pinfl,
+            'birth_date': instance.birth_date,
+            'nationality': instance.nationality,
+            'citizenship': instance.citizenship,
+            'doc_type': instance.doc_type,
+            'gender': instance.gender,
+            'birth_place': instance.birth_place,
+            'region': instance.region,
+            'district': instance.district,
+            'address': instance.address,
+        }
+        return {"success": True, "auth_status": DONE, "result": data}
+
+
 class SignUpSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(SignUpSerializer, self).__init__(*args, **kwargs)
@@ -76,6 +106,80 @@ class SignUpSerializer(serializers.ModelSerializer):
         return data
 
 
+class ChangePhoneUpSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super(ChangePhoneUpSerializer, self).__init__(*args, **kwargs)
+        self.fields['phone_number'] = serializers.CharField(required=True, source="phone", error_messages={
+            'required': 'phone_number is required'
+        })
+
+    class Meta:
+        model = User
+        fields = (
+            "auth_status",
+        )
+        extra_kwargs = {
+            'auth_status': {'read_only': True, 'required': False},
+        }
+
+    def create(self, validated_data):
+        print(validated_data)
+        user = User.objects.filter(Q(phone=validated_data['phone']))
+        print(user)
+        if user.exists():
+            data = {
+                "code": "103",
+                "message": _("This phone number is already being used")
+            }
+            raise CustomError(data)
+        else:
+            user = super(ChangePhoneUpSerializer, self).create(validated_data)
+            if validated_data['phone'] in ["998905555555", "998922222222"]:
+                user.create_verify_code_demo()
+                user.save()
+                return user
+            code = user.create_verify_code()
+            send_sms(user.phone, code)
+            user.save()
+            return user
+
+    def validate_phone_number(self, value):
+        check_phone(value)
+        query = Q(phone=value) & (
+                Q(auth_status=NEW) & Q(user_type=USER)
+        )
+        user = User.objects.filter(query)
+        if user.exists():
+            if UserConfirmation.objects.filter(user=user.first(), expiration_time__gte=timezone.now(),
+                                               is_confirmed=False).exists():
+                data = {
+                    "code": "102",
+                    "message": _("The previous verification code has not expired")
+                }
+                raise CustomError(data)
+            else:
+                user.first().delete()
+
+        return value
+
+    def to_representation(self, instance):
+        data = {'success': True}
+        return data
+
+
+class ChangeVerifySerializer(serializers.Serializer):
+    phone_number = serializers.CharField(write_only=True, required=True, error_messages={
+        'required': 'phone_number is required'
+    })
+    code = serializers.CharField(write_only=True, required=True, error_messages={
+        'required': 'code is required'
+    })
+
+    def validate_phone_number(self, phone):
+        check_phone(phone)
+        return phone
+
+
 class VerifySerializer(serializers.Serializer):
     phone_number = serializers.CharField(write_only=True, required=True, error_messages={
         'required': 'phone_number is required'
@@ -91,6 +195,7 @@ class VerifySerializer(serializers.Serializer):
 
 class CreateSimpleUserSerializers(serializers.ModelSerializer):
     code = serializers.CharField(required=True)
+
     class Meta:
         model = SimpleUsers
         fields = "__all__"
@@ -121,13 +226,23 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
                         'middle_name': info["profile"]["common_data"]["middle_name"],
                         'passport_number': info["profile"]["doc_data"]["pass_data"],
                         'pinfl': info["profile"]["common_data"]["pinfl"],
-                        'birth_date': datetime.datetime.strptime(info["profile"]["common_data"]["birth_date"], "%d.%m.%Y").date(),
+                        'birth_date': datetime.datetime.strptime(info["profile"]["common_data"]["birth_date"],
+                                                                 "%d.%m.%Y").date(),
                         'gender': "M" if info["profile"]["common_data"]["gender"] == "1" else "F",
-                        'birth_place': info["profile"]["common_data"]["birth_place"],
-                        'address': f'{adress["permanent_registration"]["region"]} {adress["permanent_registration"]["district"]} {adress["permanent_address"]}' if adress[
-                            "permanent_address"] else f'{adress["temporary_registration"]["region"]} {adress["temporary_registration"]["district"]} {adress["temporary_address"]}' if
-                        adress["temporary_address"] else "",
+                        'birth_place': info["profile"]["common_data"]["birth_place"] if info["profile"]["common_data"][
+                            "birth_place"] else info["profile"]["common_data"]["birth_country"],
+                        'nationality': info["profile"]["common_data"]["nationality"],
+                        'citizenship': info["profile"]["common_data"]["citizenship"],
+                        'doc_type': info["profile"]["common_data"]["doc_type"],
                         }
+                if adress["permanent_address"]:
+                    data["region"] = adress["permanent_registration"]["region"]
+                    data["district"] = adress["permanent_registration"]["district"]
+                    data["address"] = adress["permanent_registration"]["address"]
+                elif adress["temporary_address"]:
+                    data["region"] = adress["temporary_registration"]["region"]
+                    data["district"] = adress["temporary_registration"]["district"]
+                    data["address"] = adress["temporary_registration"]["address"]
                 obj = super().create(data)
                 user.simple_user = obj
                 user.auth_status = DONE
@@ -138,18 +253,23 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
         else:
             raise CustomError({"code": "118", "message": "My ID error"})
 
-
     def to_representation(self, instance):
         data = {
             'first_name': instance.first_name,
             'last_name': instance.last_name,
             'middle_name': instance.middle_name,
             'phone': instance.simple_user.phone,
+            'photo': None,
             'passport_number': instance.passport_number,
             'pinfl': instance.pinfl,
             'birth_date': instance.birth_date,
+            'nationality': instance.nationality,
+            'citizenship': instance.citizenship,
+            'doc_type': instance.doc_type,
             'gender': instance.gender,
             'birth_place': instance.birth_place,
+            'region': instance.region,
+            'district': instance.district,
             'address': instance.address,
         }
         return {"success": True, "auth_status": DONE, "result": data}

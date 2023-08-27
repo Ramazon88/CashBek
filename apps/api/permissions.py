@@ -1,6 +1,8 @@
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 
+from apps.users.models import USER, DONE, HALF
+
 
 class MyID(BasePermission):
     message = {'code': '106',
@@ -8,8 +10,8 @@ class MyID(BasePermission):
 
     def has_permission(self, request, view):
         return bool(
-            request.user and request.user.is_authenticated and request.user.user_type == "user" and request.user.auth_status in [
-                'half_done', 'done'] and request.user.is_active)
+            request.user and request.user.is_authenticated and request.user.user_type == USER and request.user.auth_status in [
+                HALF, DONE] and request.user.is_active)
 
 
 class CustomIsAuthenticated(IsAuthenticated):
@@ -23,5 +25,5 @@ class UserPermission(BasePermission):
 
     def has_permission(self, request, view):
         return bool(
-            request.user and request.user.is_authenticated and request.user.user_type == "user" and request.user.auth_status in [
-                'done'] and request.user.is_active)
+            request.user and request.user.is_authenticated and request.user.user_type == USER and request.user.auth_status in [
+                DONE] and request.user.is_active)

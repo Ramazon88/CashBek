@@ -181,12 +181,16 @@ class SimpleUsers(models.Model):
     pinfl = models.CharField(max_length=100, unique=True, null=True, blank=True, error_messages={
         'unique': _("A user with that pinfl already exists."),
     }, verbose_name="ПИНФЛ")
+    photo = models.ImageField(upload_to="user/", null=True, blank=True,)
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
-    inn = models.CharField(max_length=100, null=True, blank=True,
-                           verbose_name="Идентификационной номер налогоплательщика")
     gender = models.CharField(max_length=100, null=True, blank=True, verbose_name="Пол")
+    nationality = models.CharField(max_length=100, null=True, blank=True, verbose_name="Национальность")
+    citizenship = models.CharField(max_length=100, null=True, blank=True, verbose_name="Гражданство")
+    doc_type = models.CharField(max_length=512, null=True, blank=True, verbose_name="Тип документа")
     birth_place = models.CharField(max_length=100, null=True, blank=True, verbose_name="Место рождения")
-    address = models.CharField(max_length=100, null=True, blank=True, verbose_name="Адрес")
+    region = models.CharField(max_length=100, null=True, blank=True, verbose_name="Значение региона")
+    district = models.CharField(max_length=100, null=True, blank=True, verbose_name="Значение района (города)")
+    address = models.CharField(max_length=512, null=True, blank=True, verbose_name="Адрес")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -211,7 +215,8 @@ class Vendor(models.Model):
 
 
 class Seller(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Имя продавца")
+    name = models.CharField(max_length=100, verbose_name="Имя организация")
+    seller_name = models.CharField(max_length=100, verbose_name="Имя продавца")
     telegram_id = models.CharField(max_length=100, unique=True, verbose_name="Telegram ID")
 
     class Meta:

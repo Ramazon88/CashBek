@@ -104,7 +104,7 @@ def core(update: Update, context: CallbackContext):
                                                                  parse_mode="HTML")
                             qr_code.message_id = message["message_id"]
                             qr_code.chat_id = user_id
-                            qr_code.save()
+                            qr_code.save_edit()
                             SellerTemp.objects.filter(tg_id=user_id).update(step=0)
                             update.message.reply_html("Главный страница", reply_markup=main_buttons)
 
