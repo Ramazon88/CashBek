@@ -5,10 +5,5 @@ static
 /static/
 migrations
 db.sqlite3
-/apps/dashboard/migrations/
-
-/apps/api/migrations/
-
-/apps/main/migrations/
-/apps/sellerbot/migrations/
+**/migrations/*
 data.json

@@ -5,10 +5,11 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.api.balance.serializers import GetCheckSerializer, GetProductSerializer
+from apps.api.balance.serializers import GetCheckSerializer, GetProductSerializer, ListVendorSerializers
 from apps.api.balance.service import get_balance, get_all_balance
 from apps.api.permissions import UserPermission
 from apps.main.models import Cashbek, Products, ACTIVE
+from apps.users.models import Vendor
 
 
 class CustomListPagination(PageNumberPagination):
@@ -88,3 +89,16 @@ class GetProductsView(ListAPIView):
         res = {"success": True}
         res.update(data.data)
         return Response(res)
+
+
+class ListVendorView(ListAPIView):
+    queryset = Vendor.objects.all()
+    permission_classes = (UserPermission,)
+    serializer_class = ListVendorSerializers
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.status_code == 200:
+            response = Response(data={"success": True, "vendors": response.data})
+        else:
+            pass
+        return super().finalize_response(request, response, *args, **kwargs)

@@ -6,5 +6,6 @@ urlpatterns = [
     path('getCheck/', GetCheckView.as_view()),
     path('getAllBalance/', GetAllBalanceView.as_view()),
     path('getProducts/', GetProductsView.as_view()),
+    path('getListVendor/', ListVendorView.as_view()),
 ]
 

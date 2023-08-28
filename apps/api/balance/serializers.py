@@ -43,3 +43,9 @@ class GetProductSerializer(serializers.ModelSerializer):
         data.update({"amount": PriceProduct.objects.filter(promo__status=ACTIVE, product_id=data["id"]).first().price})
         data.update({"image": "https://w7.pngwing.com/pngs/378/624/png-transparent-iphone-14.png"})
         return data
+
+
+class ListVendorSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = ["id", "name", "logo"]
