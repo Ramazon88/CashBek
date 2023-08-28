@@ -3,7 +3,5 @@ venv
 .env
 static
 /static/
-migrations
 db.sqlite3
-**/migrations/*
 data.json
