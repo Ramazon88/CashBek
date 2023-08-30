@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from apps.api.balance.serializers import GetCheckSerializer, GetProductSerializer, ListVendorSerializers
 from apps.api.balance.service import get_balance, get_all_balance
+from apps.api.filter import ProductFilter
 from apps.api.permissions import UserPermission
 from apps.main.models import Cashbek, Products, ACTIVE
 from apps.users.models import Vendor
@@ -79,10 +80,11 @@ class GetProductsView(ListAPIView):
     pagination_class = CustomListPagination
     filter_backends = (filters.SearchFilter, DjangoFilterBackend)
     search_fields = ('model',)
-    filterset_fields = ["ven", "id"]
+    filterset_class = ProductFilter
+    # filterset_fields = ["ven", "id"]
 
     def get_queryset(self):
-        return Products.objects.filter(promo__status=ACTIVE, is_active=True).order_by("-datetime")
+        return Products.objects.filter(promo__status=ACTIVE, is_active=True).distinct("model").order_by("model", "-datetime")
 
     def get_paginated_response(self, data):
         data = super().get_paginated_response(data)
@@ -98,7 +100,11 @@ class ListVendorView(ListAPIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         if response.status_code == 200:
-            response = Response(data={"success": True, "vendors": response.data})
+            product = Products.objects.filter(promo__status=ACTIVE, is_active=True).distinct("model")
+            vendors = response.data
+            for i in vendors:
+                i["product_type_count"] = product.filter(ven_id=i["id"]).count()
+            response = Response(data={"success": True, "vendors": vendors})
         else:
             pass
         return super().finalize_response(request, response, *args, **kwargs)
