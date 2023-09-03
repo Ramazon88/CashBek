@@ -6,6 +6,5 @@ class MainConfig(AppConfig):
     name = 'apps.main'
 
     def ready(self):
-        from apps.sellerbot.dispatcher import ready as bot
-        bot()
+        import apps.main.signals
 

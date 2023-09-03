@@ -55,7 +55,7 @@ def products(request):
         products = f.qs.order_by("-id")
         context.update({"filter": f})
     else:
-        products = Products.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
+        products = Products.objects.filter(ven=request.user.vendor.vendor).order_by("-id")
         alls = products
         active = products.filter(is_active=True)
         no_active = products.filter(is_active=False)
@@ -135,7 +135,7 @@ def export_products(request):
     if request.user.is_manager():
         products = Products.objects.all().order_by("-id")
     else:
-        products = Products.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
+        products = Products.objects.filter(ven=request.user.vendor.vendor).order_by("-id")
     file_location = BASE_DIR / 'file/products.xlsx'
     file_send = BASE_DIR / f'file/products_{timezone.now().strftime("%d-%m-%Y")}.xlsx'
     wb = load_workbook(file_location)
@@ -179,7 +179,7 @@ def promo(request):
         promos = f.qs.order_by("-id")
         context.update({"filter": f})
     else:
-        promos = Promo.objects.filter(vendor__vendor=request.user.vendor.vendor).order_by("-id")
+        promos = Promo.objects.filter(ven=request.user.vendor.vendor).order_by("-id")
     if request.GET.get('q'):
         word = request.GET.get('q')
         promos = promos.filter(name__icontains=word)
@@ -275,11 +275,16 @@ def confirm_promo(request):
     if request.POST.get("promo"):
         pid = request.POST.get("promo")
         new = TempPromo.objects.get(pk=pid)
-        obj = Promo.objects.create(name=new.name, start=new.start, end=new.end, budget=new.budget,
+        obj = Promo.objects.create(name=new.name, start=new.start, end=new.end, budget=new.budget, ven=request.user.vendor.vendor,
                                    vendor=request.user.vendor, price_procent=request.user.vendor.vendor.price)
         obj.products.set(new.products.all())
-        bulk_obj = [PriceProduct(promo=obj, product=i.product,
-                                 price=i.price) for i in TempPriceProduct.objects.filter(promo=new)]
+        bulk_obj = []
+        for i in TempPriceProduct.objects.filter(promo=new):
+            if obj.price_procent == 100:
+                amount = i.price
+            else:
+                amount = round(i.price * obj.price_procent / 100, ndigits=-3)
+            bulk_obj.append(PriceProduct(promo=obj, product=i.product, price=amount, all_price=i.price))
         PriceProduct.objects.bulk_create(bulk_obj)
         messages.success(request, "Промо успешно создано")
         return redirect("promo")

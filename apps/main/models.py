@@ -2,6 +2,7 @@ import json
 
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
+from apps.main.utility import get_random_token
 from apps.users.models import *
 
 WAIT, ACTIVE, REFUSED, PAUSE, FINISH = (
@@ -19,9 +20,14 @@ choice_promo = (
     (FINISH, "Завершенный"),
 )
 
+INCOME, EXPENSE = (
+    1,
+    2
+)
+
 choice_cashbek = (
-    (1, "Начисление Кэшбэка"),
-    (2, "Cписание Кэшбэка"),
+    (INCOME, "Начисление Кэшбэка"),
+    (EXPENSE, "Cписание Кэшбэка"),
 )
 
 
@@ -69,6 +75,7 @@ class TempPromo(models.Model):
 class PriceProduct(models.Model):
     promo = models.ForeignKey(Promo, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    all_price = models.IntegerField()
     price = models.IntegerField()
 
 
@@ -82,7 +89,9 @@ class QR_code(models.Model):
     qr_id = models.UUIDField(default=uuid.uuid4)
     expiry_date = models.DateTimeField(null=True)
     is_used = models.BooleanField(default=False)
+    types = models.IntegerField(choices=choice_cashbek)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     message_id = models.CharField(max_length=100, null=True)
     chat_id = models.CharField(max_length=100, null=True)
 
@@ -108,12 +117,72 @@ class QR_code(models.Model):
         super(QR_code, self).save(*args, **kwargs)
 
 
+class Token_confirm(models.Model):
+    token = models.CharField(max_length=16, default=get_random_token)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    expiry_date = models.DateTimeField(null=True)
+    is_used = models.BooleanField(default=False)
+    types = models.IntegerField(choices=choice_cashbek)
+
+    def delete_token(self):
+        schedule, created = IntervalSchedule.objects.get_or_create(
+            every=2,
+            period=IntervalSchedule.MINUTES,
+        )
+        PeriodicTask.objects.create(
+            interval=schedule,  # we created this above.
+            name=f"{self.token}_{self.pk}",  # simply describes this periodic task.
+            task='apps.main.task.delete_token',  # name of task.
+            args=json.dumps([self.pk]),
+            one_off=True
+        )
+
+    def save(self, *args, **kwargs):
+        self.expiry_date = timezone.now() + timedelta(minutes=2)
+        obj = super(Token_confirm, self).save(*args, **kwargs)
+        self.delete_token()
+        return obj
+
+
 class Cashbek(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    promo = models.ForeignKey(Promo, on_delete=models.CASCADE, null=True, blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    price = models.IntegerField()
     amount = models.IntegerField()
     active = models.BooleanField(default=True)
     types = models.IntegerField(choices=choice_cashbek)
+    description = models.CharField(default="", blank=True, max_length=1024)
+
+
+class Fribase(models.Model):
+    fr_id = models.CharField(max_length=256)
+    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+
+
+class Notifications(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    title_uz = models.CharField(max_length=256)
+    title_ru = models.CharField(max_length=256)
+    body_uz = models.TextField(max_length=1000)
+    body_ru = models.TextField(max_length=1000)
+    image = models.ImageField(upload_to="notifications/", blank=True, null=True)
+
+
+class ReadNot(models.Model):
+    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    notification = models.ForeignKey(Notifications, on_delete=models.CASCADE, related_name="read")
+    read = models.BooleanField(default=False)
+
+
+class FAQ(models.Model):
+    question_uz = models.CharField(max_length=256)
+    question_ru = models.CharField(max_length=256)
+    answer_uz = models.CharField(max_length=2400)
+    answer_ru = models.CharField(max_length=2400)

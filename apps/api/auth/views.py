@@ -14,6 +14,7 @@ from apps.api.permissions import UserPermission, MyID
 from apps.api.auth.serializers import SignUpSerializer, LogoutSerializer, \
     CustomTokenRefreshSerializer, \
     CreateSimpleUserSerializers, VerifySerializer, SetPhotoSerializer, ChangePhoneUpSerializer
+from apps.main.models import Fribase
 from apps.users.models import User, DONE, HALF, USER, SimpleUsers
 
 
@@ -109,7 +110,13 @@ class LogoutView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=self.request.data)
         serializer.is_valid(raise_exception=True)
+
         try:
+            try:
+                firebase_id = request.data['firebase_id']
+                Fribase.objects.filter(fr_id=firebase_id).delete()
+            except:
+                pass
             refresh_token = request.data['refresh']
             token = RefreshToken(refresh_token)
             token.blacklist()

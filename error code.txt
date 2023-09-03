@@ -1,0 +1,22 @@
+"100" - The phone number is incorrect
+"101" - The required lines are not filled
+"102" - The previous verification code has not expired
+"103" - This phone number is already being used
+"104" - Given token not valid for any token type
+"105" - Code is incorrect or expired
+"106" - No such user exists
+"107" - Given incorrect password
+"108" - Confirm_password is empty or did not match
+"109" - No active account found with the given credentials
+"110" - Authentication credentials were not provided
+"111" - Permission denied
+"112" - User not found
+"113" - This PINFL user is already registered
+"114" - pinfl line must be filled with 14 numbers
+"115" - Enter the gender string as "M" - male or "F" - female
+"116" - Already registered with MyID
+"117" - This refresh token is not available
+"118" - My ID error
+"119" - QR code is incorrect or expired
+"120" - Token is incorrect or expired
+"121" - The given amount is more than the real balance

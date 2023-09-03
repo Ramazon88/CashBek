@@ -287,7 +287,12 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
 
 
 class LogoutSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
+    refresh = serializers.CharField(required=True, error_messages={
+        'required': 'refresh is required'
+    })
+    firebase_id = serializers.CharField(required=True, error_messages={
+        'required': 'firebase_id is required'
+    })
 
 # class ChangePasswordSerializer(serializers.Serializer):
 #     password = serializers.CharField(write_only=True, required=True, error_messages={
