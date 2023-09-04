@@ -89,13 +89,13 @@ class CashbekView(GenericAPIView):
             success["expense"] = given_amount
 
         cashbek = PriceProduct.objects.filter(promo__status=ACTIVE, product=product)
-        incom = Cashbek.objects.filter(active=True,types=1)
+        incom = Cashbek.objects.filter(active=True, types=1)
         promo = product.promo.filter(start__lte=now, end__gte=now, status=ACTIVE)
         print(promo)
 
         if token.types == 1 or promo.exists():
             incom_sum = incom.filter(promo=promo.first()).aggregate(Sum('price'))['price__sum'] if \
-            incom.filter(promo=promo.first()).aggregate(Sum('price'))['price__sum'] else 0
+                incom.filter(promo=promo.first()).aggregate(Sum('price'))['price__sum'] else 0
             if promo.first().budget > incom_sum:
                 budget = promo.first().budget - incom_sum
                 if budget > cashbek.first().all_price:
@@ -105,14 +105,13 @@ class CashbekView(GenericAPIView):
                     amount = budget
                     description = "Последний остаток был приравнен к бюджету"
                 cashbek = Cashbek.objects.create(promo=promo.first(),
-                                       amount=round(amount * promo.first().price_procent / 100, ndigits=-3),
-                                       price=amount, vendor=vendor, user=user, seller=seller, product=product,
-                                       types=INCOME, description=description)
+                                                 amount=round(amount * promo.first().price_procent / 100, ndigits=-3),
+                                                 price=amount, vendor=vendor, user=user, seller=seller, product=product,
+                                                 types=INCOME, description=description)
                 success["income"] = int(cashbek.amount)
                 check_promo.delay(promo.first().pk)
         product.is_active = False
         product.save()
         delete_token.delay(token.pk)
-
 
         return Response(success, status=200)

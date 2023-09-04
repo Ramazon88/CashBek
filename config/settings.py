@@ -193,6 +193,8 @@ ERROR_BOT = env.str('ERROR_BOT')
 DOMAIN = env.str('DOMAIN')
 seller_bot = Bot(token=BOT_TOKEN)
 error_bot = Bot(token=ERROR_BOT)
+FIREBASE_KEY = env.str('FIREBASE_KEY')
+FIREBASE_URL = env.str('FIREBASE_URL')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
