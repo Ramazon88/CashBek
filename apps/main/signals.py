@@ -7,7 +7,7 @@ from apps.main.task import create_read, Notifications
 @receiver(post_save, sender=Notifications)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        create_read.delay(instance.pk)
+        create_read.apply_async((instance.pk,), countdown=3)
 
 
 

@@ -141,8 +141,7 @@ def core(update: Update, context: CallbackContext):
                                 binary_data = img_stream.getvalue()
                                 message = update.message.reply_photo(photo=InputFile(binary_data),
                                                                      caption="Тип <strong>Начисление Кэшбэка</strong>\n"
-                                                                             "Срок действия <strong>2 минуты</strong>\n"
-                                                                             f"{qr_code.qr_id}",
+                                                                             "Срок действия <strong>2 минуты</strong>\n",
                                                                      parse_mode="HTML")
                                 qr_code.message_id = message["message_id"]
                                 qr_code.chat_id = user_id
@@ -194,8 +193,7 @@ def core(update: Update, context: CallbackContext):
                             binary_data = img_stream.getvalue()
                             message = update.message.reply_photo(photo=InputFile(binary_data),
                                                                  caption="Тип <strong>Cписание Кэшбэка</strong>\n"
-                                                                 "Срок действия <strong>2 минуты</strong>\n"
-                                                                 f"{qr_code.qr_id}",
+                                                                 "Срок действия <strong>2 минуты</strong>\n",
                                                                  parse_mode="HTML")
                             qr_code.message_id = message["message_id"]
                             qr_code.chat_id = user_id

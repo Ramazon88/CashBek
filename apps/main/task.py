@@ -22,7 +22,6 @@ def edit_qr_message(chat_id, message_id, pk):
 
 @shared_task(bint=True)
 def create_read(not_id):
-    time.sleep(3)
     users = SimpleUsers.objects.all()
     notif = Notifications.objects.get(pk=int(not_id))
     read = []
@@ -46,6 +45,7 @@ def create_read(not_id):
     for i in firebase:
         body["to"] = i.fr_id
         requests.post(url=url, headers=header, json=body)
+
 
 @shared_task(bint=True)
 def edit_qr_done(chat_id, message_id, pk):
@@ -76,3 +76,21 @@ def check_promo(pk):
         promo.status = FINISH
         promo.description = "Автоматически закрыто из-за исчерпания бюджета."
         promo.save()
+
+
+@shared_task(bint=True)
+def cashbek_message(pk):
+    obj = Cashbek.objects.get(pk=pk)
+    if obj.types == 1:
+        text = f"<strong>🟢Клиент получил кэшбэк</strong>\n\n<strong>Модел: </strong>{obj.product.model}\n"
+        text += f"<strong>IMEI: </strong><code>{obj.product.imei1}</code>\n"
+        text += f"<strong>SKU: </strong>{obj.product.sku}\n"
+        text += "<strong>Сумма кэшбэка: </strong>" + "{:,}\n".format(obj.amount)
+        text += f"<strong>Клиент: </strong>{obj.user.first_name}\n"
+    else:
+        text = f"<strong>🔴Клиент использовал кэшбэк. Ваш счет пополнен</strong>\n\n<strong>Модел: </strong>{obj.product.model}\n"
+        text += f"<strong>IMEI: </strong><code>{obj.product.imei1}</code>\n"
+        text += f"<strong>SKU: </strong>{obj.product.sku}\n"
+        text += "<strong>Использованная сумма: </strong>" + "{:,}\n".format(obj.amount)
+        text += f"<strong>Клиент: </strong>{obj.user.first_name}\n"
+    seller_bot.send_message(chat_id=obj.seller.telegram_id, text=text, parse_mode="HTML")

@@ -5,7 +5,7 @@ from apps.api.permissions import UserPermission
 from apps.api.qr.serializers import GetTokenSerializer, CashbekSerializer
 from apps.api.qr.service import get_vendor_balance
 from apps.main.models import *
-from apps.main.task import edit_qr_done, delete_token, check_promo
+from apps.main.task import edit_qr_done, delete_token, check_promo, cashbek_message
 
 
 class TokenView(GenericAPIView):
@@ -84,14 +84,14 @@ class CashbekView(GenericAPIView):
                 return Response(
                     {"success": False, "code": "121", "message": "The given amount is more than the real balance"},
                     status=400)
-            Cashbek.objects.create(amount=given_amount, price=given_amount, vendor=vendor, user=user, seller=seller,
+            expen_cash = Cashbek.objects.create(amount=given_amount, price=given_amount, vendor=vendor, user=user, seller=seller,
                                    product=product, types=EXPENSE)
+            cashbek_message.apply_async((expen_cash.pk,), countdown=2)
             success["expense"] = given_amount
 
         cashbek = PriceProduct.objects.filter(promo__status=ACTIVE, product=product)
         incom = Cashbek.objects.filter(active=True, types=1)
         promo = product.promo.filter(start__lte=now, end__gte=now, status=ACTIVE)
-        print(promo)
 
         if token.types == 1 or promo.exists():
             incom_sum = incom.filter(promo=promo.first()).aggregate(Sum('price'))['price__sum'] if \
@@ -104,12 +104,13 @@ class CashbekView(GenericAPIView):
                 else:
                     amount = budget
                     description = "Последний остаток был приравнен к бюджету"
-                cashbek = Cashbek.objects.create(promo=promo.first(),
+                incom_cash = Cashbek.objects.create(promo=promo.first(),
                                                  amount=round(amount * promo.first().price_procent / 100, ndigits=-3),
                                                  price=amount, vendor=vendor, user=user, seller=seller, product=product,
                                                  types=INCOME, description=description)
-                success["income"] = int(cashbek.amount)
                 check_promo.delay(promo.first().pk)
+                cashbek_message.apply_async((incom_cash.pk,), countdown=2)
+                success["income"] = int(incom_cash.amount)
         product.is_active = False
         product.save()
         delete_token.delay(token.pk)

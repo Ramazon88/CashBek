@@ -14,9 +14,6 @@ def get_balance(user):
     alls = Cashbek.objects.filter(user=user, active=True)
     incom = alls.filter(user=user, types=1)
     expense = alls.filter(user=user, types=2)
-    # total_income = incom.aggregate(Sum('amount'))['amount__sum'] if incom.aggregate(Sum('amount'))['amount__sum'] else 0
-    # total_expense = expense.aggregate(Sum('amount'))['amount__sum'] if expense.aggregate(Sum('amount'))['amount__sum'] else 0
-    # data = {"total_income": total_income, "total_expense": total_expense}
     queryset_incom = incom.annotate(
         vendor_logo=Concat(
             Value(media_url),
@@ -24,7 +21,6 @@ def get_balance(user):
             output_field=models.CharField()
         )
     ).values('vendor__pk', 'vendor__name', 'vendor_logo').annotate(total=Sum('amount'))
-    print(queryset_incom)
     vendors = []
     for i in list(queryset_incom):
         total = 0
