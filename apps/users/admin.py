@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from apps.main.models import BlackListProducts
+from apps.main.task import set_manager_group
 from apps.users.form import CustomUniversalForm, CustomUserCreationForm, CustomUniversalFormForUser
 from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
@@ -32,7 +34,7 @@ class SellerAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.seller.user_type = SELLER
         obj.seller.auth_status = DONE
-        obj.seller.is_staff = True
+        obj.seller.is_staff = False
         super().save_model(request, obj, form, change)
 
     @admin.display(ordering='seller__phone', description='Телефон')
@@ -55,6 +57,7 @@ class SellerAdmin(admin.ModelAdmin):
         obj.manager.auth_status = DONE
         obj.manager.is_staff = True
         super().save_model(request, obj, form, change)
+        set_manager_group.apply_async((obj.manager.phone,), countdown=3)
 
     @admin.display(ordering='manager__phone', description='Телефон')
     def get_phone(self, obj):
@@ -74,7 +77,7 @@ class SellerAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.vendors.user_type = VENDOR
         obj.vendors.auth_status = DONE
-        obj.vendors.is_staff = True
+        obj.vendors.is_staff = False
         super().save_model(request, obj, form, change)
 
     @admin.display(ordering='vendors__phone', description='Телефон')

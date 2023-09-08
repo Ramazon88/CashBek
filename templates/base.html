@@ -59,6 +59,11 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Инфо</a>
       </li>
+      {% if user.is_manager %}
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/admin/users/" class="nav-link">USERS</a>
+      </li>
+      {% endif %}
     </ul>
 
     <!-- Right navbar links -->
