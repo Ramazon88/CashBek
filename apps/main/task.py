@@ -2,11 +2,12 @@ import time
 
 import requests
 from celery import shared_task
+from django.contrib.auth.models import Group
 from django.db.models import Sum
 
 from apps.main.admin import QR_code, Notifications, ReadNot
 from apps.main.models import Token_confirm, Promo, Cashbek, PriceProduct, FINISH, Fribase
-from apps.users.models import SimpleUsers
+from apps.users.models import SimpleUsers, User
 from config.settings import seller_bot, FIREBASE_KEY, FIREBASE_URL
 
 
@@ -94,3 +95,8 @@ def cashbek_message(pk):
         text += "<strong>Использованная сумма: </strong>" + "{:,}\n".format(obj.amount)
         text += f"<strong>Клиент: </strong>{obj.user.first_name}\n"
     seller_bot.send_message(chat_id=obj.seller.telegram_id, text=text, parse_mode="HTML")
+
+
+@shared_task(bint=True)
+def set_manager_group(phone):
+    User.objects.get(phone=phone).groups.add(Group.objects.get(name="Manager"))
