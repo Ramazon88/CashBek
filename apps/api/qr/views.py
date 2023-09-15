@@ -85,7 +85,7 @@ class CashbekView(GenericAPIView):
                     {"success": False, "code": "121", "message": "The given amount is more than the real balance"},
                     status=400)
             expen_cash = Cashbek.objects.create(amount=given_amount, price=given_amount, vendor=vendor, user=user, seller=seller,
-                                   product=product, types=EXPENSE)
+                                   product=product, types=EXPENSE, user_phone=self.request.user.phone)
             cashbek_message.apply_async((expen_cash.pk,), countdown=2)
             success["expense"] = given_amount
 
@@ -107,7 +107,7 @@ class CashbekView(GenericAPIView):
                 incom_cash = Cashbek.objects.create(promo=promo.first(),
                                                  amount=round(amount * promo.first().price_procent / 100, ndigits=-3),
                                                  price=amount, vendor=vendor, user=user, seller=seller, product=product,
-                                                 types=INCOME, description=description)
+                                                 types=INCOME, description=description, user_phone=self.request.user.phone)
                 check_promo.delay(promo.first().pk)
                 cashbek_message.apply_async((incom_cash.pk,), countdown=2)
                 success["income"] = int(incom_cash.amount)

@@ -153,11 +153,12 @@ class Cashbek(models.Model):
     promo = models.ForeignKey(Promo, on_delete=models.CASCADE, null=True, blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)
+    user = models.ForeignKey(SimpleUsers, on_delete=models.SET_NULL, null=True)
     price = models.IntegerField()
     amount = models.IntegerField()
     active = models.BooleanField(default=True)
     types = models.IntegerField(choices=choice_cashbek)
+    user_phone = models.CharField(blank=True, null=True, max_length=1024)
     description = models.CharField(default="", blank=True, max_length=1024)
 
 
