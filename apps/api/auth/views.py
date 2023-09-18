@@ -13,9 +13,11 @@ from apps.api.exceptions import CustomError
 from apps.api.permissions import UserPermission, MyID
 from apps.api.auth.serializers import SignUpSerializer, LogoutSerializer, \
     CustomTokenRefreshSerializer, \
-    CreateSimpleUserSerializers, VerifySerializer, SetPhotoSerializer, ChangePhoneUpSerializer
+    CreateSimpleUserSerializers, VerifySerializer, SetPhotoSerializer, ChangePhoneUpSerializer, \
+    ConfirmDeleteUserSerializer
+from apps.api.utilty import send_sms
 from apps.main.models import Fribase
-from apps.users.models import User, DONE, HALF, USER, SimpleUsers
+from apps.users.models import User, DONE, HALF, USER, SimpleUsers, UserConfirmation
 
 
 class CreateUserView(CreateAPIView):
@@ -164,7 +166,8 @@ class GetUserInfoView(APIView):
                 'last_name': user.simple_user.last_name,
                 'middle_name': user.simple_user.middle_name,
                 'phone': user.phone,
-                'photo': self.request.build_absolute_uri(user.simple_user.photo.url) if user.simple_user.photo else None,
+                'photo': self.request.build_absolute_uri(
+                    user.simple_user.photo.url) if user.simple_user.photo else None,
                 'passport_number': user.simple_user.passport_number,
                 'pinfl': user.simple_user.pinfl,
                 'birth_date': user.simple_user.birth_date,
@@ -188,6 +191,57 @@ class SetUserPhotoView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user.simple_user
+
+
+class GetDeleteVerify(APIView):
+    permission_classes = (UserPermission,)
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        if user.phone in ["998905555555", "998922222222"]:
+            user.create_verify_code_demo()
+            user.save()
+        else:
+            self.check_verify(user)
+            code = user.create_verify_code()
+            send_sms(user.phone, code)
+            user.save()
+        return Response({"success": True})
+    @staticmethod
+    def check_verify(user):
+        if UserConfirmation.objects.filter(user=user, expiration_time__gte=timezone.now(),
+                                           is_confirmed=False).exists():
+            data = {
+                "code": "102",
+                "message": "The previous verification code has not expired"
+            }
+            raise CustomError(data)
+        return True
+
+
+
+class ConfirmDeleteUserView(APIView):
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        serializer = ConfirmDeleteUserSerializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        code = self.request.data.get('code')
+        self.check_verify(self.request.user, code)
+        self.request.user.simple_user.delete()
+        return Response({"success": True})
+
+    @staticmethod
+    def check_verify(user, code):
+        verifies = user.verify_codes.filter(expiration_time__gte=timezone.now(), code=code, is_confirmed=False)
+        if not verifies.exists():
+            data = {
+                'code': '105',
+                'message': "Code is incorrect or expired"
+            }
+            raise CustomError(data)
+        verifies.delete()
+        return True
 
 # class VerifyApiView(APIView):
 #     permission_classes = (Verify,)

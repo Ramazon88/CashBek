@@ -15,6 +15,8 @@ urlpatterns = [
     path('setUserInfo/', CreateSimpleUserView.as_view(), name='Set MyID INFO'),
     path('getUserInfo/', GetUserInfoView.as_view(), name='Get MyID INFO'),
     path('setUserPhoto/', SetUserPhotoView.as_view()),
-    path('logout/', LogoutView.as_view(), name='Logout')
+    path('logout/', LogoutView.as_view(), name='Logout'),
+    path('getVerifyDeleteUser/', GetDeleteVerify.as_view()),
+    path('confirmDeleteUser/', ConfirmDeleteUserView.as_view()),
 ]
 

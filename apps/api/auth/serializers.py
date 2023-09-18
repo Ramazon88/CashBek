@@ -192,6 +192,12 @@ class VerifySerializer(serializers.Serializer):
         check_phone(phone)
         return phone
 
+class ConfirmDeleteUserSerializer(serializers.Serializer):
+    code = serializers.CharField(write_only=True, required=True, error_messages={
+        'required': 'code is required'
+    })
+
+
 
 class CreateSimpleUserSerializers(serializers.ModelSerializer):
     code = serializers.CharField(required=True)
@@ -222,26 +228,49 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
                 if SimpleUsers.objects.filter(pinfl=info["profile"]["common_data"]["pinfl"]).exists():
                     raise CustomError({"code": "113", "message": "This PINFL user is already registered"})
                 data = {'first_name': info["profile"]["common_data"]["first_name"],
+                        'first_name_en': info["profile"]["common_data"]["first_name_en"],
                         'last_name': info["profile"]["common_data"]["last_name"],
+                        'last_name_en': info["profile"]["common_data"]["last_name_en"],
                         'middle_name': info["profile"]["common_data"]["middle_name"],
                         'passport_number': info["profile"]["doc_data"]["pass_data"],
                         'pinfl': info["profile"]["common_data"]["pinfl"],
                         'birth_date': datetime.datetime.strptime(info["profile"]["common_data"]["birth_date"],
                                                                  "%d.%m.%Y").date(),
                         'gender': "M" if info["profile"]["common_data"]["gender"] == "1" else "F",
-                        'birth_place': info["profile"]["common_data"]["birth_place"] if info["profile"]["common_data"][
-                            "birth_place"] else info["profile"]["common_data"]["birth_country"],
+                        'birth_place': info["profile"]["common_data"]["birth_place"],
+                        'sdk_hash': info["profile"]["common_data"]["sdk_hash"],
+                        'birth_country': info["profile"]["common_data"]["birth_country"],
+                        'birth_country_id': info["profile"]["common_data"]["birth_country_id"],
+                        'birth_country_id_cbu': info["profile"]["common_data"]["birth_country_id_cbu"],
                         'nationality': info["profile"]["common_data"]["nationality"],
+                        'nationality_id': info["profile"]["common_data"]["nationality_id"],
+                        'nationality_id_cbu': info["profile"]["common_data"]["nationality_id_cbu"],
                         'citizenship': info["profile"]["common_data"]["citizenship"],
-                        'doc_type': info["profile"]["common_data"]["doc_type"],
+                        'citizenship_id': info["profile"]["common_data"]["citizenship_id"],
+                        'citizenship_id_cbu': info["profile"]["common_data"]["citizenship_id_cbu"],
+                        'doc_type': info["profile"]["doc_data"]["doc_type"],
+                        'doc_type_id': info["profile"]["doc_data"]["doc_type_id"],
+                        'doc_type_id_cbu': info["profile"]["doc_data"]["doc_type_id_cbu"],
+                        'doc_expiry_date': info["profile"]["doc_data"]["doc_type_id_cbu"],
+                        'doc_issued_by': info["profile"]["doc_data"]["issued_by"],
+                        'doc_issued_by_id': info["profile"]["doc_data"]["issued_by_id"],
+                        'doc_issued_date': info["profile"]["doc_data"]["issued_date"],
                         }
                 if adress["permanent_address"]:
                     data["region"] = adress["permanent_registration"]["region"]
+                    data["region_id"] = adress["permanent_registration"]["region_id"]
+                    data["region_id_cbu"] = adress["permanent_registration"]["region_id_cbu"]
                     data["district"] = adress["permanent_registration"]["district"]
+                    data["district_id"] = adress["permanent_registration"]["district_id"]
+                    data["district_id_cbu"] = adress["permanent_registration"]["district_id_cbu"]
                     data["address"] = adress["permanent_registration"]["address"]
                 elif adress["temporary_address"]:
                     data["region"] = adress["temporary_registration"]["region"]
+                    data["region_id"] = adress["temporary_registration"]["region_id"]
+                    data["region_id_cbu"] = adress["temporary_registration"]["region_id_cbu"]
                     data["district"] = adress["temporary_registration"]["district"]
+                    data["district_id"] = adress["temporary_registration"]["district_id"]
+                    data["district_id_cbu"] = adress["temporary_registration"]["district_id_cbu"]
                     data["address"] = adress["temporary_registration"]["address"]
                 obj = super().create(data)
                 user.simple_user = obj
