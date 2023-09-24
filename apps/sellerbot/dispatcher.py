@@ -9,7 +9,7 @@ bot: Bot = Bot(token=BOT_TOKEN)
 
 def ready():
     pass
-    # hostname = f'https://ramazon88.jprq.live/bot/'
+    # hostname = f'https://cashbek.omonatpay.uz/bot/'
     # print(f'setting MASTER webhook at {hostname}')
     # bot.set_webhook(hostname)
 

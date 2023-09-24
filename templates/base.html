@@ -156,27 +156,16 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            {% if cashbek %}
+            <a class="nav-link active">
+            {% else %}
+            <a href="{% url 'cashbek' %}" class="nav-link">
+            {% endif %}
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Подержанное Промо
-                <i class="fas fa-angle-left right"></i>
+                Cashbek
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                  <p>По магазинам</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa-solid fa-user"></i>
-                  <p>По клиентов</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item">
             {% if products %}

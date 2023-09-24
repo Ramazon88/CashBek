@@ -4,12 +4,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core.paginator import Paginator
-from django.db.models import Q, F, Subquery, OuterRef
+from django.db.models import Q, F, Subquery, OuterRef, Count, Sum
 from django.http import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from openpyxl.reader.excel import load_workbook
 
-from apps.dashboard.filters import ProductFilter, PromoFilter
+from apps.dashboard.filters import ProductFilter, PromoFilter, CashbekFilter
 from apps.main.models import *
 from config.settings import BASE_DIR
 
@@ -353,3 +353,48 @@ def confirm_status(request):
         promo.who = request.POST.get("who")
         promo.save()
     return redirect("promo")
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def cashbek(request):
+    context = {"cashbek": True}
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.all().order_by("-id")
+        f = CashbekFilter(request.GET, queryset=cashbek)
+        cashbek = f.qs.order_by("-id")
+        all_price = cashbek.filter(active=True).aggregate(all_price=Sum(F("price")))["all_price"]
+        incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+        excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+        context.update({"filter": f, "all_price": all_price, 'incom': incom, 'excom': excom})
+    else:
+        cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True).order_by("-id")
+        f = CashbekFilter(request.GET, queryset=cashbek)
+        cashbek = f.qs.order_by("-id")
+        all_price = cashbek.aggregate(all_price=Sum(F("price")))["all_price"]
+        incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+        excom = cashbek.filter(atypes=2).aggregate(all_price=Sum(F("price")))["all_price"]
+        context.update({"filter": f, "all_price": all_price, 'incom': incom, 'excom': excom})
+    if request.GET.get('start_date'):
+        context.update({"start_date": request.GET.get('start_date')})
+    if request.GET.get('end_date'):
+        context.update({"end_date": request.GET.get('end_date')})
+    if request.GET.get('q'):
+        word = request.GET.get('q')
+        cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
+            promo__name__icontains=word) | Q(user_phone__icontains=word) | Q(seller__name__icontains=word) | Q(
+            user__last_name__icontains=word))
+        if request.user.is_manager():
+            all_price = cashbek.filter(active=True).aggregate(all_price=Sum(F("price")))["all_price"]
+            incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+            excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+            context.update({"all_price": all_price, 'incom': incom, 'excom': excom})
+        else:
+            all_price = cashbek.aggregate(all_price=Sum(F("price")))["all_price"]
+            incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+            excom = cashbek.filter(atypes=2).aggregate(all_price=Sum(F("price")))["all_price"]
+            context.update({"all_price": all_price, 'incom': incom, 'excom': excom})
+    pagination = Paginator(cashbek, 10)
+    page_number = request.GET.get('page')
+    page_obj = pagination.get_page(page_number)
+    context.update({"obj": page_obj})
+    return render(request, "cashbek.html", context)
