@@ -15,4 +15,5 @@ urlpatterns = [
     path('export_promo/<int:pk>', export_promo, name="export_promo"),
     path('asd', confirm_status, name="confirm_status"),
     path('cashbek/', cashbek, name="cashbek"),
+    path('shop/', shop, name="shop"),
 ]

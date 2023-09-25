@@ -131,8 +131,12 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa-solid fa-shop"></i>
+            {% if shop %}
+            <a class="nav-link active">
+            {% else %}
+            <a href="{% url 'shop' %}" class="nav-link">
+            {% endif %}
+              <i class="nav-icon fas fa-copy"></i>
               <p>
                 Магазины
               </p>

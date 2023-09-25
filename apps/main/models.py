@@ -149,11 +149,11 @@ class Token_confirm(models.Model):
 
 class Cashbek(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
-    promo = models.ForeignKey(Promo, on_delete=models.CASCADE, null=True, blank=True)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    user = models.ForeignKey(SimpleUsers, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="cash_product")
+    promo = models.ForeignKey(Promo, on_delete=models.CASCADE, null=True, blank=True, related_name="cash_promo")
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="cash_vendor")
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="cash_seller")
+    user = models.ForeignKey(SimpleUsers, on_delete=models.SET_NULL, null=True, related_name="cash_user")
     price = models.IntegerField()
     amount = models.IntegerField()
     active = models.BooleanField(default=True)
