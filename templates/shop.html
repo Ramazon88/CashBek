@@ -49,90 +49,45 @@
                       <div style="margin-left: 10px;" class="form-control select2">
                         <label>Тип</label>
                         {{ filter.form.cash_seller__types }}
-<!--                        <label style="margin-left: 10px;">от</label>-->
-<!--                        <input type="date" name="start_date" value="{{ start_date }}">-->
-<!--                        <label style="margin-left: 10px;">до</label>-->
-<!--                        <input type="date" name="end_date" value="{{ end_date }}">-->
-<!--                        {% if user.is_manager %}-->
-<!--                        <label style="margin-left: 10px;">Vendor</label>-->
-<!--                        {{ filter.form.vendor }}-->
-<!--                        <label style="margin-left: 10px;">Активный</label>-->
-<!--                        {{ filter.form.active }}-->
-<!--                        {% endif %}-->
+                        <label style="margin-left: 10px;">от</label>
+                        <input type="date" name="start_date" value="{{ start_date }}">
+                        <label style="margin-left: 10px;">до</label>
+                        <input type="date" name="end_date" value="{{ end_date }}">
+                        {% if user.is_manager %}
+                        <label style="margin-left: 10px;">Vendor</label>
+                        {{ filter.form.cash_seller__vendor }}
+                        {% endif %}
                         <input type="submit" />
                       </div>
                     </form>
 
                 </div>
                 <br><br>
-                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{{ incom | intcomma }} Сум</strong></button>
-                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{{ excom | intcomma }} Сум</strong></button>
+                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{% if incom %}{{ incom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
+                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{% if excom %}{{ excom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Товар</th>
-                      <th>Дата</th>
-                      <th>IMEI</th>
-                      <th>Тип</th>
-                      <th>Промо</th>
-                      <th>Продавец</th>
-                      <th>Сумма</th>
-                      {% if user.is_manager %}
-                      <th>Vendor</th>
-                      <th>User</th>
-                      <th>Номер телефона</th>
-                      <th>Активный</th>
-                      {% endif %}
-
+                      <th>Название магазина</th>
+                      <th>Количество кэшбэков</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for ob in obj %}
                     <tr>
-<!--                    {% if user.is_manager and ob.status == "wait" %}<tr style="background-color: #C8C8C8;">{% else %}<tr>{% endif %}-->
                       <th>{{ forloop.counter }}</th>
-                      <td>{{ ob.product.model }}</td>
-                      <td>{{ ob.created_at | date:'Y-m-d H:m' }}</td>
-                      <td>{{ ob.product.imei1 }}</td>
-                      <td>{{ ob.get_types_display }}</td>
-                      <td>{{ ob.promo.name }}</td>
-                      <td>{{ ob.seller.name }}</td>
-                      <td>{{ ob.price | intcomma }}</td>
-                      {% if user.is_manager %}
-                      <td>{{ ob.vendor.name }}</td>
-                      {% if ob.user %}
-                      <td>{{ ob.user.first_name }} {{ ob.user.last_name }}</td>
-                      {% else %}
-                      <td>Удаленный аккаунт</td>
-                      {% endif %}
-                      <td>{{ ob.user_phone }}</td>
-                      {% if ob.active %}
-                      <td><i class="fa-solid fa-check" style="color: #1fbd00;"></i>Актуаль</td>
-                      {% else %}
-                      <td><i class="fa-solid fa-xmark" style="color: #ff0000;"></i>Не актуаль</td>
-                      {% endif %}
-                      {% endif %}
+                      <td>{{ ob.name }}</td>
+                      <td>{{ ob.count }}</td>
                     </tr>
                   {% endfor %}
                   </tbody>
                   <tfoot>
-                  <tr>
+                    <tr>
                       <th>#</th>
-                      <th>Товар</th>
-                      <th>Дата</th>
-                      <th>IMEI</th>
-                      <th>Тип</th>
-                      <th>Промо</th>
-                      <th>Продавец</th>
-                      <th>Сумма</th>
-                      {% if user.is_manager %}
-                      <th>Vendor</th>
-                      <th>User</th>
-                      <th>Номер телефона</th>
-                      <th>Активный</th>
-                      {% endif %}
+                      <th>Название магазина</th>
+                      <th>Количество кэшбэков</th>
                     </tr>
                   </tfoot>
                 </table>

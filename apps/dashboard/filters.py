@@ -26,10 +26,9 @@ class CashbekFilter(django_filters.FilterSet):
 
 
 class SellerFilter(django_filters.FilterSet):
-    # start_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
-    # end_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__lte')
-    # types = django_filters.ChoiceFilter(field_name='cash_seller__types')
+    start_date = django_filters.DateFilter(field_name='cash_seller__created_at', lookup_expr='date__gte')
+    end_date = django_filters.DateFilter(field_name='cash_seller__created_at', lookup_expr='date__lte')
 
     class Meta:
         model = Seller
-        fields = ['cash_seller__types', 'name']
+        fields = ['cash_seller__types', 'cash_seller__vendor', 'name']

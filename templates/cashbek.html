@@ -65,8 +65,8 @@
 
                 </div>
                 <br><br>
-                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{{ incom | intcomma }} Сум</strong></button>
-                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{{ excom | intcomma }} Сум</strong></button>
+                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{% if incom %}{{ incom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
+                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{% if excom %}{{ excom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>

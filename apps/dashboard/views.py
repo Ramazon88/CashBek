@@ -378,14 +378,16 @@ def cashbek(request):
         context.update({"end_date": request.GET.get('end_date')})
     if request.GET.get('q'):
         word = request.GET.get('q')
-        cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
-            promo__name__icontains=word) | Q(user_phone__icontains=word) | Q(seller__name__icontains=word) | Q(
-            user__last_name__icontains=word))
         if request.user.is_manager():
+            cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
+                promo__name__icontains=word) | Q(user_phone__icontains=word) | Q(seller__name__icontains=word) | Q(
+                user__last_name__icontains=word))
             incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
             excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
             context.update({'incom': incom, 'excom': excom})
         else:
+            cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
+                promo__name__icontains=word) | Q(seller__name__icontains=word))
             incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
             excom = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"]
             context.update({'incom': incom, 'excom': excom})
@@ -399,40 +401,32 @@ def cashbek(request):
 @user_passes_test(dashboard_access, login_url="signin")
 def shop(request):
     context = {"shop": True}
-    if not request.user.is_manager():
-        seller = Seller.objects.filter(active=True).annotate(count=Count(F('cash_seller')))
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True)
+        seller = Seller.objects.filter(cash_seller__active=True).annotate(
+            count=Count(F('cash_seller'))).distinct().order_by("-count")
         f = SellerFilter(request.GET, queryset=seller)
-        seller = f.qs.order_by("-id")
-        # all_price = cashbek.filter(active=True).aggregate(all_price=Sum(F("price")))["all_price"]
-        # incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-        # excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-        context.update({"filter": f})
-        # print(f.form)
-    # else:
-    #     cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True).order_by("-id")
-    #     f = CashbekFilter(request.GET, queryset=cashbek)
-    #     cashbek = f.qs.order_by("-id")
-    #     all_price = cashbek.aggregate(all_price=Sum(F("price")))["all_price"]
-    #     incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     excom = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     context.update({"filter": f, "all_price": all_price, 'incom': incom, 'excom': excom})
-    # if request.GET.get('start_date'):
-    #     context.update({"start_date": request.GET.get('start_date')})
-    # if request.GET.get('end_date'):
-    #     context.update({"end_date": request.GET.get('end_date')})
+        seller = f.qs.distinct().order_by("-count")
+        incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+        excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+        context.update({"filter": f, 'incom': incom, 'excom': excom})
+    else:
+        cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True)
+        seller = Seller.objects.filter(cash_seller__active=True, cash_seller__types=INCOME,
+                                       cash_seller__vendor=request.user.vendor.vendor).annotate(
+            count=Count(F('cash_seller'))).order_by("-count")
+        f = SellerFilter(request.GET, queryset=seller)
+        seller = f.qs.order_by("-count")
+        incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+        excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+        context.update({"filter": f, 'incom': incom, 'excom': excom})
+    if request.GET.get('start_date'):
+        context.update({"start_date": request.GET.get('start_date')})
+    if request.GET.get('end_date'):
+        context.update({"end_date": request.GET.get('end_date')})
     if request.GET.get('q'):
         word = request.GET.get('q')
         seller = seller.filter()
-        # if request.user.is_manager():
-        #     all_price = cashbek.filter(active=True).aggregate(all_price=Sum(F("price")))["all_price"]
-        #     incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-        #     excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-        #     context.update({"all_price": all_price, 'incom': incom, 'excom': excom})
-        # else:
-        #     all_price = cashbek.aggregate(all_price=Sum(F("price")))["all_price"]
-        #     incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-        #     excom = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-        #     context.update({"all_price": all_price, 'incom': incom, 'excom': excom})
     pagination = Paginator(seller, 10)
     page_number = request.GET.get('page')
     page_obj = pagination.get_page(page_number)
