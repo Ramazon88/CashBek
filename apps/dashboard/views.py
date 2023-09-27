@@ -402,6 +402,7 @@ def cashbek(request):
 def shop(request):
     context = {"shop": True}
     if request.user.is_manager():
+        print(True)
         cashbek = Cashbek.objects.filter(active=True)
         seller = Seller.objects.filter(cash_seller__active=True).annotate(
             count=Count(F('cash_seller'))).distinct().order_by("-count")
@@ -412,11 +413,13 @@ def shop(request):
         context.update({"filter": f, 'incom': incom, 'excom': excom})
     else:
         cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True)
-        seller = Seller.objects.filter(cash_seller__active=True, cash_seller__types=INCOME,
-                                       cash_seller__vendor=request.user.vendor.vendor).annotate(
-            count=Count(F('cash_seller'))).order_by("-count")
+        seller = Seller.objects.filter(cash_seller__active=True, cash_seller__vendor=request.user.vendor.vendor)
         f = SellerFilter(request.GET, queryset=seller)
-        seller = f.qs.order_by("-count")
+        seller = f.qs.annotate(
+            count=Count(F('cash_seller')))
+        # for i in seller:
+        #     print(i.cash_seller.count())
+        #     print(i.cash_seller.values())
         incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
         excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
         context.update({"filter": f, 'incom': incom, 'excom': excom})

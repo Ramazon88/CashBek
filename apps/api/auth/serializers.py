@@ -192,11 +192,11 @@ class VerifySerializer(serializers.Serializer):
         check_phone(phone)
         return phone
 
+
 class ConfirmDeleteUserSerializer(serializers.Serializer):
     code = serializers.CharField(write_only=True, required=True, error_messages={
         'required': 'code is required'
     })
-
 
 
 class CreateSimpleUserSerializers(serializers.ModelSerializer):

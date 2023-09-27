@@ -27,9 +27,16 @@ class UserInline(admin.StackedInline):
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('Основной', {'fields': ('name', 'seller_name', 'telegram_id', 'region', 'district')}),
+        ('Сведения о юридическом лице', {'fields': ('legal_entity_name', 'legal_entity_address', 'inn', 'bank', 'mfo',
+                                                    'schot', 'name_shef')}),
+    )
     exclude = ('password1', 'password2')
     inlines = [UserInline]
-    list_display = ["name", "get_phone", "get_active"]
+    list_display = ["name", "get_phone", "region", "district", "get_active"]
+    list_filter = ["region", "district", "seller__is_active"]
+    search_fields = ["name", "seller_name", "legal_entity_name", "seller__phone"]
 
     def save_model(self, request, obj, form, change):
         obj.seller.user_type = SELLER
