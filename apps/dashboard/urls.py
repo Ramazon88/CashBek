@@ -16,4 +16,5 @@ urlpatterns = [
     path('asd', confirm_status, name="confirm_status"),
     path('cashbek/', cashbek, name="cashbek"),
     path('shop/', shop, name="shop"),
+    path('seller_paid/', seller_agrement, name="seller_paid"),
 ]

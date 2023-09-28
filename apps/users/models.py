@@ -498,6 +498,9 @@ class Seller(models.Model):
         verbose_name = "Продавец"
         verbose_name_plural = "Продавцы"
 
+
+    # def total(self):
+
     def __str__(self):
         return self.name
 

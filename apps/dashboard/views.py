@@ -163,7 +163,8 @@ def confirm_products(request):
         creator = []
         objs = BlackListProducts.objects.filter(pk__gte=prs[0], pk__lte=prs[1], vendor=request.user.vendor)
         for obj in objs:
-            creator.append(Products(model=obj.model, imei1=obj.imei1, sku=obj.sku, vendor=request.user.vendor, ven=request.user.vendor.vendor))
+            creator.append(Products(model=obj.model, imei1=obj.imei1, sku=obj.sku, vendor=request.user.vendor,
+                                    ven=request.user.vendor.vendor))
         Products.objects.bulk_create(creator)
         objs.delete()
         messages.success(request, "Товары успешно добавлены")
@@ -275,7 +276,8 @@ def confirm_promo(request):
     if request.POST.get("promo"):
         pid = request.POST.get("promo")
         new = TempPromo.objects.get(pk=pid)
-        obj = Promo.objects.create(name=new.name, start=new.start, end=new.end, budget=new.budget, ven=request.user.vendor.vendor,
+        obj = Promo.objects.create(name=new.name, start=new.start, end=new.end, budget=new.budget,
+                                   ven=request.user.vendor.vendor,
                                    vendor=request.user.vendor, price_procent=request.user.vendor.vendor.price)
         obj.products.set(new.products.all())
         bulk_obj = []
@@ -435,3 +437,42 @@ def shop(request):
     page_obj = pagination.get_page(page_number)
     context.update({"obj": page_obj})
     return render(request, "shop.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def seller_agrement(request):
+    context = {"seller_agrement": True}
+    # if request.user.is_manager():
+    #     print(True)
+    #     cashbek = Cashbek.objects.filter(active=True)
+    #     seller = Seller.objects.filter(cash_seller__active=True).annotate(
+    #         count=Count(F('cash_seller'))).distinct().order_by("-count")
+    #     f = SellerFilter(request.GET, queryset=seller)
+    #     seller = f.qs.distinct().order_by("-count")
+    #     incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+    #     excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+    #     context.update({"filter": f, 'incom': incom, 'excom': excom})
+    # else:
+    #     cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True)
+    #     seller = Seller.objects.filter(cash_seller__active=True, cash_seller__vendor=request.user.vendor.vendor)
+    #     f = SellerFilter(request.GET, queryset=seller)
+    #     seller = f.qs.annotate(
+    #         count=Count(F('cash_seller')))
+    #     # for i in seller:
+    #     #     print(i.cash_seller.count())
+    #     #     print(i.cash_seller.values())
+    #     incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+    #     excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+    #     context.update({"filter": f, 'incom': incom, 'excom': excom})
+    # if request.GET.get('start_date'):
+    #     context.update({"start_date": request.GET.get('start_date')})
+    # if request.GET.get('end_date'):
+    #     context.update({"end_date": request.GET.get('end_date')})
+    # if request.GET.get('q'):
+    #     word = request.GET.get('q')
+    #     seller = seller.filter()
+    # pagination = Paginator(seller, 10)
+    # page_number = request.GET.get('page')
+    # page_obj = pagination.get_page(page_number)
+    # context.update({"obj": page_obj})
+    return render(request, "seller_agrement.html", context)
