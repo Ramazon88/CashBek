@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q, F, Subquery, OuterRef, Count, Sum
+from django.db.models.functions import TruncDate
 from django.http import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from openpyxl.reader.excel import load_workbook
@@ -40,6 +41,36 @@ def signin(request):
 @user_passes_test(dashboard_access, login_url="signin")
 def index(request):
     context = {"home": True}
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True)
+        f = CashbekFilter(request.GET, queryset=cashbek)
+        cashbek = f.qs
+        context.update({"filter": f})
+    else:
+        cashbek = Cashbek.objects.filter(active=True, vendor=request.user.vendor.vendor)
+    incom_count = cashbek.filter(types=1).count()
+    expen_count = cashbek.filter(types=2).count()
+    shop = cashbek.values("seller__name").distinct().count()
+    all_cashbek = cashbek.annotate(day=TruncDate('created_at')).values('day').annotate(count=Count('id'))
+    cashbek_count_list = []
+    incom_count_list = []
+    expen_count_list = []
+    datetime_list = []
+    for i in all_cashbek:
+        datetime_list.append(i["day"].strftime("%Y-%m-%dT%H:%M:%SZ"))
+        cashbek_count_list.append(i["count"])
+        incom_count_list.append(cashbek.filter(types=1, created_at__date=i["day"]).count())
+        expen_count_list.append(cashbek.filter(types=2, created_at__date=i["day"]).count())
+    shop_names = []
+    shop_count_list = []
+    for i in cashbek.values("seller__name").distinct():
+        shop_names.append(i["seller__name"])
+        shop_count_list.append(cashbek.filter(seller__name=i["seller__name"]).count())
+
+    context.update({"cashbeks": cashbek, "incom_count": incom_count, "expen_count": expen_count, "shops": shop,
+                    "datetime_list": datetime_list, "cashbek_count_list": cashbek_count_list,
+                    "incom_count_list": incom_count_list, "expen_count_list": expen_count_list, "shop_names": shop_names,
+                    "shop_count_list": shop_count_list})
     return render(request, "index.html", context)
 
 
@@ -294,6 +325,7 @@ def confirm_promo(request):
 
 @user_passes_test(dashboard_access, login_url="signin")
 def export_promo(request, pk):
+    print(request.META.get('HTTP_REFERER'))
     promo = Promo.objects.get(pk=pk)
     if not request.user.is_manager() and promo.vendor != request.user.vendor:
         return HttpResponseNotFound()
