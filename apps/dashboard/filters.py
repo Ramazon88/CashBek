@@ -32,3 +32,21 @@ class SellerFilter(django_filters.FilterSet):
     class Meta:
         model = Seller
         fields = ['cash_seller__types', 'cash_seller__vendor', 'name']
+
+
+class PaymentSeller(django_filters.FilterSet):
+    start_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
+    end_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__lte')
+
+    class Meta:
+        model = PaymentForSeller
+        fields = ['created_at']
+
+
+class PaymentVendor(django_filters.FilterSet):
+    start_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
+    end_date = django_filters.DateFilter(field_name='created_at', lookup_expr='date__lte')
+
+    class Meta:
+        model = PaymentOfVendor
+        fields = ['created_at']

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
+from django.db.models import Sum, F
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -475,6 +476,15 @@ class Vendor(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def total_balance(self):
+        total = self.cash_vendor.filter(types=1, active=True).aggregate(all_price=Sum(F("price")))["all_price"] if \
+            self.cash_vendor.filter(types=1, active=True).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        paid = self.payment_vendor.all().aggregate(all_price=Sum(F("amount")))["all_price"] if \
+            self.payment_vendor.all().aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        residual = total - paid
+        return {'total': total, 'paid': paid, 'residual': residual}
+
     class Meta:
         verbose_name = "Vendor"
         verbose_name_plural = "Vendors"
@@ -498,8 +508,14 @@ class Seller(models.Model):
         verbose_name = "Продавец"
         verbose_name_plural = "Продавцы"
 
-
-    # def total(self):
+    @property
+    def total_balance(self):
+        total = self.cash_seller.filter(types=2, active=True).aggregate(all_price=Sum(F("price")))["all_price"] if \
+        self.cash_seller.filter(types=2, active=True).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        paid = self.payment_seller.all().aggregate(all_price=Sum(F("amount")))["all_price"] if \
+        self.payment_seller.all().aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        residual = total - paid
+        return {'total': total, 'paid': paid, 'residual': residual}
 
     def __str__(self):
         return self.name

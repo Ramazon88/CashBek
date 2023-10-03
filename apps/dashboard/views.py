@@ -9,7 +9,7 @@ from django.http import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from openpyxl.reader.excel import load_workbook
 
-from apps.dashboard.filters import ProductFilter, PromoFilter, CashbekFilter, SellerFilter
+from apps.dashboard.filters import ProductFilter, PromoFilter, CashbekFilter, SellerFilter, PaymentSeller, PaymentVendor
 from apps.main.models import *
 from config.settings import BASE_DIR
 
@@ -440,39 +440,108 @@ def shop(request):
 
 
 @user_passes_test(dashboard_access, login_url="signin")
-def seller_agrement(request):
-    context = {"seller_agrement": True}
-    # if request.user.is_manager():
-    #     print(True)
-    #     cashbek = Cashbek.objects.filter(active=True)
-    #     seller = Seller.objects.filter(cash_seller__active=True).annotate(
-    #         count=Count(F('cash_seller'))).distinct().order_by("-count")
-    #     f = SellerFilter(request.GET, queryset=seller)
-    #     seller = f.qs.distinct().order_by("-count")
-    #     incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     context.update({"filter": f, 'incom': incom, 'excom': excom})
-    # else:
-    #     cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True)
-    #     seller = Seller.objects.filter(cash_seller__active=True, cash_seller__vendor=request.user.vendor.vendor)
-    #     f = SellerFilter(request.GET, queryset=seller)
-    #     seller = f.qs.annotate(
-    #         count=Count(F('cash_seller')))
-    #     # for i in seller:
-    #     #     print(i.cash_seller.count())
-    #     #     print(i.cash_seller.values())
-    #     incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-    #     context.update({"filter": f, 'incom': incom, 'excom': excom})
-    # if request.GET.get('start_date'):
-    #     context.update({"start_date": request.GET.get('start_date')})
-    # if request.GET.get('end_date'):
-    #     context.update({"end_date": request.GET.get('end_date')})
-    # if request.GET.get('q'):
-    #     word = request.GET.get('q')
-    #     seller = seller.filter()
-    # pagination = Paginator(seller, 10)
-    # page_number = request.GET.get('page')
-    # page_obj = pagination.get_page(page_number)
-    # context.update({"obj": page_obj})
-    return render(request, "seller_agrement.html", context)
+def seller_aggrement(request):
+    context = {"seller_aggrement": True}
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True)
+        payment = PaymentForSeller.objects.all()
+        total = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] if \
+        cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
+        payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        residual = total - paid
+        seller = Seller.objects.all()
+        if request.GET.get('q'):
+            word = request.GET.get('q')
+            seller = seller.filter(name__icontains=word)
+        pagination = Paginator(seller, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
+        return render(request, "aggrement.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def seller_aggrement_detail(request, pk):
+    context = {"seller_aggrement": True}
+    if request.user.is_manager():
+        if request.POST:
+            seller = Seller.objects.get(pk=pk)
+            PaymentForSeller.objects.create(seller=seller, amount=request.POST.get("amount"), descriptions=request.POST.get("comment"))
+            return redirect("seller_paid_detail", seller.pk)
+        seller = Seller.objects.get(pk=pk)
+        payments = PaymentForSeller.objects.filter(seller=seller).order_by('-created_at')
+        f = PaymentSeller(request.GET, queryset=payments)
+        payments = f.qs.order_by("-id")
+        if request.GET.get('start_date'):
+            context.update({"start_date": request.GET.get('start_date')})
+        if request.GET.get('end_date'):
+            context.update({"end_date": request.GET.get('end_date')})
+        pagination = Paginator(payments, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({"obj": page_obj, 'seller': seller, 'filter': f})
+        return render(request, "aggrement_detail.html", context)
+
+@user_passes_test(dashboard_access, login_url="signin")
+def vendor_aggrement(request):
+    context = {"vendor_aggrement": True}
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True)
+        payment = PaymentOfVendor.objects.all()
+        total = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] if \
+        cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
+        payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        residual = total - paid
+        vendor = Vendor.objects.all()
+        if request.GET.get('q'):
+            word = request.GET.get('q')
+            vendor = vendor.filter(name__icontains=word)
+        pagination = Paginator(vendor, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
+        return render(request, "aggrement.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def vendor_aggrement_detail(request, pk):
+    context = {"vendor_aggrement": True}
+    if request.user.is_manager():
+        if request.POST:
+            vendor = Vendor.objects.get(pk=pk)
+            PaymentOfVendor.objects.create(vendor=vendor, amount=request.POST.get("amount"), descriptions=request.POST.get("comment"))
+            return redirect("vendor_paid_detail", vendor.pk)
+        vendor = Vendor.objects.get(pk=pk)
+        payments = PaymentOfVendor.objects.filter(vendor=vendor).order_by('-created_at')
+        f = PaymentVendor(request.GET, queryset=payments)
+        payments = f.qs.order_by("-id")
+        if request.GET.get('start_date'):
+            context.update({"start_date": request.GET.get('start_date')})
+        if request.GET.get('end_date'):
+            context.update({"end_date": request.GET.get('end_date')})
+        pagination = Paginator(payments, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({"obj": page_obj, 'vendor': vendor, 'filter': f})
+        return render(request, "aggrement_detail.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def vendor_detail(request):
+    context = {"vendor_aggrement": True}
+    if not request.user.is_manager():
+        vendor = request.user.vendor.vendor
+        payments = PaymentOfVendor.objects.filter(vendor=vendor).order_by('-created_at')
+        f = PaymentVendor(request.GET, queryset=payments)
+        payments = f.qs.order_by("-id")
+        if request.GET.get('start_date'):
+            context.update({"start_date": request.GET.get('start_date')})
+        if request.GET.get('end_date'):
+            context.update({"end_date": request.GET.get('end_date')})
+        pagination = Paginator(payments, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({"obj": page_obj, 'vendor': vendor, 'filter': f})
+        return render(request, "aggrement_detail.html", context)

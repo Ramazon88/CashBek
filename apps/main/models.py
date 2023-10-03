@@ -162,6 +162,19 @@ class Cashbek(models.Model):
     description = models.CharField(default="", blank=True, max_length=1024)
 
 
+class PaymentForSeller(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    amount = models.BigIntegerField()
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='payment_seller')
+    descriptions = models.CharField(max_length=1024, default="")
+
+
+class PaymentOfVendor(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    amount = models.BigIntegerField()
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='payment_vendor')
+    descriptions = models.CharField(max_length=1024, default="")
+
 class Fribase(models.Model):
     fr_id = models.CharField(max_length=256)
     user = models.ForeignKey(SimpleUsers, on_delete=models.CASCADE)

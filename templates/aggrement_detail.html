@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            {% if seller_aggrement %}
+            <h1>История платежей продавцам</h1>
+            {% else %}
+            <h1>История платежей поставщикам</h1>
+            {% endif %}
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              {% if seller_aggrement %}
+              <li class="breadcrumb-item"><a href="{% url 'seller_paid' %}">История платежей продавцам</a></li>
+              <li class="breadcrumb-item active">{{ seller.name }}</li>
+              {% else %}
+              {% if user.is_manager %}
+              <li class="breadcrumb-item"><a href="{% url 'seller_paid' %}">История платежей поставщикам</a></li>
+              {% endif %}
+              <li class="breadcrumb-item active">{{ vendor.name }}</li>
+              {% endif %}
+
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                {% if seller_aggrement %}
+                <h3 class="card-title">{{ seller.name }}</h3>
+                {% else %}
+                <h3 class="card-title">{{ vendor.name }}</h3>
+                {% endif %}
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <address>
+                    {% if seller_aggrement %}
+                    <strong>Наименования юридического лица: </strong>{{ seller.legal_entity_name }}<br>
+                    <strong>Адрес юридического лица: </strong>{{ seller.legal_entity_address }}<br>
+                    <strong>Юридическое лицо банк: </strong>{{ seller.bank }}<br>
+                    <strong>МФО: </strong>{{ seller.mfo }}<br>
+                    <strong>СТИР: </strong>{{ seller.inn }}<br>
+                    <strong>Р/С: </strong>{{ seller.schot }}<br>
+                    <strong>Номер телефона	: </strong>{{ seller.seller.phone }}<br>
+                    {% else %}
+                    <strong>Наименования вендора: </strong>{{ vendor.name }}<br>
+                    <strong>Тип активности: </strong>{{ vendor.type_of_activity }}<br>
+                    <strong>Номер телефона	: </strong>{{ vendor.vendor.vendors.phone }}<br>
+                    {% endif %}
+                </address>
+                <br>
+                <div class="row">
+                  <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row">
+
+                      {% if seller_aggrement %}
+                      {% with total=seller.total_balance %}
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Сумма Cписание Кэшбэка</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.total | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Оплаченный</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.paid | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Остальные</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.residual | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      {% endwith %}
+                      {% else %}
+
+                      {% with total=vendor.total_balance %}
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Сумма Начисление Кэшбэка</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.total | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Оплаченный</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.paid | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Остальные</span>
+                            <span class="info-box-number text-center text-muted mb-0">{{ total.residual | intcomma }} Сум</span>
+                          </div>
+                        </div>
+                      </div>
+                      {% endwith %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <br>
+                {% if seller_aggrement %}
+                <h3 class="text-center">История платежей продавцам</h3>
+                {% else %}
+                <h3 class="text-center">История платежей поставщикам</h3>
+                {% endif %}
+
+                <br>
+                <div class="btn-group">
+                    {% if user.is_manager %}
+                    <a class="btn btn-info" data-toggle="modal" data-target="#payment"><i class="fa-solid fa-plus"></i>Создать платежа</a>
+                    {% endif %}
+                    <form method="get">
+                      <div style="margin-left: 10px;" class="form-control select2">
+                        <label>от</label>
+                        <input type="date" name="start_date" value="{{ start_date }}">
+                        <label style="margin-left: 10px;">до</label>
+                        <input type="date" name="end_date" value="{{ end_date }}">
+                        <input type="submit" />
+                      </div>
+                    </form>
+                </div>
+                <br><br>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Идентификатор платежа</th>
+                      <th>Дата платежа</th>
+                      <th>К оплате</th>
+                      <th>Комментарий</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ob in obj %}
+                    <tr>
+                      <th>{{ forloop.counter }}</th>
+                      <td>{{ ob.pk }}</td>
+                      <td>{{ ob.created_at | date:'Y-m-d H:i' }}</td>
+                      <td>{{ ob.amount | intcomma }} Сум</td>
+                      <td>{{ ob.descriptions }}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <tr>
+                      <th>#</th>
+                      <th>Идентификатор платежа</th>
+                      <th>Дата платежа</th>
+                      <th>К оплате</th>
+                      <th>Комментарий</th>
+                    </tr>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {% if obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.previous_page_number }}">Предыдущий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Предыдущий</a></li>
+                    {% endif %}
+                    {% for i in obj.paginator.page_range %}
+                    {% if i == obj.number %}
+                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                    {% elif i >= obj.number|add:-3 and i <= obj.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.next_page_number }}">Следующий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Следующий</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.modal -->
+  <div class="modal fade" id="payment">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Создать платежа</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% if seller_aggrement %}
+        <form action="{% url 'seller_paid_detail' seller.pk %}" method="post">{% csrf_token %}
+        {% else %}
+        <form action="{% url 'vendor_paid_detail' vendor.pk %}" method="post">{% csrf_token %}
+        {% endif %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label>К оплате</label>
+            <input type="number" class="form-control" name="amount" required>
+          </div>
+          <div class="form-group">
+            <label>Комментарий</label>
+            <input type="text" class="form-control" name="comment">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="submit" class="btn btn-primary">Сохранять</button>
+        </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+<!-- /.modal -->
+{% for message in messages %}
+{% if message.tags == "success" %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("SUCCESS", m, "success")
+</script>
+{% else %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("ERROR", m, "error")
+</script>
+{% endif %}
+{% endfor %}
+{% endblock %}

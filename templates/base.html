@@ -183,9 +183,9 @@
               </p>
             </a>
           </li>
-          {% if not user.is_manager %}
+          {% if user.is_manager %}
           <li class="nav-item">
-            {% if seller_agrement %}
+            {% if seller_aggrement %}
             <a class="nav-link active">
             {% else %}
             <a href="{% url 'seller_paid' %}" class="nav-link">
@@ -197,14 +197,27 @@
             </a>
           </li>
           <li class="nav-item">
-            {% if products %}
+            {% if vendor_aggrement %}
             <a class="nav-link active">
             {% else %}
-            <a href="{% url 'products' %}" class="nav-link">
+            <a href="{% url 'vendor_paid' %}" class="nav-link">
             {% endif %}
               <i class="fa-solid fa-handshake-angle"></i>
               <p>
                 Оплата поставщику
+              </p>
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            {% if vendor_aggrement %}
+            <a class="nav-link active">
+            {% else %}
+            <a href="{% url 'vendor_payment' %}" class="nav-link">
+            {% endif %}
+              <i class="fa-solid fa-handshake-angle"></i>
+              <p>
+                Платежи
               </p>
             </a>
           </li>
