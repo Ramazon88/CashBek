@@ -63,9 +63,9 @@ def index(request):
         expen_count_list.append(cashbek.filter(types=2, created_at__date=i["day"]).count())
     shop_names = []
     shop_count_list = []
-    for i in cashbek.values("seller__name").distinct():
+    for i in cashbek.values('seller__name').annotate(seller_count=Count('seller')).order_by('-seller_count')[:10]:
         shop_names.append(i["seller__name"])
-        shop_count_list.append(cashbek.filter(seller__name=i["seller__name"]).count())
+        shop_count_list.append(i["seller_count"])
 
     context.update({"cashbeks": cashbek, "incom_count": incom_count, "expen_count": expen_count, "shops": shop,
                     "datetime_list": datetime_list, "cashbek_count_list": cashbek_count_list,
@@ -467,13 +467,45 @@ def shop(request):
             cashbek.filter(types=1, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] else 0
         expening += cashbek.filter(types=2, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] if \
             cashbek.filter(types=2, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] else 0
-        seller_list.append({"name": sel.name, "count": incom + expen, "incom": incom, "expen": expen})
+        seller_list.append({"pk": sel.pk, "name": sel.name, "count": incom + expen, "incom": incom, "expen": expen})
     seller_list = sorted(seller_list, key=lambda x: x['count'], reverse=True)
     pagination = Paginator(seller_list, 10)
     page_number = request.GET.get('page')
     page_obj = pagination.get_page(page_number)
     context.update({"obj": page_obj, "filter": f, 'incoming': incoming, 'expening': expening})
     return render(request, "shop.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def shop_detail(request, pk):
+    context = {"shop": True}
+    seller = Seller.objects.get(pk=pk)
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True, seller=seller)
+    else:
+        cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True, seller=seller)
+    f = CashbekFilter(request.GET, queryset=cashbek)
+    cashbek = f.qs.order_by("-created_at")
+    if request.GET.get('start_date'):
+        context.update({"start_date": request.GET.get('start_date')})
+    if request.GET.get('end_date'):
+        context.update({"end_date": request.GET.get('end_date')})
+    if request.GET.get('q'):
+        word = request.GET.get('q')
+        if request.user.is_manager():
+            cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
+                promo__name__icontains=word) | Q(user_phone__icontains=word) | Q(user__last_name__icontains=word))
+        else:
+            cashbek = cashbek.filter(Q(product__model__icontains=word) | Q(product__imei1__icontains=word) | Q(
+                promo__name__icontains=word))
+    incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"]
+    excom = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"]
+    context.update({"filter": f, 'incom': incom, 'excom': excom, 'seller': seller})
+    pagination = Paginator(cashbek, 10)
+    page_number = request.GET.get('page')
+    page_obj = pagination.get_page(page_number)
+    context.update({"obj": page_obj, "filter": f})
+    return render(request, "shop_detail.html", context)
 
 
 @user_passes_test(dashboard_access, login_url="signin")

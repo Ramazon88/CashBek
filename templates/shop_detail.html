@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{seller.name}}</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'shop' %}">Список Cashbek</a></li>
+              <li class="breadcrumb-item active">{{seller.name}}</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{{seller.name}}</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <address>
+                    <strong>Наименования юридического лица: </strong>{{ seller.legal_entity_name }}<br>
+                    <strong>Область: </strong>{{ seller.get_region_display }}<br>
+                    <strong>Район: </strong>{{ seller.get_district_display }}<br>
+                    <strong>Номер телефона	: </strong>{{ seller.seller.phone }}<br>
+                </address>
+                <br>
+                <div class="btn-group">
+                    <form action="">
+                          <div class="input-group">
+                              <input type="search" class="form-control" name="q" style="margin-left: 5px;" placeholder="Поиск">
+                              <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default">
+                                      <i class="fa fa-search"></i>
+                                  </button>
+                              </div>
+                          </div>
+                    </form>
+
+                    <form method="get">
+                      <div style="margin-left: 10px;" class="form-control select2">
+                        <label>Тип</label>
+                        {{ filter.form.types }}
+                        <label style="margin-left: 10px;">от</label>
+                        <input type="date" name="start_date" value="{{ start_date }}">
+                        <label style="margin-left: 10px;">до</label>
+                        <input type="date" name="end_date" value="{{ end_date }}">
+                        {% if user.is_manager %}
+                        <label style="margin-left: 10px;">Vendor</label>
+                        {{ filter.form.vendor }}
+                        {% endif %}
+                        <input type="submit" />
+                      </div>
+                    </form>
+
+                </div>
+                <br><br>
+                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{% if incom %}{{ incom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
+                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{% if excom %}{{ excom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
+                <br><br>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Товар</th>
+                      <th>Дата</th>
+                      <th>IMEI</th>
+                      <th>Тип</th>
+                      <th>Промо</th>
+                      <th>Сумма</th>
+                      {% if user.is_manager %}
+                      <th>Vendor</th>
+                      <th>User</th>
+                      <th>Номер телефона</th>
+                      {% endif %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ob in obj %}
+                    <tr>
+                      <th>{{ forloop.counter }}</th>
+                      <td>{{ ob.product.model }}</td>
+                      <td>{{ ob.created_at | date:'Y-m-d H:i' }}</td>
+                      <td>{{ ob.product.imei1 }}</td>
+                      <td>{{ ob.get_types_display }}</td>
+                      <td>{{ ob.promo.name }}</td>
+                      <td>{{ ob.price | intcomma }}</td>
+                      {% if user.is_manager %}
+                      <td>{{ ob.vendor.name }}</td>
+                      {% if ob.user %}
+                      <td>{{ ob.user.first_name }} {{ ob.user.last_name }}</td>
+                      {% else %}
+                      <td>Удаленный аккаунт</td>
+                      {% endif %}
+                      <td>{{ ob.user_phone }}</td>
+                      {% endif %}
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>#</th>
+                      <th>Товар</th>
+                      <th>Дата</th>
+                      <th>IMEI</th>
+                      <th>Тип</th>
+                      <th>Промо</th>
+                      <th>Сумма</th>
+                      {% if user.is_manager %}
+                      <th>Vendor</th>
+                      <th>User</th>
+                      <th>Номер телефона</th>
+                      {% endif %}
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {% if obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.previous_page_number }}">Предыдущий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Предыдущий</a></li>
+                    {% endif %}
+                    {% for i in obj.paginator.page_range %}
+                    {% if i == obj.number %}
+                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                    {% elif i >= obj.number|add:-3 and i <= obj.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ obj.next_page_number }}">Следующий</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link">Следующий</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+<!-- /.modal -->
+{% for message in messages %}
+{% if message.tags == "success" %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("SUCCESS", m, "success")
+</script>
+{% else %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}"
+    swal("ERROR", m, "error")
+</script>
+{% endif %}
+{% endfor %}
+{% endblock %}

@@ -31,3 +31,6 @@ from django.test import TestCase
 # bot.send_photo(chat_id=254118850, photo=InputFile(binary_data))
 
 
+a = ["a", "a", "a", "a", "b", "b", "c", "c", "c", "c", "c", "s"]
+# a.sort(key=lambda x: a.count(x), reverse=True)
+print(tuple(a))
