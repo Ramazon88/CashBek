@@ -47,15 +47,13 @@
 
                     <form method="get">
                       <div style="margin-left: 10px;" class="form-control select2">
-                        <label>Тип</label>
-                        {{ filter.form.cash_seller__types }}
-                        <label style="margin-left: 10px;">от</label>
+                        <label>от</label>
                         <input type="date" name="start_date" value="{{ start_date }}">
                         <label style="margin-left: 10px;">до</label>
                         <input type="date" name="end_date" value="{{ end_date }}">
                         {% if user.is_manager %}
                         <label style="margin-left: 10px;">Vendor</label>
-                        {{ filter.form.cash_seller__vendor }}
+                        {{ filter.form.vendor }}
                         {% endif %}
                         <input type="submit" />
                       </div>
@@ -63,8 +61,8 @@
 
                 </div>
                 <br><br>
-                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{% if incom %}{{ incom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
-                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{% if excom %}{{ excom | intcomma }}{% else %}0{% endif %} Сум</strong></button>
+                <button type="button" class="btn btn-success">Начисление Кэшбэка: <strong>{{ incoming | intcomma }} Сум</strong></button>
+                <button type="button" class="btn btn-danger">Cписание Кэшбэка: <strong>{{ expening | intcomma }} Сум</strong></button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
@@ -72,6 +70,8 @@
                       <th>#</th>
                       <th>Название магазина</th>
                       <th>Количество кэшбэков</th>
+                      <th>Количество Начисление кэшбэков</th>
+                      <th>Количество Cписание кэшбэков</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +80,8 @@
                       <th>{{ forloop.counter }}</th>
                       <td>{{ ob.name }}</td>
                       <td>{{ ob.count }}</td>
+                      <td>{{ ob.incom }}</td>
+                      <td>{{ ob.expen }}</td>
                     </tr>
                   {% endfor %}
                   </tbody>
@@ -88,6 +90,8 @@
                       <th>#</th>
                       <th>Название магазина</th>
                       <th>Количество кэшбэков</th>
+                      <th>Количество Начисление кэшбэков</th>
+                      <th>Количество Cписание кэшбэков</th>
                     </tr>
                   </tfoot>
                 </table>

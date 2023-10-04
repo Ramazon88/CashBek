@@ -31,4 +31,3 @@ from django.test import TestCase
 # bot.send_photo(chat_id=254118850, photo=InputFile(binary_data))
 
 
-print(round(49500, ndigits=-3))

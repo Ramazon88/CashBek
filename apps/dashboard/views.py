@@ -57,7 +57,7 @@ def index(request):
     expen_count_list = []
     datetime_list = []
     for i in all_cashbek:
-        datetime_list.append(i["day"].strftime("%Y-%m-%dT%H:%M:%SZ"))
+        datetime_list.append(i["day"].strftime("%Y-%m-%d"))
         cashbek_count_list.append(i["count"])
         incom_count_list.append(cashbek.filter(types=1, created_at__date=i["day"]).count())
         expen_count_list.append(cashbek.filter(types=2, created_at__date=i["day"]).count())
@@ -69,8 +69,8 @@ def index(request):
 
     context.update({"cashbeks": cashbek, "incom_count": incom_count, "expen_count": expen_count, "shops": shop,
                     "datetime_list": datetime_list, "cashbek_count_list": cashbek_count_list,
-                    "incom_count_list": incom_count_list, "expen_count_list": expen_count_list, "shop_names": shop_names,
-                    "shop_count_list": shop_count_list})
+                    "incom_count_list": incom_count_list, "expen_count_list": expen_count_list,
+                    "shop_names": shop_names, "shop_count_list": shop_count_list})
     return render(request, "index.html", context)
 
 
@@ -436,38 +436,43 @@ def cashbek(request):
 def shop(request):
     context = {"shop": True}
     if request.user.is_manager():
-        print(True)
         cashbek = Cashbek.objects.filter(active=True)
-        seller = Seller.objects.filter(cash_seller__active=True).annotate(
-            count=Count(F('cash_seller'))).distinct().order_by("-count")
-        f = SellerFilter(request.GET, queryset=seller)
-        seller = f.qs.distinct().order_by("-count")
-        incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-        excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-        context.update({"filter": f, 'incom': incom, 'excom': excom})
+        seller = Seller.objects.filter(cash_seller__active=True).distinct()
     else:
         cashbek = Cashbek.objects.filter(vendor=request.user.vendor.vendor, active=True)
-        seller = Seller.objects.filter(cash_seller__active=True, cash_seller__vendor=request.user.vendor.vendor)
-        f = SellerFilter(request.GET, queryset=seller)
-        seller = f.qs.annotate(
-            count=Count(F('cash_seller')))
-        # for i in seller:
-        #     print(i.cash_seller.count())
-        #     print(i.cash_seller.values())
-        incom = cashbek.filter(active=True, types=1).aggregate(all_price=Sum(F("price")))["all_price"]
-        excom = cashbek.filter(active=True, types=2).aggregate(all_price=Sum(F("price")))["all_price"]
-        context.update({"filter": f, 'incom': incom, 'excom': excom})
+        seller = Seller.objects.filter(cash_seller__active=True,
+                                       cash_seller__vendor=request.user.vendor.vendor).distinct()
     if request.GET.get('start_date'):
         context.update({"start_date": request.GET.get('start_date')})
     if request.GET.get('end_date'):
         context.update({"end_date": request.GET.get('end_date')})
     if request.GET.get('q'):
         word = request.GET.get('q')
-        seller = seller.filter()
-    pagination = Paginator(seller, 10)
+        if request.user.is_manager():
+            seller = Seller.objects.filter(cash_seller__active=True).distinct()
+        else:
+            seller = Seller.objects.filter(cash_seller__active=True,
+                                           cash_seller__vendor=request.user.vendor.vendor).distinct()
+
+        seller = seller.filter(name__icontains=word)
+    f = CashbekFilter(request.GET, queryset=cashbek)
+    cashbek = f.qs
+    seller_list = []
+    incoming = 0
+    expening = 0
+    for sel in seller:
+        incom = cashbek.filter(types=1, seller=sel).count()
+        expen = cashbek.filter(types=2, seller=sel).count()
+        incoming += cashbek.filter(types=1, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] if \
+            cashbek.filter(types=1, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        expening += cashbek.filter(types=2, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] if \
+            cashbek.filter(types=2, seller=sel).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        seller_list.append({"name": sel.name, "count": incom + expen, "incom": incom, "expen": expen})
+    seller_list = sorted(seller_list, key=lambda x: x['count'], reverse=True)
+    pagination = Paginator(seller_list, 10)
     page_number = request.GET.get('page')
     page_obj = pagination.get_page(page_number)
-    context.update({"obj": page_obj})
+    context.update({"obj": page_obj, "filter": f, 'incoming': incoming, 'expening': expening})
     return render(request, "shop.html", context)
 
 
@@ -478,9 +483,9 @@ def seller_aggrement(request):
         cashbek = Cashbek.objects.filter(active=True)
         payment = PaymentForSeller.objects.all()
         total = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] if \
-        cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+            cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] else 0
         paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
-        payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+            payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
         residual = total - paid
         seller = Seller.objects.all()
         if request.GET.get('q'):
@@ -499,7 +504,8 @@ def seller_aggrement_detail(request, pk):
     if request.user.is_manager():
         if request.POST:
             seller = Seller.objects.get(pk=pk)
-            PaymentForSeller.objects.create(seller=seller, amount=request.POST.get("amount"), descriptions=request.POST.get("comment"))
+            PaymentForSeller.objects.create(seller=seller, amount=request.POST.get("amount"),
+                                            descriptions=request.POST.get("comment"))
             return redirect("seller_paid_detail", seller.pk)
         seller = Seller.objects.get(pk=pk)
         payments = PaymentForSeller.objects.filter(seller=seller).order_by('-created_at')
@@ -515,6 +521,7 @@ def seller_aggrement_detail(request, pk):
         context.update({"obj": page_obj, 'seller': seller, 'filter': f})
         return render(request, "aggrement_detail.html", context)
 
+
 @user_passes_test(dashboard_access, login_url="signin")
 def vendor_aggrement(request):
     context = {"vendor_aggrement": True}
@@ -522,9 +529,9 @@ def vendor_aggrement(request):
         cashbek = Cashbek.objects.filter(active=True)
         payment = PaymentOfVendor.objects.all()
         total = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] if \
-        cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+            cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
         paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
-        payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+            payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
         residual = total - paid
         vendor = Vendor.objects.all()
         if request.GET.get('q'):
@@ -543,7 +550,8 @@ def vendor_aggrement_detail(request, pk):
     if request.user.is_manager():
         if request.POST:
             vendor = Vendor.objects.get(pk=pk)
-            PaymentOfVendor.objects.create(vendor=vendor, amount=request.POST.get("amount"), descriptions=request.POST.get("comment"))
+            PaymentOfVendor.objects.create(vendor=vendor, amount=request.POST.get("amount"),
+                                           descriptions=request.POST.get("comment"))
             return redirect("vendor_paid_detail", vendor.pk)
         vendor = Vendor.objects.get(pk=pk)
         payments = PaymentOfVendor.objects.filter(vendor=vendor).order_by('-created_at')
