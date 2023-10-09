@@ -39,9 +39,9 @@ def create_profile(sender, instance, **kwargs):
                                                                                              info, parse_mode="HTML")
                     bot.send_message(chat_id=instance.vendor.telegram_id, text="<strong>❌Промо отклонено</strong>\n\n" + info, parse_mode="HTML")
                 else:
-                    bot.send_message(chat_id=Manager.objects.all().first().telegram_id, text=info, parse_mode="HTML")
+                    bot.send_message(chat_id=-4058643019, text=info, parse_mode="HTML")
                     bot.send_message(chat_id=instance.vendor.telegram_id,
                                      text=info, parse_mode="HTML")
-    except:
-        pass
+    except Exception as e:
+        print(e)
 

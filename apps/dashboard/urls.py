@@ -13,6 +13,7 @@ urlpatterns = [
     path('import_promo/', import_promo, name="import_promo"),
     path('confirm_promo/', confirm_promo, name="confirm_promo"),
     path('export_promo/<int:pk>', export_promo, name="export_promo"),
+    path('export_cashbek/', export_cashbek, name="export_cashbek"),
     path('asd', confirm_status, name="confirm_status"),
     path('cashbek/', cashbek, name="cashbek"),
     path('shop/', shop, name="shop"),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('seller_paid/<int:pk>/', seller_aggrement_detail, name="seller_paid_detail"),
     path('vendor_paid/<int:pk>/', vendor_aggrement_detail, name="vendor_paid_detail"),
     path('vendor_payment/', vendor_detail, name="vendor_payment"),
+    path('status_cashbek/', status_cashbek, name="status_cashbek"),
 ]

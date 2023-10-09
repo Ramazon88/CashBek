@@ -12,6 +12,7 @@ from openpyxl.reader.excel import load_workbook
 
 from apps.dashboard.filters import ProductFilter, PromoFilter, CashbekFilter, SellerFilter, PaymentSeller, PaymentVendor
 from apps.main.models import *
+from apps.main.utility import get_tashkent_time
 from config.settings import BASE_DIR
 
 
@@ -410,6 +411,8 @@ def cashbek(request):
         context.update({"start_date": request.GET.get('start_date')})
     if request.GET.get('end_date'):
         context.update({"end_date": request.GET.get('end_date')})
+    if request.GET.get('vendor'):
+        context.update({"vendor_id": request.GET.get('vendor')})
     if request.GET.get('q'):
         word = request.GET.get('q')
         if request.user.is_manager():
@@ -617,3 +620,104 @@ def vendor_detail(request):
         page_obj = pagination.get_page(page_number)
         context.update({"obj": page_obj, 'vendor': vendor, 'filter': f})
         return render(request, "aggrement_detail.html", context)
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def export_cashbek(request):
+    if request.user.is_manager():
+        cashbek = Cashbek.objects.filter(active=True).order_by("-created_at")
+        if request.POST.get('vendor_id'):
+            cashbek = Cashbek.objects.filter(active=True, vendor=Vendor.objects.get(pk=request.POST.get('vendor_id'))).order_by("-created_at")
+        file_location = BASE_DIR / 'file/cashbek_info.xlsx'
+        file_send = BASE_DIR / f'file/cashbek.xlsx'
+        wb = load_workbook(file_location)
+        sheet = wb.active
+        for i_row, cash in enumerate(cashbek, start=4):
+            product = cash.product
+            seller = cash.seller
+            user = cash.user if cash.user else 0
+            sheet.cell(row=i_row, column=1, value=get_tashkent_time(cash.created_at).strftime('%d-%m-%Y %H:%M'))
+            sheet.cell(row=i_row, column=2, value=product.model)
+            sheet.cell(row=i_row, column=3, value=product.imei1)
+            sheet.cell(row=i_row, column=4, value=product.sku)
+            sheet.cell(row=i_row, column=5, value=cash.promo.name if cash.promo else "")
+            sheet.cell(row=i_row, column=6, value=cash.amount)
+            sheet.cell(row=i_row, column=7, value=cash.get_types_display())
+            sheet.cell(row=i_row, column=8, value=cash.vendor.name)
+            sheet.cell(row=i_row, column=9, value=seller.name)
+            sheet.cell(row=i_row, column=10, value=seller.get_region_display())
+            sheet.cell(row=i_row, column=11, value=seller.get_district_display())
+            sheet.cell(row=i_row, column=12, value=seller.seller.phone)
+            if user:
+                sheet.cell(row=i_row, column=13, value=user.first_name)
+                sheet.cell(row=i_row, column=14, value=user.last_name)
+                sheet.cell(row=i_row, column=15, value=user.passport_number)
+                sheet.cell(row=i_row, column=16, value=user.pinfl)
+                sheet.cell(row=i_row, column=17, value=user.citizenship)
+                sheet.cell(row=i_row, column=18, value=user.birth_date.strftime('%d-%m-%Y'))
+                sheet.cell(row=i_row, column=19, value=user.birth_place)
+                sheet.cell(row=i_row, column=20, value=user.gender)
+                sheet.cell(row=i_row, column=21, value=user.region)
+                sheet.cell(row=i_row, column=22, value=user.district)
+                sheet.cell(row=i_row, column=23, value=user.address)
+                sheet.cell(row=i_row, column=24, value=cash.user_phone)
+            else:
+                sheet.cell(row=i_row, column=13, value="Удаленный аккаунт")
+                sheet.cell(row=i_row, column=24, value=cash.user_phone)
+        wb.save(file_send)
+        with open(file_send, 'rb') as f:
+            file_data = f.read()
+        response = HttpResponse(file_data, content_type='application/vnd.ms-excel')
+        response[
+            'Content-Disposition'] = f'attachment; filename="cashbek_{timezone.now().strftime("%d-%m-%Y")}.xlsx"'
+        os.remove(file_send)
+        return response
+    else:
+        cashbek = Cashbek.objects.filter(active=True, vendor=request.user.vendor.vendor).order_by("-created_at")
+        if request.POST.get('vendor_id'):
+            cashbek = Cashbek.objects.filter(active=True, vendor=Vendor.objects.get(pk=request.POST.get('vendor_id')))
+        file_location = BASE_DIR / 'file/cashbek_info1.xlsx'
+        file_send = BASE_DIR / f'file/cashbek.xlsx'
+        wb = load_workbook(file_location)
+        sheet = wb.active
+        for i_row, cash in enumerate(cashbek, start=4):
+            product = cash.product
+            seller = cash.seller
+            sheet.cell(row=i_row, column=1, value=get_tashkent_time(cash.created_at).strftime('%d-%m-%Y %H:%M'))
+            sheet.cell(row=i_row, column=2, value=product.model)
+            sheet.cell(row=i_row, column=3, value=product.imei1)
+            sheet.cell(row=i_row, column=4, value=product.sku)
+            sheet.cell(row=i_row, column=5, value=cash.promo.name if cash.promo else "")
+            sheet.cell(row=i_row, column=6, value=cash.amount)
+            sheet.cell(row=i_row, column=7, value=cash.get_types_display())
+            sheet.cell(row=i_row, column=8, value=cash.vendor.name)
+            sheet.cell(row=i_row, column=9, value=seller.name)
+            sheet.cell(row=i_row, column=10, value=seller.get_region_display())
+            sheet.cell(row=i_row, column=11, value=seller.get_district_display())
+            sheet.cell(row=i_row, column=12, value=seller.seller.phone)
+        wb.save(file_send)
+        with open(file_send, 'rb') as f:
+            file_data = f.read()
+        response = HttpResponse(file_data, content_type='application/vnd.ms-excel')
+        response[
+            'Content-Disposition'] = f'attachment; filename="cashbek_{timezone.now().strftime("%d-%m-%Y")}.xlsx"'
+        os.remove(file_send)
+        return response
+
+
+@user_passes_test(dashboard_access, login_url="signin")
+def status_cashbek(request):
+    if request.POST.get("active"):
+        Cashbek.objects.filter(pk=request.POST.get("cashbek_id")).update(active=False,
+                                                                         description=request.POST.get("comment"))
+        messages.success(request, "Кэшбэк успешно деактивирован")
+    elif request.POST.get("inactive"):
+        Cashbek.objects.filter(pk=request.POST.get("cashbek_id")).update(active=True)
+        messages.success(request, "Кэшбэк успешно активирован")
+    return redirect("cashbek")
+
+
+
+
+
+

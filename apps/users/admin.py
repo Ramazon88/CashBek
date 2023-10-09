@@ -113,7 +113,11 @@ class SimpleUserInline(admin.StackedInline):
 class SellerAdmin(admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [SimpleUserInline]
-    list_display = ["full_name", "get_phone", "pinfl", "auth_status", "get_active"]
+    list_display = ["full_name", "get_phone", "passport_number", "pinfl", "get_active", "doc_type", "doc_expiry_date",
+                    "doc_issued_by", "doc_issued_date", "citizenship", "nationality", "birth_place", "birth_date",
+                    "gender", "region", "district", "address"]
+    list_filter = ["citizenship", "nationality", "region", "district", "gender"]
+    search_fields = ["passport_number", "pinfl", "first_name", "first_name_en", "last_name", "last_name_en"]
 
     @admin.display(ordering='simple_user__phone', description='Телефон')
     def get_phone(self, obj):
@@ -132,27 +136,27 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.simple_user.auth_status
 
 
-@admin.register(User)
-class UserAdmin(DjangoUserAdmin, admin.ModelAdmin):
-    fieldsets = (
-        (_('Main'), {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'auth_status', 'phone',)}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login',)}),
-    )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'phone', 'first_name', 'last_name', 'user_type',),
-        }),
-    )
-    list_display = ('get_fullname', 'phone', 'is_staff', 'user_type', 'date_joined',)
-    list_filter = ('user_type',)
-    search_fields = ('first_name', 'last_name', 'phone',)
-    ordering = ('-id',)
-
-    @staticmethod
-    def get_fullname(obj):
-        if obj.first_name or obj.last_name:
-            return "{} {}".format(obj.first_name, obj.last_name)
-        return "{}".format(obj.username)
+# @admin.register(User)
+# class UserAdmin(DjangoUserAdmin, admin.ModelAdmin):
+#     fieldsets = (
+#         (_('Main'), {'fields': ('username', 'password')}),
+#         (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'auth_status', 'phone',)}),
+#         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+#         (_('Important dates'), {'fields': ('last_login',)}),
+#     )
+#     add_fieldsets = (
+#         (None, {
+#             'classes': ('wide',),
+#             'fields': ('username', 'password1', 'password2', 'phone', 'first_name', 'last_name', 'user_type',),
+#         }),
+#     )
+#     list_display = ('get_fullname', 'phone', 'is_staff', 'user_type', 'date_joined',)
+#     list_filter = ('user_type',)
+#     search_fields = ('first_name', 'last_name', 'phone',)
+#     ordering = ('-id',)
+#
+#     @staticmethod
+#     def get_fullname(obj):
+#         if obj.first_name or obj.last_name:
+#             return "{} {}".format(obj.first_name, obj.last_name)
+#         return "{}".format(obj.username)
