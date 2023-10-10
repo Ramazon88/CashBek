@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
 
+from apps.main.admin import superAdmin
 from config import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('superadmin08/', superAdmin.urls),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     # re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('', include('apps.dashboard.urls')),

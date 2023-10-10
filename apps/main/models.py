@@ -160,6 +160,20 @@ class Cashbek(models.Model):
     types = models.IntegerField(choices=choice_cashbek)
     user_phone = models.CharField(blank=True, null=True, max_length=1024)
     description = models.CharField(default="", blank=True, max_length=1024)
+    @property
+    def get_product_model(self):
+        return self.product.model
+
+    @property
+    def get_product_imei(self):
+        return self.product.imei1
+
+    @property
+    def get_user(self):
+        if self.user:
+            return self.user.simple_user.phone
+        else:
+            return "deleted"
 
 
 class PaymentForSeller(models.Model):

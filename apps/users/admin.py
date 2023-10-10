@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
+from apps.main.admin import superAdmin
 from apps.main.models import BlackListProducts
 from apps.main.task import set_manager_group
 from apps.users.form import CustomUniversalForm, CustomUserCreationForm, CustomUniversalFormForUser
@@ -9,6 +10,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 admin.site.register(Vendor)
+superAdmin.register(Vendor)
 admin.site.register(BlackListProducts)
 
 
@@ -25,7 +27,6 @@ class UserInline(admin.StackedInline):
         return super().get_formset(request, obj=None, **kwargs)
 
 
-@admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Основной', {'fields': ('name', 'seller_name', 'telegram_id', 'region', 'district')}),
@@ -53,7 +54,10 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.seller.is_active
 
 
-@admin.register(Manager)
+admin.site.register(Seller, SellerAdmin)
+superAdmin.register(Seller, SellerAdmin)
+
+
 class SellerAdmin(admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [UserInline]
@@ -75,7 +79,10 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.manager.is_active
 
 
-@admin.register(Vendor_account)
+admin.site.register(Manager, SellerAdmin)
+superAdmin.register(Manager, SellerAdmin)
+
+
 class SellerAdmin(admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [UserInline]
@@ -96,6 +103,10 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.vendors.is_active
 
 
+admin.site.register(Vendor_account, SellerAdmin)
+superAdmin.register(Vendor_account, SellerAdmin)
+
+
 class SimpleUserInline(admin.StackedInline):
     model = User
     form = CustomUserCreationForm
@@ -109,7 +120,6 @@ class SimpleUserInline(admin.StackedInline):
         return super().get_formset(request, obj=None, **kwargs)
 
 
-@admin.register(SimpleUsers)
 class SellerAdmin(admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [SimpleUserInline]
@@ -136,27 +146,33 @@ class SellerAdmin(admin.ModelAdmin):
         return obj.simple_user.auth_status
 
 
-# @admin.register(User)
-# class UserAdmin(DjangoUserAdmin, admin.ModelAdmin):
-#     fieldsets = (
-#         (_('Main'), {'fields': ('username', 'password')}),
-#         (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'auth_status', 'phone',)}),
-#         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-#         (_('Important dates'), {'fields': ('last_login',)}),
-#     )
-#     add_fieldsets = (
-#         (None, {
-#             'classes': ('wide',),
-#             'fields': ('username', 'password1', 'password2', 'phone', 'first_name', 'last_name', 'user_type',),
-#         }),
-#     )
-#     list_display = ('get_fullname', 'phone', 'is_staff', 'user_type', 'date_joined',)
-#     list_filter = ('user_type',)
-#     search_fields = ('first_name', 'last_name', 'phone',)
-#     ordering = ('-id',)
-#
-#     @staticmethod
-#     def get_fullname(obj):
-#         if obj.first_name or obj.last_name:
-#             return "{} {}".format(obj.first_name, obj.last_name)
-#         return "{}".format(obj.username)
+admin.site.register(SimpleUsers, SellerAdmin)
+superAdmin.register(SimpleUsers, SellerAdmin)
+
+
+class UserAdmin(DjangoUserAdmin, admin.ModelAdmin):
+    fieldsets = (
+        (_('Main'), {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type', 'auth_status', 'phone',)}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login',)}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'phone', 'first_name', 'last_name', 'user_type',),
+        }),
+    )
+    list_display = ('get_fullname', 'phone', 'is_staff', 'user_type', 'date_joined',)
+    list_filter = ('user_type',)
+    search_fields = ('first_name', 'last_name', 'phone',)
+    ordering = ('-id',)
+
+    @staticmethod
+    def get_fullname(obj):
+        if obj.first_name or obj.last_name:
+            return "{} {}".format(obj.first_name, obj.last_name)
+        return "{}".format(obj.username)
+
+
+superAdmin.register(User, UserAdmin)
