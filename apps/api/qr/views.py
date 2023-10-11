@@ -5,7 +5,7 @@ from apps.api.permissions import UserPermission
 from apps.api.qr.serializers import GetTokenSerializer, CashbekSerializer
 from apps.api.qr.service import get_vendor_balance
 from apps.main.models import *
-from apps.main.task import edit_qr_done, delete_token, check_promo, cashbek_message
+from apps.main.task import edit_qr_done, delete_token, check_promo, cashbek_message, check_many_cashbek
 
 
 class TokenView(GenericAPIView):
@@ -114,5 +114,5 @@ class CashbekView(GenericAPIView):
         product.is_active = False
         product.save()
         delete_token.delay(token.pk)
-
+        check_many_cashbek.apply_async((user.pk,), countdown=2)
         return Response(success, status=200)

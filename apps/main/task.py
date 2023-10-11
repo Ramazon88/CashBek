@@ -1,12 +1,12 @@
-import time
+import datetime
 
 import requests
 from celery import shared_task
 from django.contrib.auth.models import Group
-from django.db.models import Sum
+from django.db.models import Sum, Q
 
 from apps.main.admin import QR_code, Notifications, ReadNot
-from apps.main.models import Token_confirm, Promo, Cashbek, PriceProduct, FINISH, Fribase
+from apps.main.models import Token_confirm, Promo, Cashbek, PriceProduct, FINISH, Fribase, WAIT, ACTIVE, PAUSE
 from apps.users.models import SimpleUsers, User
 from config.settings import seller_bot, FIREBASE_KEY, FIREBASE_URL
 
@@ -100,3 +100,26 @@ def cashbek_message(pk):
 @shared_task(bint=True)
 def set_manager_group(phone):
     User.objects.get(phone=phone).groups.add(Group.objects.get(name="Manager"))
+
+
+@shared_task(bint=True)
+def check_many_cashbek(user_pk):
+    date = datetime.date.today()
+    user = SimpleUsers.objects.get(pk=user_pk)
+    cashbek = Cashbek.objects.filter(types=1, active=True, created_at__date=date, user__pk=user_pk)
+    if cashbek.count() > 2:
+        text = f"<strong>🔴Клиент получил более 2 кэшбэков</strong>\n\n<strong>Количество полученных кэшбэков: </strong>{cashbek.count()}\n"
+        text += f"<strong>Клиент: </strong>{user.first_name} {user.last_name}\n"
+        text += f"<strong>Номер телефона: </strong><code>{user.simple_user.phone}</code>\n"
+        seller_bot.send_message(chat_id=-4058643019, text=text, parse_mode="HTML")
+
+
+@shared_task(bint=True)
+def check_promo_expire():
+    date = datetime.date.today()
+    promo = Promo.objects.filter(Q(status=WAIT) | Q(status=ACTIVE) | Q(status=PAUSE), end=date)
+    for i in promo:
+        i.status = FINISH
+        i.description = "Акция была автоматически отменена в связи с истечением срока действия"
+        i.save()
+

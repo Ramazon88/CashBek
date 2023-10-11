@@ -326,7 +326,6 @@ def confirm_promo(request):
 
 @user_passes_test(dashboard_access, login_url="signin")
 def export_promo(request, pk):
-    print(request.META.get('HTTP_REFERER'))
     promo = Promo.objects.get(pk=pk)
     if not request.user.is_manager() and promo.vendor != request.user.vendor:
         return HttpResponseNotFound()
