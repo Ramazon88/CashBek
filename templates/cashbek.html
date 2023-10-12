@@ -62,7 +62,7 @@
                         <input type="submit" />
                       </div>
                     </form>
-                    <form action="{% url 'export_cashbek' %}" method="post" style="margin-left: 100px;">{% csrf_token %}
+                    <form action="{% url 'export_cashbek' %}" method="post" style="margin-left: 20px;">{% csrf_token %}
                         <input type="hidden" name="vendor_id" value="{{ vendor_id }}">
                           <button type="submit" class="btn btn-success">
                              Экспорт

@@ -18,6 +18,11 @@ admin.site.register(FAQ)
 class SuperAdmin(admin.AdminSite):
     site_header = "Super Cashbek"
 
+    # def has_permission(self, request):
+    #     if request.user.phone == "998988888888":
+    #         return True
+    #     return False
+
 
 superAdmin = SuperAdmin(name="SuperCashbek")
 superAdmin.register(TempPriceProduct)

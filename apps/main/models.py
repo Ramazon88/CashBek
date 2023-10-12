@@ -62,6 +62,12 @@ class Promo(models.Model):
     who = models.CharField(max_length=1024, default="")
     price_procent = models.IntegerField()
 
+    @property
+    def count_cashbek(self):
+        cashbek = self.cash_promo.filter(types=1, active=True)
+        return {"count": cashbek.count(), "summa": cashbek.aggregate(all_price=Sum(F("price")))["all_price"] if \
+            cashbek.aggregate(all_price=Sum(F("price")))["all_price"] else 0}
+
 
 class TempPromo(models.Model):
     vendor = models.ForeignKey(Vendor_account, on_delete=models.CASCADE)
@@ -160,6 +166,7 @@ class Cashbek(models.Model):
     types = models.IntegerField(choices=choice_cashbek)
     user_phone = models.CharField(blank=True, null=True, max_length=1024)
     description = models.CharField(default="", blank=True, max_length=1024)
+
     @property
     def get_product_model(self):
         return self.product.model
@@ -188,6 +195,7 @@ class PaymentOfVendor(models.Model):
     amount = models.BigIntegerField()
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='payment_vendor')
     descriptions = models.CharField(max_length=1024, default="")
+
 
 class Fribase(models.Model):
     fr_id = models.CharField(max_length=256)

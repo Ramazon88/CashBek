@@ -530,6 +530,8 @@ def seller_aggrement(request):
         page_obj = pagination.get_page(page_number)
         context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
         return render(request, "aggrement.html", context)
+    else:
+        return redirect("home")
 
 
 @user_passes_test(dashboard_access, login_url="signin")
@@ -554,6 +556,8 @@ def seller_aggrement_detail(request, pk):
         page_obj = pagination.get_page(page_number)
         context.update({"obj": page_obj, 'seller': seller, 'filter': f})
         return render(request, "aggrement_detail.html", context)
+    else:
+        return redirect("home")
 
 
 @user_passes_test(dashboard_access, login_url="signin")
@@ -576,6 +580,8 @@ def vendor_aggrement(request):
         page_obj = pagination.get_page(page_number)
         context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
         return render(request, "aggrement.html", context)
+    else:
+        return redirect("home")
 
 
 @user_passes_test(dashboard_access, login_url="signin")
@@ -600,6 +606,8 @@ def vendor_aggrement_detail(request, pk):
         page_obj = pagination.get_page(page_number)
         context.update({"obj": page_obj, 'vendor': vendor, 'filter': f})
         return render(request, "aggrement_detail.html", context)
+    else:
+        return redirect("home")
 
 
 @user_passes_test(dashboard_access, login_url="signin")
@@ -619,6 +627,8 @@ def vendor_detail(request):
         page_obj = pagination.get_page(page_number)
         context.update({"obj": page_obj, 'vendor': vendor, 'filter': f})
         return render(request, "aggrement_detail.html", context)
+    else:
+        return redirect("home")
 
 
 @user_passes_test(dashboard_access, login_url="signin")
@@ -713,7 +723,7 @@ def status_cashbek(request):
     elif request.POST.get("inactive"):
         Cashbek.objects.filter(pk=request.POST.get("cashbek_id")).update(active=True)
         messages.success(request, "Кэшбэк успешно активирован")
-    return redirect("cashbek")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 

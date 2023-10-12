@@ -87,6 +87,14 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="card-footer">
+                  <form action="{% url 'confirm_promo' %}" method="post">{% csrf_token %}
+                    <input type="hidden" name="promo" value="{{ promos.id }}">
+                    <button type="submit" class="btn btn-info">Сохранять</button>
+                    <a href="{% url 'products' %}" class="btn btn-danger float-right">Отмена</a>
+                  </form>
+                </div>
+                <br><br>
                 <table class="table table-bordered table-success">
                   <thead>
                   <tr>
@@ -122,7 +130,6 @@
                     <button type="submit" class="btn btn-info">Сохранять</button>
                     <a href="{% url 'products' %}" class="btn btn-danger float-right">Отмена</a>
                   </form>
-
                 </div>
               </div>
               {% endif %}

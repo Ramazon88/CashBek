@@ -1,1 +1,160 @@
 
+INFO 2023-10-12 14:42:08,642 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 14:42:10,862 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 200 15678
+WARNING 2023-10-12 14:42:11,668 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2023-10-12 14:42:11,712 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679
+INFO 2023-10-12 14:42:15,141 django.server basehttp basehttp.py log_message "GET /admin/users/ HTTP/1.1" 200 34229
+INFO 2023-10-12 14:42:15,161 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+WARNING 2023-10-12 14:42:15,166 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 14:42:15,264 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 14:45:17,306 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 14:45:19,253 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 14:45:37,318 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 14:45:38,691 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 14:46:32,005 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 14:46:33,217 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:14:26,002 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:14:27,237 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+WARNING 2023-10-12 15:15:07,989 django.request log log.py log_response Not Found: /admin/superadmin08/
+WARNING 2023-10-12 15:15:07,990 django.server basehttp basehttp.py log_message "GET /admin/superadmin08/ HTTP/1.1" 404 7274
+INFO 2023-10-12 15:15:50,864 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:15:52,204 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:15:56,191 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 200 47665
+WARNING 2023-10-12 15:15:56,213 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:16:01,380 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 200 41178
+INFO 2023-10-12 15:16:01,395 django.server basehttp basehttp.py log_message "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,397 django.server basehttp basehttp.py log_message "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,401 django.server basehttp basehttp.py log_message "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,403 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,403 django.server basehttp basehttp.py log_message "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,404 django.server basehttp basehttp.py log_message "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,405 django.server basehttp basehttp.py log_message "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2023-10-12 15:16:01,413 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+INFO 2023-10-12 15:16:01,414 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+WARNING 2023-10-12 15:16:01,416 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:16:13,063 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:16:14,331 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:16:16,437 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 200 41178
+INFO 2023-10-12 15:16:16,454 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:16:16,461 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:16:21,851 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/8/change/ HTTP/1.1" 200 52185
+INFO 2023-10-12 15:16:21,873 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:16:21,878 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:16:21,880 django.server basehttp basehttp.py log_message "GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+INFO 2023-10-12 15:16:21,881 django.server basehttp basehttp.py log_message "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15292
+INFO 2023-10-12 15:16:27,219 django.server basehttp basehttp.py log_message "POST /superadmin08/users/user/8/change/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:16:27,227 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:16:27,252 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3528
+WARNING 2023-10-12 15:16:27,269 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:16:31,735 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3931
+WARNING 2023-10-12 15:16:31,751 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:19,900 django.server basehttp basehttp.py log_message "GET /admin/ HTTP/1.1" 200 52608
+WARNING 2023-10-12 15:17:19,917 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:31,887 django.server basehttp basehttp.py log_message "GET /admin/users/manager/ HTTP/1.1" 200 24761
+INFO 2023-10-12 15:17:31,913 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:17:31,919 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:34,888 django.server basehttp basehttp.py log_message "GET /admin/users/vendor/ HTTP/1.1" 200 24384
+INFO 2023-10-12 15:17:34,910 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:17:34,913 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:36,412 django.server basehttp basehttp.py log_message "GET /admin/users/vendor_account/ HTTP/1.1" 200 24775
+INFO 2023-10-12 15:17:36,432 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:17:36,434 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:51,639 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:51,650 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 200 3517
+WARNING 2023-10-12 15:17:51,668 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:53,750 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:53,756 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:53,765 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 200 3517
+WARNING 2023-10-12 15:17:53,780 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:55,128 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:55,134 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:55,142 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 200 3517
+WARNING 2023-10-12 15:17:55,156 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:56,143 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:56,148 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:56,156 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 200 3517
+WARNING 2023-10-12 15:17:56,173 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:17:57,139 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:57,145 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:17:57,154 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 200 3517
+WARNING 2023-10-12 15:17:57,172 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:18:09,646 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:18:10,913 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:18:13,167 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:18:13,225 django.server basehttp basehttp.py log_message "GET /superadmin08/ HTTP/1.1" 200 47651
+WARNING 2023-10-12 15:18:13,244 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:18:48,371 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 200 41178
+INFO 2023-10-12 15:18:48,397 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:18:48,400 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:18:54,112 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/8/change/ HTTP/1.1" 200 52185
+INFO 2023-10-12 15:18:54,131 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:18:54,133 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:19:20,587 django.server basehttp basehttp.py log_message "POST /superadmin08/users/user/8/change/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:20,595 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:20,605 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3528
+WARNING 2023-10-12 15:19:20,621 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:19:30,518 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:19:31,786 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:19:34,897 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:34,903 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:34,919 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3528
+WARNING 2023-10-12 15:19:34,937 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:19:35,914 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:35,921 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:35,932 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3528
+WARNING 2023-10-12 15:19:35,952 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:19:45,022 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:45,028 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:45,037 django.server basehttp basehttp.py log_message "GET /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 200 3528
+WARNING 2023-10-12 15:19:45,054 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:19:45,113 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:19:46,595 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:19:47,622 django.server basehttp basehttp.py log_message "POST /superadmin08/login/?next=/superadmin08/users/user/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:19:47,685 django.server basehttp basehttp.py log_message "GET /superadmin08/users/user/ HTTP/1.1" 200 41776
+INFO 2023-10-12 15:19:47,705 django.server basehttp basehttp.py log_message "GET /superadmin08/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-10-12 15:19:47,711 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-10-12 15:31:05,083 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\admin.py changed, reloading.
+INFO 2023-10-12 15:31:06,471 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:43:54,793 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\api\balance\serializers.py changed, reloading.
+INFO 2023-10-12 15:43:56,513 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:46:44,360 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\dashboard\views.py changed, reloading.
+INFO 2023-10-12 15:46:45,640 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 15:46:51,248 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 200 15678
+INFO 2023-10-12 15:46:53,763 django.server basehttp basehttp.py log_message "GET /cashbek/ HTTP/1.1" 200 38355
+INFO 2023-10-12 15:47:02,510 django.server basehttp basehttp.py log_message "POST /status_cashbek/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:47:02,556 django.server basehttp basehttp.py log_message "GET /cashbek/ HTTP/1.1" 200 38446
+INFO 2023-10-12 15:47:16,457 django.server basehttp basehttp.py log_message "POST /export_cashbek/ HTTP/1.1" 200 7902
+INFO 2023-10-12 15:47:21,167 django.server basehttp basehttp.py log_message "GET /cashbek/?types=2&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 26846
+INFO 2023-10-12 15:47:28,041 django.server basehttp basehttp.py log_message "POST /status_cashbek/ HTTP/1.1" 302 0
+INFO 2023-10-12 15:47:28,069 django.server basehttp basehttp.py log_message "GET /cashbek/?types=2&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 27153
+INFO 2023-10-12 15:48:19,861 django.server basehttp basehttp.py log_message "GET /cashbek/?types=2&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 26956
+INFO 2023-10-12 15:48:20,752 django.server basehttp basehttp.py log_message "GET /cashbek/?types=2&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 26955
+INFO 2023-10-12 15:48:56,729 django.server basehttp basehttp.py log_message "GET /cashbek/?types=&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 38354
+INFO 2023-10-12 16:05:02,122 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\models.py changed, reloading.
+INFO 2023-10-12 16:05:04,072 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 16:17:25,189 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\models.py changed, reloading.
+INFO 2023-10-12 16:17:26,759 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-10-12 16:17:31,125 django.server basehttp basehttp.py log_message "GET /cashbek/?types=&start_date=&end_date=&vendor=&active=unknown HTTP/1.1" 200 38354
+INFO 2023-10-12 16:17:32,637 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:18:27,921 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:18:28,975 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:18:29,991 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:18:30,960 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:18:35,706 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:03,215 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:04,201 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:04,968 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:05,683 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:21,086 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17237
+INFO 2023-10-12 16:19:21,953 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17246
+INFO 2023-10-12 16:19:31,860 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17246
+INFO 2023-10-12 16:19:32,780 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17247
+INFO 2023-10-12 16:19:38,592 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17247
+INFO 2023-10-12 16:19:39,434 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17247
+INFO 2023-10-12 17:06:54,199 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17235
+INFO 2023-10-12 17:06:55,302 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17235
+INFO 2023-10-12 17:06:56,343 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17235
+INFO 2023-10-12 17:10:53,726 django.server basehttp basehttp.py log_message "GET /promo/ HTTP/1.1" 200 17235
+INFO 2023-10-12 17:10:55,785 django.server basehttp basehttp.py log_message "GET /export_promo/10 HTTP/1.1" 200 6469
+INFO 2023-10-12 17:50:21,162 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\main\task.py changed, reloading.
+INFO 2023-10-12 17:50:22,594 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader

@@ -41,7 +41,7 @@ class GetProductSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data.update({"amount": PriceProduct.objects.filter(promo__status=ACTIVE, product_id=data["id"]).first().price})
-        data.update({"image": "https://w7.pngwing.com/pngs/378/624/png-transparent-iphone-14.png"})
+        data.update({"image": self.context['request'].build_absolute_uri(instance.ven.logo.url)})
         return data
 
 

@@ -1,1 +1,30 @@
 
+WARNING 2023-10-12 14:42:11,668 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2023-10-12 14:42:11,712 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679
+WARNING 2023-10-12 14:42:15,166 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 14:42:15,264 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:15:07,989 django.request log log.py log_response Not Found: /admin/superadmin08/
+WARNING 2023-10-12 15:15:07,990 django.server basehttp basehttp.py log_message "GET /admin/superadmin08/ HTTP/1.1" 404 7274
+WARNING 2023-10-12 15:15:56,213 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:16:01,416 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:16:16,461 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:16:21,878 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:16:27,269 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:16:31,751 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:19,917 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:31,919 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:34,913 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:36,434 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:51,668 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:53,780 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:55,156 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:56,173 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:17:57,172 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:18:13,244 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:18:48,400 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:18:54,133 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:19:20,621 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:19:34,937 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:19:35,952 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:19:45,054 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-12 15:19:47,711 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813

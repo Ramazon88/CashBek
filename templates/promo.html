@@ -70,6 +70,7 @@
                       <th>Дата окончания акции</th>
                       <th>Бюджет</th>
                       <th>Количество товаров</th>
+                      <th>Количество полученных кэшбэков</th>
                       {% if user.is_manager %}
                       <th>Vendor</th>
                       {% endif %}
@@ -87,6 +88,9 @@
                       <td>{{ ob.end | date:'Y-m-d' }}</td>
                       <td>{{ ob.budget | intcomma }}</td>
                       <td>{{ ob.products.all.count }}</td>
+                      {% with total=ob.count_cashbek %}
+                      <td>{{ total.count }} ({{ total.summa | intcomma }} Сум)</td>
+                      {% endwith %}
                       {% if user.is_manager %}
                       <td>{{ ob.vendor.vendor }}</td>
                       {% endif %}
@@ -120,6 +124,7 @@
                     <th>Дата окончания акции</th>
                     <th>Бюджет</th>
                     <th>Количество товаров</th>
+                    <th>Количество полученных кэшбэков</th>
                     {% if user.is_manager %}
                     <th>Vendor</th>
                     {% endif %}
