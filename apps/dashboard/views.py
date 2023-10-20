@@ -636,7 +636,9 @@ def export_cashbek(request):
     if request.user.is_manager():
         cashbek = Cashbek.objects.filter(active=True).order_by("-created_at")
         if request.POST.get('vendor_id'):
-            cashbek = Cashbek.objects.filter(active=True, vendor=Vendor.objects.get(pk=request.POST.get('vendor_id'))).order_by("-created_at")
+            cashbek = Cashbek.objects.filter(active=True,
+                                             vendor=Vendor.objects.get(pk=request.POST.get('vendor_id'))).order_by(
+                "-created_at")
         file_location = BASE_DIR / 'file/cashbek_info.xlsx'
         file_send = BASE_DIR / f'file/cashbek.xlsx'
         wb = load_workbook(file_location)
@@ -726,7 +728,24 @@ def status_cashbek(request):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-
-
-
-
+@user_passes_test(dashboard_access, login_url="signin")
+def users(request):
+    context = {"simple_user": True}
+    if request.user.is_manager():
+        users = SimpleUsers.objects.filter()
+        total = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] if \
+            cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
+            payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        residual = total - paid
+        vendor = Vendor.objects.all()
+        if request.GET.get('q'):
+            word = request.GET.get('q')
+            vendor = vendor.filter(name__icontains=word)
+        pagination = Paginator(vendor, 10)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
+        return render(request, "aggrement.html", context)
+    else:
+        return redirect("home")

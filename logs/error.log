@@ -28,3 +28,5 @@ WARNING 2023-10-12 15:19:34,937 django.server basehttp basehttp.py log_message "
 WARNING 2023-10-12 15:19:35,952 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
 WARNING 2023-10-12 15:19:45,054 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
 WARNING 2023-10-12 15:19:47,711 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-10-17 12:19:45,528 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2023-10-17 12:19:45,529 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679

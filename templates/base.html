@@ -208,6 +208,18 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            {% if simple_user %}
+            <a class="nav-link active">
+            {% else %}
+            <a href="{% url 'vendor_paid' %}" class="nav-link">
+            {% endif %}
+              <i class="fa-solid fa-users"></i>
+              <p>
+                Обычные пользователи
+              </p>
+            </a>
+          </li>
           {% else %}
           <li class="nav-item">
             {% if vendor_aggrement %}
@@ -240,9 +252,9 @@
   <footer class="main-footer">
     <strong>Copyright &copy; 2023 <a href="#">Cashbek</a>.</strong>
     All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+<!--    <div class="float-right d-none d-sm-inline-block">-->
+<!--      <b>Version</b> 3.2.0-->
+<!--    </div>-->
   </footer>
 
   <!-- Control Sidebar -->
