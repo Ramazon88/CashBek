@@ -7,20 +7,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            {% if seller_aggrement %}
-            <h1>История платежей продавцам</h1>
-            {% else %}
-            <h1>История платежей поставщикам</h1>
-            {% endif %}
+            <h1>Список обычные пользователи</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-              {% if seller_aggrement %}
-              <li class="breadcrumb-item active">История платежей продавцам</li>
-              {% else %}
-              <li class="breadcrumb-item active">История платежей поставщикам</li>
-              {% endif %}
             </ol>
           </div>
         </div>
@@ -34,12 +25,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                {% if seller_aggrement %}
-                <h3 class="card-title">История платежей продавцам</h3>
-                {% else %}
-                <h3 class="card-title">История платежей поставщикам</h3>
-                {% endif %}
-
+                <h3 class="card-title">Список обычные пользователи</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -56,9 +42,7 @@
                     </form>
                 </div>
                 <br><br>
-                <button type="button" class="btn btn-info">Общий: <strong>{{ total | intcomma }} Сум</strong></button>
-                <button type="button" class="btn btn-success">Оплаченный: <strong>{{ paid | intcomma }} Сум</strong></button>
-                <button type="button" class="btn btn-danger">Остальные: <strong>{{ residual | intcomma }} Сум</strong></button>
+                <button type="button" class="btn btn-info">Общий: <strong>{{ users_count }}</strong></button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>

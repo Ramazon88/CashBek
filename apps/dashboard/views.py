@@ -733,19 +733,14 @@ def users(request):
     context = {"simple_user": True}
     if request.user.is_manager():
         users = SimpleUsers.objects.filter()
-        total = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] if \
-            cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
-        paid = payment.aggregate(all_price=Sum(F("amount")))["all_price"] if \
-            payment.aggregate(all_price=Sum(F("amount")))["all_price"] else 0
-        residual = total - paid
-        vendor = Vendor.objects.all()
         if request.GET.get('q'):
             word = request.GET.get('q')
-            vendor = vendor.filter(name__icontains=word)
-        pagination = Paginator(vendor, 10)
+            users = users.filter(name__icontains=word)
+        users_count = users.count()
+        pagination = Paginator(users, 10)
         page_number = request.GET.get('page')
         page_obj = pagination.get_page(page_number)
-        context.update({'total': total, 'paid': paid, 'residual': residual, 'obj': page_obj})
+        context.update({'obj': page_obj, "users_count": users_count})
         return render(request, "aggrement.html", context)
     else:
         return redirect("home")
