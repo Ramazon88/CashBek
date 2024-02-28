@@ -30,3 +30,154 @@ WARNING 2023-10-12 15:19:45,054 django.server basehttp basehttp.py log_message "
 WARNING 2023-10-12 15:19:47,711 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
 WARNING 2023-10-17 12:19:45,528 django.request log log.py log_response Not Found: /favicon.ico
 WARNING 2023-10-17 12:19:45,529 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679
+WARNING 2023-11-20 16:39:15,908 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2023-11-20 16:39:15,909 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679
+WARNING 2023-11-20 16:42:38,543 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:42:38,683 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:42:41,468 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:42:45,402 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:44:15,416 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:45:19,911 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+ERROR 2023-11-20 16:45:28,901 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 465, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:45:28,904 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140998
+ERROR 2023-11-20 16:47:28,028 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 466, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:47:28,031 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140880
+ERROR 2023-11-20 16:48:08,767 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 466, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:48:08,769 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140897
+WARNING 2023-11-20 16:51:07,383 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:53:31,594 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2023-11-20 16:53:37,331 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 12:42:27,159 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:42:27,160 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6805
+WARNING 2024-02-28 12:58:44,167 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:58:44,168 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6787
+WARNING 2024-02-28 12:59:09,156 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:59:09,157 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6805
+WARNING 2024-02-28 14:10:18,612 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 14:10:19,054 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 14:10:23,032 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 14:10:24,377 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 14:10:56,480 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:28:07,059 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:28:07,598 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:28:08,802 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:57:54,394 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:58:23,939 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+WARNING 2024-02-28 15:58:51,140 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813

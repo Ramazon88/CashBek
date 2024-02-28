@@ -18,7 +18,7 @@ from config.settings import BASE_DIR
 
 
 def start_handler(update: Update, context: CallbackContext):
-    user_id = str(update.message.from_user.id)
+    user_id = update.message.from_user.id
     try:
         seller = Seller.objects.get(telegram_id=user_id, seller__is_active=True)
         text = f"<strong>Продавец: </strong>{seller.name}\n<strong>ID: </strong><code>{seller.telegram_id}</code>"

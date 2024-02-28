@@ -24,7 +24,7 @@ class GetNotificationsView(ListAPIView):
     pagination_class = CustomListPagination
 
     def get_queryset(self):
-        return self.request.user.simple_user.readnot_set.all()
+        return self.request.user.simple_user.readnot_set.all().order_by("-id")
 
     def get_paginated_response(self, data):
         data = super().get_paginated_response(data)

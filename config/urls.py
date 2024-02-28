@@ -30,6 +30,7 @@ urlpatterns = [
     # re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('', include('apps.dashboard.urls')),
     path('api/', include('apps.api.urls')),
-    path('bot/', include('apps.sellerbot.urls'))
+    path('bot/', include('apps.sellerbot.urls')),
+    path('minibot/', include('apps.minibot.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

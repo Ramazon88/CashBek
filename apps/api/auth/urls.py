@@ -18,5 +18,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='Logout'),
     path('getVerifyDeleteUser/', GetDeleteVerify.as_view()),
     path('confirmDeleteUser/', ConfirmDeleteUserView.as_view()),
+    path('checkAvailableUserByPass/', CheckAvailableUserByPassView.as_view()),
 ]
 

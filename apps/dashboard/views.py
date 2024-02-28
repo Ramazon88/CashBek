@@ -636,9 +636,7 @@ def export_cashbek(request):
     if request.user.is_manager():
         cashbek = Cashbek.objects.filter(active=True).order_by("-created_at")
         if request.POST.get('vendor_id'):
-            cashbek = Cashbek.objects.filter(active=True,
-                                             vendor=Vendor.objects.get(pk=request.POST.get('vendor_id'))).order_by(
-                "-created_at")
+            cashbek = Cashbek.objects.filter(active=True, vendor=Vendor.objects.get(pk=request.POST.get('vendor_id'))).order_by("-created_at")
         file_location = BASE_DIR / 'file/cashbek_info.xlsx'
         file_send = BASE_DIR / f'file/cashbek.xlsx'
         wb = load_workbook(file_location)
@@ -728,19 +726,7 @@ def status_cashbek(request):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-@user_passes_test(dashboard_access, login_url="signin")
-def users(request):
-    context = {"simple_user": True}
-    if request.user.is_manager():
-        users = SimpleUsers.objects.filter()
-        if request.GET.get('q'):
-            word = request.GET.get('q')
-            users = users.filter(name__icontains=word)
-        users_count = users.count()
-        pagination = Paginator(users, 10)
-        page_number = request.GET.get('page')
-        page_obj = pagination.get_page(page_number)
-        context.update({'obj': page_obj, "users_count": users_count})
-        return render(request, "aggrement.html", context)
-    else:
-        return redirect("home")
+
+
+
+

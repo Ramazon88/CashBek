@@ -62,6 +62,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        print(self.context['request'].headers)
         user = User.objects.filter(Q(phone=validated_data['phone']) & Q(user_type=USER))
         if user.exists():
             if validated_data['phone'] in ["998905555555", "998922222222"]:
@@ -216,7 +217,7 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
             "client_id": CLIENT_ID,
             "client_secret": CLIENT_SECRET
         }
-        response_access = requests.post(url=MY_ID_URL + "/api/v1/oauth2/access-token", data=body)
+        response_access = requests.post(url=MY_ID_URL + "/api/v1/oauth2/access-token/", data=body)
         if response_access.status_code == 200:
             header = {
                 "Authorization": f"Bearer {response_access.json()['access_token']}"
@@ -251,7 +252,7 @@ class CreateSimpleUserSerializers(serializers.ModelSerializer):
                         'doc_type': info["profile"]["doc_data"]["doc_type"],
                         'doc_type_id': info["profile"]["doc_data"]["doc_type_id"],
                         'doc_type_id_cbu': info["profile"]["doc_data"]["doc_type_id_cbu"],
-                        'doc_expiry_date': info["profile"]["doc_data"]["doc_type_id_cbu"],
+                        'doc_expiry_date': info["profile"]["doc_data"]["expiry_date"],
                         'doc_issued_by': info["profile"]["doc_data"]["issued_by"],
                         'doc_issued_by_id': info["profile"]["doc_data"]["issued_by_id"],
                         'doc_issued_date': info["profile"]["doc_data"]["issued_date"],

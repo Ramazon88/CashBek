@@ -1,60 +1,6 @@
-import pprint
+import requests
 
-a = {'profile': {'address': {'permanent_address': None,
-                             'permanent_registration': None,
-                             'temporary_address': 'Кухна Чупонота МФЙ, 13 мавзеси, '
-                                                  '16а-уй, 37-хонадон',
-                             'temporary_registration': {'address': 'Кухна Чупонота '
-                                                                   'МФЙ, 13 '
-                                                                   'мавзеси, '
-                                                                   '16а-уй, '
-                                                                   '37-хонадон',
-                                                        'cadastre': '10:01:07:01:01:5085:0001:037',
-                                                        'country': None,
-                                                        'country_id': None,
-                                                        'country_id_cbu': None,
-                                                        'date_from': '2023-01-27T00:00:00',
-                                                        'date_till': '2024-01-27T00:00:00',
-                                                        'district': 'UCHTEPA '
-                                                                    'TUMANI',
-                                                        'district_id': '1001',
-                                                        'district_id_cbu': '198',
-                                                        'region': 'TOSHKENT SHAHRI',
-                                                        'region_id': '10',
-                                                        'region_id_cbu': '26'}},
-                 'authentication_method': 'strong',
-                 'common_data': {'birth_country': 'УЗБЕКИСТАН',
-                                 'birth_country_id': '182',
-                                 'birth_country_id_cbu': '860',
-                                 'birth_date': '08.02.1997',
-                                 'birth_place': 'NAVOIY SHAHRI',
-                                 'citizenship': 'УЗБЕКИСТАН',
-                                 'citizenship_id': '182',
-                                 'citizenship_id_cbu': '860',
-                                 'doc_type': 'БИОМЕТРИЧЕСКИЙ ПАСПОРТ ГРАЖДАНИНА '
-                                             'РЕСПУБЛИКИ УЗБЕКИСТАН',
-                                 'doc_type_id': '46',
-                                 'doc_type_id_cbu': '6',
-                                 'first_name': 'RAMAZON',
-                                 'first_name_en': 'RAMAZON',
-                                 'gender': '1',
-                                 'last_name': 'ABDURAYIMOV',
-                                 'last_name_en': 'ABDURAYIMOV',
-                                 'last_update_address': '2023-09-15T10:19:32.844748+00:00',
-                                 'last_update_pass_data': '2023-09-15T10:19:32.515285+00:00',
-                                 'middle_name': 'ALISHER O‘G‘LI',
-                                 'nationality': 'УЗБЕК/УЗБЕЧКА',
-                                 'nationality_id': '44',
-                                 'nationality_id_cbu': '01',
-                                 'pinfl': '30802975820031',
-                                 'sdk_hash': 'e720a817680e26cf11a530f410aa6db1'},
-                 'contacts': {'email': None, 'phone': 'qtpkDjbaG'},
-                 'doc_data': {'doc_type': 'БИОМЕТРИЧЕСКИЙ ПАСПОРТ ГРАЖДАНИНА '
-                                          'РЕСПУБЛИКИ УЗБЕКИСТАН',
-                              'doc_type_id': '46',
-                              'doc_type_id_cbu': '6',
-                              'expiry_date': '27.01.2026',
-                              'issued_by': 'КАРМАНИНСКИЙ РОВД НАВОИЙСКОЙ ОБЛАСТИ',
-                              'issued_by_id': '12222',
-                              'issued_date': '28.01.2016',
-                              'pass_data': 'AB2774877'}}}
+response = requests.get(url=f"https://billing.radius.uz:4012/radius_ut/hs/radius_bot/order/delay_all",
+                        auth=("django_admin", "DJango_96547456"), timeout=20).json()
+
+print(len(response))

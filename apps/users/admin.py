@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
+from import_export.admin import ExportMixin
+from import_export.formats import base_formats
 
 from apps.main.admin import superAdmin
 from apps.main.models import BlackListProducts
@@ -8,6 +10,9 @@ from apps.users.form import CustomUniversalForm, CustomUserCreationForm, CustomU
 from apps.users.models import *
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
+from rangefilter.filters import DateTimeRangeFilter, DateRangeFilter
+
+from apps.users.resources import Resource
 
 admin.site.register(Vendor)
 superAdmin.register(Vendor)
@@ -120,14 +125,21 @@ class SimpleUserInline(admin.StackedInline):
         return super().get_formset(request, obj=None, **kwargs)
 
 
-class SellerAdmin(admin.ModelAdmin):
+class SellerAdmin(ExportMixin, admin.ModelAdmin):
     exclude = ('password1', 'password2')
     inlines = [SimpleUserInline]
-    list_display = ["full_name", "get_phone", "passport_number", "pinfl", "get_active", "doc_type", "doc_expiry_date",
+    list_display = ["full_name", "created_at", "get_phone", "passport_number", "pinfl", "get_active",
                     "doc_issued_by", "doc_issued_date", "citizenship", "nationality", "birth_place", "birth_date",
                     "gender", "region", "district", "address"]
-    list_filter = ["citizenship", "nationality", "region", "district", "gender"]
     search_fields = ["passport_number", "pinfl", "first_name", "first_name_en", "last_name", "last_name_en"]
+    list_filter = ["region", "district", "gender", ("created_at", DateRangeFilter), ]
+    resource_class = Resource
+
+    def get_export_formats(self):
+        formats = (
+            base_formats.XLSX,
+        )
+        return [f for f in formats if f().can_export()]
 
     @admin.display(ordering='simple_user__phone', description='Телефон')
     def get_phone(self, obj):

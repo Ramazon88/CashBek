@@ -207,6 +207,7 @@ class GetDeleteVerify(APIView):
             send_sms(user.phone, code)
             user.save()
         return Response({"success": True})
+
     @staticmethod
     def check_verify(user):
         if UserConfirmation.objects.filter(user=user, expiration_time__gte=timezone.now(),
@@ -217,7 +218,6 @@ class GetDeleteVerify(APIView):
             }
             raise CustomError(data)
         return True
-
 
 
 class ConfirmDeleteUserView(APIView):
@@ -242,6 +242,17 @@ class ConfirmDeleteUserView(APIView):
             raise CustomError(data)
         verifies.delete()
         return True
+
+
+class CheckAvailableUserByPassView(APIView):
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        user = SimpleUsers.objects.filter(passport_number=data.get("pass_data"))
+        if user.exists():
+            return Response({"success": False, "code": "116", "message": "Already registered with MyID"}, status=400)
+        return Response({"success": True, "message": "Ok"})
 
 # class VerifyApiView(APIView):
 #     permission_classes = (Verify,)

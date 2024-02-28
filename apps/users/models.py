@@ -421,6 +421,7 @@ class User(AbstractUser):
 
 
 class SimpleUsers(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя")
     first_name_en = models.CharField(max_length=100, null=True, blank=True, verbose_name="Имя")
     last_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Фамилия")
@@ -458,14 +459,6 @@ class SimpleUsers(models.Model):
     district_id = models.CharField(max_length=100, null=True, blank=True)
     district_id_cbu = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=512, null=True, blank=True, verbose_name="Адрес")
-
-    def totals(self):
-        cashbek = self.cash_user.filter(active=True)
-        incom = cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] if \
-                    cashbek.filter(types=1).aggregate(all_price=Sum(F("price")))["all_price"] else 0
-        expen = cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] if \
-                    cashbek.filter(types=2).aggregate(all_price=Sum(F("price")))["all_price"] else 0
-        return {"count": cashbek.count(), "incom": incom, "expen": expen, "balance": incom - expen}
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -519,9 +512,9 @@ class Seller(models.Model):
     @property
     def total_balance(self):
         total = self.cash_seller.filter(types=2, active=True).aggregate(all_price=Sum(F("price")))["all_price"] if \
-            self.cash_seller.filter(types=2, active=True).aggregate(all_price=Sum(F("price")))["all_price"] else 0
+        self.cash_seller.filter(types=2, active=True).aggregate(all_price=Sum(F("price")))["all_price"] else 0
         paid = self.payment_seller.all().aggregate(all_price=Sum(F("amount")))["all_price"] if \
-            self.payment_seller.all().aggregate(all_price=Sum(F("amount")))["all_price"] else 0
+        self.payment_seller.all().aggregate(all_price=Sum(F("amount")))["all_price"] else 0
         residual = total - paid
         return {'total': total, 'paid': paid, 'residual': residual}
 

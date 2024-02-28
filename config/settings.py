@@ -104,6 +104,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.main',
     'apps.sellerbot',
+    'apps.minibot',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist'
 ]
@@ -247,6 +248,7 @@ seller_bot = Bot(token=BOT_TOKEN)
 error_bot = Bot(token=ERROR_BOT)
 FIREBASE_KEY = env.str('FIREBASE_KEY')
 FIREBASE_URL = env.str('FIREBASE_URL')
+MINIBOT = env.str('MINIBOT')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)

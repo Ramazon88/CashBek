@@ -204,3 +204,579 @@ INFO 2023-10-17 17:22:01,331 django.utils.autoreload autoreload autoreload.py tr
 INFO 2023-10-17 17:22:02,811 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
 INFO 2023-10-17 17:33:43,048 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\dashboard\views.py changed, reloading.
 INFO 2023-10-17 17:33:44,869 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:39:11,569 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:39:15,029 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 302 0
+INFO 2023-11-20 16:39:15,052 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2023-11-20 16:39:15,110 django.server basehttp basehttp.py log_message "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2023-11-20 16:39:15,113 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 59309
+INFO 2023-11-20 16:39:15,151 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 46375
+INFO 2023-11-20 16:39:15,159 django.server basehttp basehttp.py log_message "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 1396758
+INFO 2023-11-20 16:39:15,161 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 89503
+INFO 2023-11-20 16:39:15,167 django.server basehttp basehttp.py log_message "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 83259
+INFO 2023-11-20 16:39:15,425 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78268
+WARNING 2023-11-20 16:39:15,908 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2023-11-20 16:39:15,909 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6679
+INFO 2023-11-20 16:39:18,291 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:23,407 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:31,222 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:36,776 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:41,430 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:48,119 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:39:53,572 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:40:01,444 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:40:08,024 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:40:20,337 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:40:26,827 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:40:31,295 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:42:20,048 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2023-11-20 16:42:34,657 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 302 0
+INFO 2023-11-20 16:42:34,724 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 200 15985
+INFO 2023-11-20 16:42:34,744 django.server basehttp basehttp.py log_message "GET /static/dist/img/Cashbek.png HTTP/1.1" 200 125361
+INFO 2023-11-20 16:42:34,749 django.server basehttp basehttp.py log_message "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 20021
+INFO 2023-11-20 16:42:34,749 django.server basehttp basehttp.py log_message "GET /static/plugins/summernote/summernote-bs4.min.css HTTP/1.1" 200 19513
+INFO 2023-11-20 16:42:34,749 django.server basehttp basehttp.py log_message "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 11967
+INFO 2023-11-20 16:42:34,749 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 614
+INFO 2023-11-20 16:42:34,750 django.server basehttp basehttp.py log_message "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2023-11-20 16:42:34,753 django.server basehttp basehttp.py log_message "GET /static/dist/img/cashbek.jpg HTTP/1.1" 200 38335
+INFO 2023-11-20 16:42:34,754 django.server basehttp basehttp.py log_message "GET /static/dist/img/avatar5.png HTTP/1.1" 200 7587
+INFO 2023-11-20 16:42:34,767 django.server basehttp basehttp.py log_message "GET /static/plugins/bs-custom-file-input/bs-custom-file-input.min.js HTTP/1.1" 200 2345
+INFO 2023-11-20 16:42:34,767 django.server basehttp basehttp.py log_message "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2023-11-20 16:42:34,768 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47714
+INFO 2023-11-20 16:42:34,776 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21159
+INFO 2023-11-20 16:42:34,787 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2023-11-20 16:42:34,795 django.server basehttp basehttp.py log_message "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67842
+INFO 2023-11-20 16:42:34,801 django.server basehttp basehttp.py log_message "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 58863
+INFO 2023-11-20 16:42:34,809 django.server basehttp basehttp.py log_message "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 153031
+INFO 2023-11-20 16:42:34,810 django.server basehttp basehttp.py log_message "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 61593
+INFO 2023-11-20 16:42:34,811 django.server basehttp basehttp.py log_message "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 173084
+INFO 2023-11-20 16:42:34,822 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 254926
+INFO 2023-11-20 16:42:34,827 django.server basehttp basehttp.py log_message "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7626
+INFO 2023-11-20 16:42:34,830 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.js HTTP/1.1" 200 107329
+INFO 2023-11-20 16:42:34,832 django.server basehttp basehttp.py log_message "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42614
+INFO 2023-11-20 16:42:38,516 django.server basehttp basehttp.py log_message "GET /admin/users/ HTTP/1.1" 200 25107
+INFO 2023-11-20 16:42:38,542 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/css/all.min.css HTTP/1.1" 200 59344
+WARNING 2023-11-20 16:42:38,543 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:42:38,544 django.server basehttp basehttp.py log_message "GET /static/jazzmin/css/main.css HTTP/1.1" 200 16969
+INFO 2023-11-20 16:42:38,553 django.server basehttp basehttp.py log_message "GET /static/vendor/adminlte/css/adminlte.min.css HTTP/1.1" 200 1382975
+INFO 2023-11-20 16:42:38,561 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/main.js HTTP/1.1" 200 2391
+INFO 2023-11-20 16:42:38,567 django.server basehttp basehttp.py log_message "GET /static/vendor/bootstrap/js/bootstrap.min.js HTTP/1.1" 200 62440
+INFO 2023-11-20 16:42:38,567 django.server basehttp basehttp.py log_message "GET /static/vendor/adminlte/js/adminlte.min.js HTTP/1.1" 200 44244
+INFO 2023-11-20 16:42:38,585 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2023-11-20 16:42:38,654 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13276
+INFO 2023-11-20 16:42:38,655 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78196
+WARNING 2023-11-20 16:42:38,683 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:42:41,415 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/ HTTP/1.1" 200 40594
+INFO 2023-11-20 16:42:41,446 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+INFO 2023-11-20 16:42:41,446 django.server basehttp basehttp.py log_message "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2023-11-20 16:42:41,447 django.server basehttp basehttp.py log_message "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2023-11-20 16:42:41,448 django.server basehttp basehttp.py log_message "GET /static/vendor/select2/css/select2.min.css HTTP/1.1" 200 16264
+INFO 2023-11-20 16:42:41,451 django.server basehttp basehttp.py log_message "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2023-11-20 16:42:41,462 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2023-11-20 16:42:41,463 django.server basehttp basehttp.py log_message "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2023-11-20 16:42:41,465 django.server basehttp basehttp.py log_message "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+WARNING 2023-11-20 16:42:41,468 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:42:41,470 django.server basehttp basehttp.py log_message "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2023-11-20 16:42:41,484 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/change_list.js HTTP/1.1" 200 2252
+INFO 2023-11-20 16:42:41,500 django.server basehttp basehttp.py log_message "GET /static/vendor/select2/js/select2.min.js HTTP/1.1" 200 73170
+INFO 2023-11-20 16:42:41,506 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2023-11-20 16:42:45,371 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70917
+INFO 2023-11-20 16:42:45,394 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+INFO 2023-11-20 16:42:45,398 django.server basehttp basehttp.py log_message "GET /static/admin/js/calendar.js HTTP/1.1" 200 8466
+INFO 2023-11-20 16:42:45,399 django.server basehttp basehttp.py log_message "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2023-11-20 16:42:45,399 django.server basehttp basehttp.py log_message "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2023-11-20 16:42:45,402 django.server basehttp basehttp.py log_message "GET /static/admin/js/inlines.js HTTP/1.1" 200 15526
+WARNING 2023-11-20 16:42:45,402 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:42:45,415 django.server basehttp basehttp.py log_message "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2023-11-20 16:42:45,419 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/change_form.js HTTP/1.1" 200 6052
+INFO 2023-11-20 16:44:15,364 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 302 0
+INFO 2023-11-20 16:44:15,394 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/ HTTP/1.1" 200 41212
+INFO 2023-11-20 16:44:15,414 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-11-20 16:44:15,416 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:45:15,570 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:45:16,875 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:45:19,884 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70821
+INFO 2023-11-20 16:45:19,904 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-11-20 16:45:19,911 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+ERROR 2023-11-20 16:45:28,901 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 465, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:45:28,904 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140998
+INFO 2023-11-20 16:47:15,833 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:47:17,124 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:47:19,798 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70821
+ERROR 2023-11-20 16:47:28,028 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 466, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:47:28,031 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140880
+INFO 2023-11-20 16:48:00,509 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:48:01,916 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:48:04,094 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70821
+ERROR 2023-11-20 16:48:08,767 django.request log log.py log_response Internal Server Error: /admin/users/simpleusers/28/change/
+Traceback (most recent call last):
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1889, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1747, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1798, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "C:\Users\Radius\Desktop\CashBek\venv\Lib\site-packages\django\contrib\admin\options.py", line 1227, in save_model
+    obj.save()
+  File "C:\Users\Radius\Desktop\CashBek\apps\users\models.py", line 466, in save
+    image = Image.open(instance.photo.path)
+                       ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'photo'
+ERROR 2023-11-20 16:48:08,769 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 500 140897
+INFO 2023-11-20 16:48:14,831 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70821
+INFO 2023-11-20 16:49:46,297 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:49:47,983 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:50:56,239 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:50:57,690 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2023-11-20 16:51:07,296 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 302 0
+INFO 2023-11-20 16:51:07,354 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/ HTTP/1.1" 200 41212
+INFO 2023-11-20 16:51:07,376 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-11-20 16:51:07,383 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:53:31,573 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/28/change/ HTTP/1.1" 200 70837
+INFO 2023-11-20 16:53:31,592 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-11-20 16:53:31,594 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:53:37,277 django.server basehttp basehttp.py log_message "POST /admin/users/simpleusers/28/change/ HTTP/1.1" 302 0
+INFO 2023-11-20 16:53:37,309 django.server basehttp basehttp.py log_message "GET /admin/users/simpleusers/ HTTP/1.1" 200 41212
+INFO 2023-11-20 16:53:37,329 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2023-11-20 16:53:37,331 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2023-11-20 16:58:46,139 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\users\models.py changed, reloading.
+INFO 2023-11-20 16:58:47,956 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:42:14,617 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:42:22,498 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 302 0
+INFO 2024-02-28 12:42:22,777 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:42:23,224 django.server basehttp basehttp.py log_message "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2024-02-28 12:42:23,517 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 59309
+INFO 2024-02-28 12:42:23,656 django.server basehttp basehttp.py log_message "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 1396758
+INFO 2024-02-28 12:42:23,657 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 46375
+INFO 2024-02-28 12:42:23,667 django.server basehttp basehttp.py log_message "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 83259
+INFO 2024-02-28 12:42:23,674 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 89503
+INFO 2024-02-28 12:42:26,295 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78268
+WARNING 2024-02-28 12:42:27,159 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:42:27,160 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6805
+INFO 2024-02-28 12:43:33,357 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\apps.py changed, reloading.
+INFO 2024-02-28 12:43:35,228 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:43:54,550 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:47:00,036 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 12:47:05,855 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:50:54,514 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 12:51:18,767 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:56:15,965 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 12:56:22,559 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:56:41,936 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 12:56:44,429 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 12:57:05,292 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 12:57:12,522 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:57:44,562 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 12:58:23,301 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 12:58:28,674 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:58:41,111 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 302 0
+INFO 2024-02-28 12:58:41,119 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:58:41,202 django.server basehttp basehttp.py log_message "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2024-02-28 12:58:41,206 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 59309
+INFO 2024-02-28 12:58:41,206 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 46375
+INFO 2024-02-28 12:58:41,209 django.server basehttp basehttp.py log_message "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 83259
+INFO 2024-02-28 12:58:41,215 django.server basehttp basehttp.py log_message "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 1396758
+INFO 2024-02-28 12:58:41,218 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 89503
+INFO 2024-02-28 12:58:42,120 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78268
+WARNING 2024-02-28 12:58:44,167 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:58:44,168 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6787
+INFO 2024-02-28 12:59:04,399 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:04,758 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 59309
+INFO 2024-02-28 12:59:05,067 django.server basehttp basehttp.py log_message "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2024-02-28 12:59:05,073 django.server basehttp basehttp.py log_message "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 1396758
+INFO 2024-02-28 12:59:05,193 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 46375
+INFO 2024-02-28 12:59:05,193 django.server basehttp basehttp.py log_message "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 83259
+INFO 2024-02-28 12:59:05,194 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 89503
+INFO 2024-02-28 12:59:06,719 django.server basehttp basehttp.py log_message "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78268
+WARNING 2024-02-28 12:59:09,156 django.request log log.py log_response Not Found: /favicon.ico
+WARNING 2024-02-28 12:59:09,157 django.server basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 6805
+INFO 2024-02-28 12:59:12,022 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:13,589 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:14,738 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:15,657 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:17,134 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 302 0
+INFO 2024-02-28 12:59:17,144 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:25,849 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 12:59:27,592 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:34,542 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 12:59:39,898 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 12:59:40,446 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:24:43,436 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:29:23,583 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:29:27,739 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:30:05,229 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\views.py changed, reloading.
+INFO 2024-02-28 13:30:11,009 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:30:11,582 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:30:15,511 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:31:35,617 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:31:37,888 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:31:55,147 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 13:31:56,960 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:32:00,101 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:38:06,417 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:38:08,298 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:38:17,968 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:38:20,040 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:38:24,989 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:38:37,675 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:38:39,534 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:38:42,813 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:38:44,553 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:38:45,569 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:38:46,460 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 13:48:47,096 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:48:49,413 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 13:59:45,273 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 13:59:47,407 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:02:01,126 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:02:02,997 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:05:27,923 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 14:05:29,984 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:07:48,020 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 302 0
+INFO 2024-02-28 14:07:48,029 django.server basehttp basehttp.py log_message "GET /login/?next=/ HTTP/1.1" 200 2673
+INFO 2024-02-28 14:07:48,039 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:07:50,093 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:09:00,737 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\admin.py changed, reloading.
+INFO 2024-02-28 14:09:02,618 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:09:03,298 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2024-02-28 14:09:12,923 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 200 2836
+INFO 2024-02-28 14:10:14,813 django.server basehttp basehttp.py log_message "POST /login/ HTTP/1.1" 302 0
+INFO 2024-02-28 14:10:14,888 django.server basehttp basehttp.py log_message "GET / HTTP/1.1" 200 15985
+INFO 2024-02-28 14:10:14,965 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 614
+INFO 2024-02-28 14:10:14,967 django.server basehttp basehttp.py log_message "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 11967
+INFO 2024-02-28 14:10:14,971 django.server basehttp basehttp.py log_message "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 20021
+INFO 2024-02-28 14:10:14,972 django.server basehttp basehttp.py log_message "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2024-02-28 14:10:14,972 django.server basehttp basehttp.py log_message "GET /static/plugins/summernote/summernote-bs4.min.css HTTP/1.1" 200 19513
+INFO 2024-02-28 14:10:14,978 django.server basehttp basehttp.py log_message "GET /static/dist/img/cashbek.jpg HTTP/1.1" 200 38335
+INFO 2024-02-28 14:10:14,979 django.server basehttp basehttp.py log_message "GET /static/dist/img/Cashbek.png HTTP/1.1" 200 125361
+INFO 2024-02-28 14:10:14,981 django.server basehttp basehttp.py log_message "GET /static/dist/img/avatar5.png HTTP/1.1" 200 7587
+INFO 2024-02-28 14:10:15,047 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 254926
+INFO 2024-02-28 14:10:15,063 django.server basehttp basehttp.py log_message "GET /static/plugins/bs-custom-file-input/bs-custom-file-input.min.js HTTP/1.1" 200 2345
+INFO 2024-02-28 14:10:15,114 django.server basehttp basehttp.py log_message "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 173084
+INFO 2024-02-28 14:10:15,129 django.server basehttp basehttp.py log_message "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2024-02-28 14:10:15,163 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21159
+INFO 2024-02-28 14:10:15,180 django.server basehttp basehttp.py log_message "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47714
+INFO 2024-02-28 14:10:15,200 django.server basehttp basehttp.py log_message "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2024-02-28 14:10:15,231 django.server basehttp basehttp.py log_message "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 58863
+INFO 2024-02-28 14:10:15,260 django.server basehttp basehttp.py log_message "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67842
+INFO 2024-02-28 14:10:15,290 django.server basehttp basehttp.py log_message "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 61593
+INFO 2024-02-28 14:10:15,302 django.server basehttp basehttp.py log_message "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 153031
+INFO 2024-02-28 14:10:15,308 django.server basehttp basehttp.py log_message "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7626
+INFO 2024-02-28 14:10:15,312 django.server basehttp basehttp.py log_message "GET /static/dist/js/adminlte.js HTTP/1.1" 200 107329
+INFO 2024-02-28 14:10:15,315 django.server basehttp basehttp.py log_message "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42614
+INFO 2024-02-28 14:10:18,512 django.server basehttp basehttp.py log_message "GET /admin/users/ HTTP/1.1" 200 27185
+INFO 2024-02-28 14:10:18,596 django.server basehttp basehttp.py log_message "GET /static/jazzmin/css/main.css HTTP/1.1" 200 16969
+INFO 2024-02-28 14:10:18,597 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/css/all.min.css HTTP/1.1" 200 59344
+WARNING 2024-02-28 14:10:18,612 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 14:10:18,617 django.server basehttp basehttp.py log_message "GET /static/vendor/adminlte/css/adminlte.min.css HTTP/1.1" 200 1382975
+INFO 2024-02-28 14:10:18,633 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/main.js HTTP/1.1" 200 2391
+INFO 2024-02-28 14:10:18,645 django.server basehttp basehttp.py log_message "GET /static/vendor/adminlte/js/adminlte.min.js HTTP/1.1" 200 44244
+INFO 2024-02-28 14:10:18,647 django.server basehttp basehttp.py log_message "GET /static/vendor/bootstrap/js/bootstrap.min.js HTTP/1.1" 200 62440
+INFO 2024-02-28 14:10:18,654 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2024-02-28 14:10:19,027 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13276
+INFO 2024-02-28 14:10:19,028 django.server basehttp basehttp.py log_message "GET /static/vendor/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 78196
+WARNING 2024-02-28 14:10:19,054 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 14:10:22,899 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/ HTTP/1.1" 200 23496
+INFO 2024-02-28 14:10:22,984 django.server basehttp basehttp.py log_message "GET /static/vendor/select2/css/select2.min.css HTTP/1.1" 200 16264
+INFO 2024-02-28 14:10:22,998 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+INFO 2024-02-28 14:10:23,000 django.server basehttp basehttp.py log_message "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2024-02-28 14:10:23,010 django.server basehttp basehttp.py log_message "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2024-02-28 14:10:23,010 django.server basehttp basehttp.py log_message "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2024-02-28 14:10:23,012 django.server basehttp basehttp.py log_message "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2024-02-28 14:10:23,015 django.server basehttp basehttp.py log_message "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2024-02-28 14:10:23,028 django.server basehttp basehttp.py log_message "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+WARNING 2024-02-28 14:10:23,032 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 14:10:23,053 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/change_list.js HTTP/1.1" 200 2252
+INFO 2024-02-28 14:10:23,064 django.server basehttp basehttp.py log_message "GET /static/vendor/select2/js/select2.min.js HTTP/1.1" 200 73170
+INFO 2024-02-28 14:10:23,073 django.server basehttp basehttp.py log_message "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2024-02-28 14:10:24,287 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/add/ HTTP/1.1" 200 29481
+INFO 2024-02-28 14:10:24,373 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+INFO 2024-02-28 14:10:24,373 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+WARNING 2024-02-28 14:10:24,377 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 14:10:24,396 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2024-02-28 14:10:24,398 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2024-02-28 14:10:24,399 django.server basehttp basehttp.py log_message "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2024-02-28 14:10:24,402 django.server basehttp basehttp.py log_message "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2024-02-28 14:10:24,411 django.server basehttp basehttp.py log_message "GET /static/jazzmin/js/change_form.js HTTP/1.1" 200 6052
+INFO 2024-02-28 14:10:37,249 django.server basehttp basehttp.py log_message "GET /admin/minibot/shop/add/?_to_field=id&_popup=1 HTTP/1.1" 200 5778
+INFO 2024-02-28 14:10:37,333 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+INFO 2024-02-28 14:10:42,808 django.server basehttp basehttp.py log_message "POST /admin/minibot/shop/add/?_to_field=id&_popup=1 HTTP/1.1" 200 425
+INFO 2024-02-28 14:10:42,891 django.server basehttp basehttp.py log_message "GET /static/admin/js/popup_response.js HTTP/1.1" 200 1946
+INFO 2024-02-28 14:10:56,361 django.server basehttp basehttp.py log_message "POST /admin/minibot/operator/add/ HTTP/1.1" 302 0
+INFO 2024-02-28 14:10:56,395 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/ HTTP/1.1" 200 26440
+INFO 2024-02-28 14:10:56,476 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 14:10:56,480 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 14:11:03,190 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:11:27,917 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:14:41,119 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:14:43,052 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:14:51,638 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:14:53,901 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:14:56,148 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:18:15,286 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:18:17,338 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:19:49,611 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:19:51,411 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:20:44,643 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:20:46,643 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:31:52,176 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:31:54,301 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:40:55,406 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:40:58,947 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:41:09,210 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 14:42:03,993 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:42:06,004 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:43:54,134 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:43:56,279 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:51:12,621 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:51:14,540 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:52:27,218 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\buttons.py changed, reloading.
+INFO 2024-02-28 14:52:29,067 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:52:44,076 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\buttons.py changed, reloading.
+INFO 2024-02-28 14:52:46,834 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:56:20,602 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:56:22,954 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:57:52,671 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:57:55,219 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 14:59:52,400 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 14:59:54,252 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:00:11,492 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:00:13,374 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:00:39,399 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:00:41,986 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:03:34,822 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:03:36,946 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:07:49,798 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:07:51,647 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:08:41,749 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:08:43,658 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:12:06,724 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:12:08,611 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:13:37,627 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:13:39,931 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:16:19,679 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:16:22,152 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:19:37,387 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\buttons.py changed, reloading.
+INFO 2024-02-28 15:19:39,203 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:19:44,113 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:19:46,038 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:19:50,639 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:19:54,490 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:19:57,301 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:19:59,789 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:21:06,359 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:21:08,190 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:21:09,245 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:16,457 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:22:18,450 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:22:19,192 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:22,091 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:26,306 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:29,582 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:31,730 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:33,582 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:35,869 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:22:47,607 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:23:50,732 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:23:52,678 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:23:59,010 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:24:01,182 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:24:07,324 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:24:17,293 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:24:19,549 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:24:27,209 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:04,814 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:25:06,592 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:25:09,186 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:10,996 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:14,461 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:17,009 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:18,843 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:19,826 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:25:27,436 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:26:30,578 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\dispatcher.py changed, reloading.
+INFO 2024-02-28 15:26:32,314 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:26:37,085 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:26:45,816 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:26:54,870 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:28:06,967 django.server basehttp basehttp.py log_message "GET /admin/minibot/applications/ HTTP/1.1" 200 23524
+INFO 2024-02-28 15:28:07,052 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:28:07,059 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 15:28:07,512 django.server basehttp basehttp.py log_message "GET /admin/minibot/minitemp/ HTTP/1.1" 200 25891
+INFO 2024-02-28 15:28:07,596 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:28:07,598 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 15:28:08,714 django.server basehttp basehttp.py log_message "GET /admin/minibot/minitemp/1/change/ HTTP/1.1" 200 32223
+INFO 2024-02-28 15:28:08,790 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:28:08,802 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 15:28:08,811 django.server basehttp basehttp.py log_message "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2024-02-28 15:31:40,660 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:31:42,545 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:33:06,555 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:09,853 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:13,303 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:14,860 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:16,329 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:25,771 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:33:33,396 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:34:19,433 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:34:21,558 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:34:46,488 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\buttons.py changed, reloading.
+INFO 2024-02-28 15:34:48,266 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:35:20,252 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:22,228 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:27,501 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:31,142 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:32,860 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:45,593 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:35:52,770 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:21,288 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:39:23,099 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:39:29,784 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:31,055 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:34,846 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:37,941 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:39,391 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:39:50,702 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:40:00,414 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:40:08,731 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:42:02,104 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:42:03,966 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:44:11,898 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:44:13,660 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:44:31,274 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:45:01,858 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:48:16,618 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:48:18,664 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:50:08,795 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:50:10,656 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:50:18,464 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:50:20,142 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:50:25,488 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:50:29,106 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:50:30,747 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:51:27,015 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:51:30,058 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:51:38,083 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:52:26,206 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:53:38,039 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:53:42,494 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:54:01,547 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:54:08,851 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:54:16,442 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:54:23,413 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:54:29,723 django.server basehttp basehttp.py log_message "POST /minibot/ HTTP/1.1" 200 2
+INFO 2024-02-28 15:57:46,610 django.utils.autoreload autoreload autoreload.py trigger_reload C:\Users\Radius\Desktop\CashBek\apps\minibot\main.py changed, reloading.
+INFO 2024-02-28 15:57:48,764 django.utils.autoreload autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-02-28 15:57:54,293 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/ HTTP/1.1" 200 25869
+INFO 2024-02-28 15:57:54,387 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:57:54,394 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 15:58:23,855 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/add/ HTTP/1.1" 200 29518
+INFO 2024-02-28 15:58:23,936 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:58:23,939 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813
+INFO 2024-02-28 15:58:51,028 django.server basehttp basehttp.py log_message "POST /admin/minibot/operator/add/ HTTP/1.1" 302 0
+INFO 2024-02-28 15:58:51,054 django.server basehttp basehttp.py log_message "GET /admin/minibot/operator/ HTTP/1.1" 200 26758
+INFO 2024-02-28 15:58:51,138 django.server basehttp basehttp.py log_message "GET /admin/jsi18n/ HTTP/1.1" 200 16066
+WARNING 2024-02-28 15:58:51,140 django.server basehttp basehttp.py log_message "GET /static/books/img/logo.png HTTP/1.1" 404 1813

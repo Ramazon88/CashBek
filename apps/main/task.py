@@ -108,8 +108,7 @@ def check_many_cashbek(user_pk):
     user = SimpleUsers.objects.get(pk=user_pk)
     cashbek = Cashbek.objects.filter(types=1, active=True, created_at__date=date, user__pk=user_pk)
     if cashbek.count() > 2:
-        text = f"<strong>🔴Сегодня клиент получил более 2 кэшбэков.</strong>\n\n<strong>Количество полученных " \
-               f"кэшбэков: </strong>{cashbek.count()}\n"
+        text = f"<strong>🔴Сегодня клиент получил более 2 кэшбэков.</strong>\n\n<strong>Количество полученных кэшбэков: </strong>{cashbek.count()}\n"
         text += f"<strong>Клиент: </strong>{user.first_name} {user.last_name}\n"
         text += f"<strong>Номер телефона: </strong><code>{user.simple_user.phone}</code>\n"
         seller_bot.send_message(chat_id=-4058643019, text=text, parse_mode="HTML")
