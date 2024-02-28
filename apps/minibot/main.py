@@ -91,6 +91,7 @@ def core(update: Update, context: CallbackContext):
                                                                                         caption=text)])
             MiniTemp.objects.filter(operator=oper).update(step=0, phone=None, order=None, link_other=None,
                                                           screen_other=None, screen_radius=None)
+            update.message.reply_html("№1 ✅Запрос отправлен на рассмотрение.", reply_markup=main_buttons)
             update.message.reply_html("Начать", reply_markup=main_buttons)
         elif msg == '🏠Главный страница':
             MiniTemp.objects.filter(operator=oper).update(step=0, phone=None, order=None, link_other=None,
@@ -98,4 +99,4 @@ def core(update: Update, context: CallbackContext):
             update.message.reply_html("Начать", reply_markup=main_buttons)
     except Exception as e:
         print(e)
-        raise e
+
